@@ -7,6 +7,7 @@ const navLinks = [
     { href: '/resume.pdf', label: 'Resume', external: true },
     { href: '#projects', label: 'Projects' },
     { href: '#education', label: 'Education' },
+    { href: '#publications', label: 'Publications' },
     { href: '#experiences', label: 'Experiences' },
     { href: '#skills', label: 'Skills' },
     { href: '#contact', label: 'Contact' },
