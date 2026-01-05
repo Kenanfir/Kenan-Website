@@ -17,7 +17,18 @@ interface CardProps {
 
 // Helper to get YouTube thumbnail from video URL
 function getYouTubeThumbnail(videoUrl: string): string {
-    const match = videoUrl.match(/embed\/([a-zA-Z0-9_-]+)/);
+    // Match /embed/VIDEO_ID format
+    let match = videoUrl.match(/embed\/([a-zA-Z0-9_-]+)/);
+    if (match) {
+        return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+    }
+    // Match youtu.be/VIDEO_ID format
+    match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (match) {
+        return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+    }
+    // Match youtube.com/watch?v=VIDEO_ID format
+    match = videoUrl.match(/[?&]v=([a-zA-Z0-9_-]+)/);
     if (match) {
         return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
     }
