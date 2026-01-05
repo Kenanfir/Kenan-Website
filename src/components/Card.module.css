@@ -1,6 +1,8 @@
 .card {
     display: block;
     width: 320px;
+    flex-shrink: 0;
+    /* Prevent shrinking in horizontal scroll */
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 8px;
