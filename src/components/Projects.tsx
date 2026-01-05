@@ -1,5 +1,5 @@
 import Card from './Card';
-import { projects, projectYears, getProjectsByYear } from '@/data/projects';
+import { projects, projectCategories, getProjectsByCategory } from '@/data/projects';
 import styles from './Projects.module.css';
 
 export default function Projects() {
@@ -8,17 +8,17 @@ export default function Projects() {
             <div className={styles.container}>
                 <h2 className={styles.sectionTitle}>PROJECTS</h2>
 
-                {projectYears.map((year) => {
-                    const yearProjects = getProjectsByYear(year);
-                    if (yearProjects.length === 0) return null;
+                {projectCategories.map((cat) => {
+                    const categoryProjects = getProjectsByCategory(cat.key);
+                    if (categoryProjects.length === 0) return null;
 
                     return (
-                        <div key={year} className={styles.yearGroup}>
-                            <div className={styles.yearHeader}>
-                                <span className={styles.yearBadge}>{year}</span>
+                        <div key={cat.key} className={styles.categoryGroup}>
+                            <div className={styles.categoryHeader}>
+                                <span className={styles.categoryBadge}>{cat.label}</span>
                             </div>
                             <div className={styles.horizontalScroll}>
-                                {yearProjects.map((project) => (
+                                {categoryProjects.map((project) => (
                                     <Card
                                         key={project.slug}
                                         slug={project.slug}

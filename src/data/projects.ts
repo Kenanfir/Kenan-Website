@@ -1,3 +1,5 @@
+export type ProjectCategory = 'GAMES' | 'GAME_JAMS' | 'APPS' | 'OTHERS';
+
 export interface Project {
     slug: string;
     title: string;
@@ -8,7 +10,8 @@ export interface Project {
     teamSize: number;
     duration: string;
     platform: string;
-    year: 'ON_GOING' | '2025' | '2024' | '2023' | '2022';
+    category: ProjectCategory;
+    year: string;
     about: string;
     appStoreUrl?: string;
     itchUrl?: string;
@@ -35,7 +38,8 @@ export const projects: Project[] = [
         teamSize: 5,
         duration: 'Ongoing',
         platform: 'Website',
-        year: 'ON_GOING',
+        category: 'APPS',
+        year: 'Ongoing',
         about: 'This tool helps Game Developers specially asset creators to push their assets straight in to the Git project with only some push of a button. It streamline the process of integrating asset from the creator to the developer. This way it can help them to have standard rule for asset as well, like location, name, etc.',
         info: {
             role: 'Developer',
@@ -57,7 +61,8 @@ export const projects: Project[] = [
         teamSize: 1,
         duration: 'Ongoing',
         platform: 'App',
-        year: 'ON_GOING',
+        category: 'APPS',
+        year: 'Ongoing',
         about: 'Plan Hub is a mobile-first AI-powered personal planning assistant. It creates and manages OKRs with AI assistance, generates packed daily schedules from your goals, reviews tomorrow\'s plan each night, sends push notifications for task reminders, and tracks progress with daily logs. Features include a freemium subscription model with Pro plan ($6.99/month), cross-platform support (iOS, Android, Web), and integration with OpenAI GPT-4 for intelligent scheduling.',
         info: {
             role: 'Solo Developer',
@@ -81,6 +86,7 @@ export const projects: Project[] = [
         teamSize: 3,
         duration: '+8 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: 'This app helps organizers manage costs and payments for recurring activities like sports, fitness, or dance classes. Users create sessions with flexible pricing, add participants, and the app automatically calculates per-person costs and tracks who has paid versus who still owes money.',
         info: {
@@ -104,6 +110,7 @@ export const projects: Project[] = [
         teamSize: 8,
         duration: '+8 Weeks',
         platform: 'Mac',
+        category: 'GAMES',
         year: '2025',
         about: 'SATURATED is a first-person horror game where you play as a commercial diver. Descend, fix the pipe, finish your job. That\'s all you have to do. It\'s only 5 shifts, after all. Keep at it, you\'ll see the sun yet. Between shifts, you retreat to the saturation chamber meant for rest, reflection, and recovery. But even here, the silence feels wrong, and your thoughts begin to twist as the days blur together.',
         info: {
@@ -127,6 +134,7 @@ export const projects: Project[] = [
         teamSize: 6,
         duration: '+4 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: 'Find your match. Connect with purpose. Networking made simple, powerful, and personal. Findect gives you recommendation of people that you should talk too using LLM model.',
         info: {
@@ -150,6 +158,7 @@ export const projects: Project[] = [
         teamSize: 3,
         duration: '+4 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: 'Tona is an app that helps casual Instagram photographers keep their feed visually consistent by automatically applying tone and color grading from their past uploads. It analyzes your existing aesthetic and matches new photos to blend seamlessly into your Instagram grid, no manual editing or presets needed.',
         info: {
@@ -174,6 +183,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '+2 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: 'This game is an quick arcade game where your going up and up while jumping between the walls, my role here was more into porting and publishing the game on App Store.',
         info: {
@@ -198,6 +208,7 @@ export const projects: Project[] = [
         teamSize: 5,
         duration: '+5 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: 'This app is a gamification for motivating users to burn more calories. It has a similar idea to Tamagotchi, but we applied it to the Apple Watch. This app is the second challenge for the Apple Developer Academy, which is to learn and apply Apple technologies. Some of which are WatchKit, SpriteKit, HealthKit, and SwiftData.',
         info: {
@@ -220,6 +231,7 @@ export const projects: Project[] = [
         teamSize: 1,
         duration: '+3 Weeks',
         platform: 'iOS',
+        category: 'APPS',
         year: '2025',
         about: '"Rantify" is my first time trying to develop an iOS app, this app gives you a gamified random activity to do. This app is the first challenge from apple developer academy that is to learn how to develop an iOS app.',
         info: {
@@ -243,6 +255,7 @@ export const projects: Project[] = [
         teamSize: 3,
         duration: '6 Months',
         platform: 'UE5',
+        category: 'GAMES',
         year: '2025',
         about: 'You are an exorcist; the mortuary needs your help to get rid of the devil haunting the place. Well, that\'s basically the game scenario. You can also play with your friend in a multiplayer session. Imagine it\'s mortuary assistant combined with phasmophobia.',
         info: {
@@ -267,6 +280,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '4 Months',
         platform: 'UE5',
+        category: 'GAMES',
         year: '2024',
         about: 'As a Manager of fishermen, you can tell your fishermen to sail them out, repair the boat, upgrade them, etc. The goal is just to make a lot of money 🙂 Also, one of the main thing for this game it\'s for research purposes on Dynamic Difficulty Adjustment (DDA) so I\'m combining Q-Learning with Fuzzy Logic to create the DDA.',
         info: {
@@ -290,6 +304,7 @@ export const projects: Project[] = [
         teamSize: 5,
         duration: '10 Months',
         platform: 'UE4',
+        category: 'GAMES',
         year: '2024',
         about: '"Xanthous" is a VR horror game and an academic project for my final project and thesis. I was an AI programmer creating algorithm designs such as Fuzzy Logic, Monte Carlo, Behavior Tree, and more.',
         info: {
@@ -315,6 +330,7 @@ export const projects: Project[] = [
         teamSize: 4,
         duration: '38 Hours',
         platform: 'Unity',
+        category: 'GAME_JAMS',
         year: '2024',
         about: '"Coblos Son" is a joke and meme-ish game created for Global Game Jam 2024 Surabaya. The game simulates a drunk individual participating in the upcoming election, adding a humorous element to the voting process.',
         info: {
@@ -341,6 +357,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '40 Hours',
         platform: 'UE4',
+        category: 'GAME_JAMS',
         year: '2023',
         about: '"Echo Remnant" is a hardcore-level stealth game, utilizing AI Perception tools from UE4. "Echo Remnant" was developed for Garena GameJam.',
         info: {
@@ -365,6 +382,7 @@ export const projects: Project[] = [
         teamSize: 3,
         duration: '48 Hours',
         platform: 'UE5',
+        category: 'GAME_JAMS',
         year: '2023',
         about: '"F.U.R.Y" which stand for "Fiendish Unrest Rattles You" is a first-person horror-action game. "F.U.R.Y" was developed for Candela GameJam.',
         info: {
@@ -388,6 +406,7 @@ export const projects: Project[] = [
         teamSize: 3,
         duration: '1 Week',
         platform: 'Unity',
+        category: 'GAME_JAMS',
         year: '2023',
         about: '"Slime Sage" is a movement-satisfying game using Mix and Jam\'s package for the game called "The Pathless". "Slime Sage" was developed for the event GAMELOFT Game Designer Connect.',
         info: {
@@ -411,6 +430,7 @@ export const projects: Project[] = [
         teamSize: 1,
         duration: '3 Months',
         platform: 'Proxmox',
+        category: 'OTHERS',
         year: '2023',
         about: 'This is one of my personal projects of mine. I created a server for me to host useful services and it\'s a way for me to learn more about technologies.',
         info: {
@@ -434,6 +454,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '4 Months',
         platform: 'Flutter',
+        category: 'APPS',
         year: '2023',
         about: '"Priority" is a mobile app designed for booking store visits. It is developed as part of a government-sponsored business program conducted on campuses. I mainly use Google Cloud Platform and Firebase as the server-side functionality. The app\'s current state is only a prototype.',
         info: {
@@ -458,6 +479,7 @@ export const projects: Project[] = [
         teamSize: 6,
         duration: '48 Hours',
         platform: 'Unity',
+        category: 'GAME_JAMS',
         year: '2022',
         about: '"Bed Time" is a side-scrolling survival horror game created for Indie Games Group Indonesia GameJam+ 2022. In this game, you take on the role of a child left alone at home, and you must guide the child to fend off demons until morning comes. Despite our initial concept, the game remains unfinished.',
         info: {
@@ -481,6 +503,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '1 Week',
         platform: 'Unity',
+        category: 'GAME_JAMS',
         year: '2022',
         about: '"Don\'t Get Hunted" is a top-down multiplayer horror game. The game objective is monster collect orbs to gain power and eliminate human before it\'s too late, while human must eliminate monster before it got powerful. "Don\'t Get Hunted" utilizes Photon for multiplayer server and functionality.',
         info: {
@@ -496,10 +519,15 @@ export const projects: Project[] = [
     },
 ];
 
-export const projectYears = ['ON_GOING', '2025', '2024', '2023', '2022'] as const;
+export const projectCategories: { key: ProjectCategory; label: string }[] = [
+    { key: 'GAMES', label: 'Games' },
+    { key: 'GAME_JAMS', label: 'Game Jams' },
+    { key: 'APPS', label: 'Apps' },
+    { key: 'OTHERS', label: 'Others' },
+];
 
-export function getProjectsByYear(year: Project['year']): Project[] {
-    return projects.filter(p => p.year === year);
+export function getProjectsByCategory(category: ProjectCategory): Project[] {
+    return projects.filter(p => p.category === category);
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
