@@ -10,6 +10,8 @@ export interface Project {
     platform: string;
     year: 'ON_GOING' | '2025' | '2024' | '2023' | '2022';
     about: string;
+    appStoreUrl?: string;
+    itchUrl?: string;
     info: {
         role: string;
         teamSize: string;
@@ -29,7 +31,7 @@ export const projects: Project[] = [
         title: 'Asset Tracker',
         role: 'GAME DEV TOOL',
         description: 'This tool helps Game Developers specially asset creators to push their assets straight in to the Git project with only some push of a button.',
-        thumbnail: '/images/asset-tracker.jpg',
+        thumbnail: '',
         teamSize: 5,
         duration: '+2 Weeks',
         platform: 'Website',
@@ -51,7 +53,7 @@ export const projects: Project[] = [
         title: 'Group Session Payment Tracker',
         role: 'iOS DEVELOPER',
         description: 'This app helps organizers manage costs and payments for recurring activities like sports, fitness, or dance classes.',
-        thumbnail: '/images/payment-tracker.jpg',
+        thumbnail: '',
         teamSize: 3,
         duration: '+1 Weeks',
         platform: 'iOS',
@@ -74,8 +76,8 @@ export const projects: Project[] = [
         title: 'Saturated',
         role: 'GAME DEVELOPER',
         description: 'SATURATED is a first-person horror game where you play as a commercial diver. Descend, fix the pipe, finish your job.',
-        thumbnail: '/images/saturated.jpg',
-        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/0wkXfAQb-wY',
         teamSize: 8,
         duration: '+8 Weeks',
         platform: 'Mac',
@@ -97,7 +99,8 @@ export const projects: Project[] = [
         title: 'Findect',
         role: 'iOS BACKEND DEVELOPER',
         description: 'Find your match. Connect with purpose. Networking made simple, powerful, and personal using LLM model.',
-        thumbnail: '/images/findect.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/baLQDNrXQoo',
         teamSize: 6,
         duration: '+4 Weeks',
         platform: 'iOS',
@@ -119,7 +122,8 @@ export const projects: Project[] = [
         title: 'Tona',
         role: 'iOS DEVELOPER',
         description: 'Tona helps casual Instagram photographers keep their feed visually consistent by automatically applying tone and color grading.',
-        thumbnail: '/images/tona.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/-LpufQveMVQ',
         teamSize: 3,
         duration: '+4 Weeks',
         platform: 'iOS',
@@ -141,7 +145,9 @@ export const projects: Project[] = [
         title: 'Milky Ice Jump',
         role: 'iOS DEVELOPER',
         description: 'A quick arcade game where you\'re going up and up while jumping between the walls.',
-        thumbnail: '/images/milky.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/Tpz54tOTTOw',
+        appStoreUrl: 'https://apps.apple.com/id/app/milky-ice-jump/id6751799679',
         teamSize: 2,
         duration: '+2 Weeks',
         platform: 'iOS',
@@ -156,7 +162,6 @@ export const projects: Project[] = [
         sections: [
             { heading: 'INTRODUCTION', content: 'A fun, addictive arcade experience optimized for mobile play.' },
             { heading: 'MY ROLE', content: 'Porting the game to iOS and handling App Store publishing.' },
-            { heading: 'LINK', content: 'https://apps.apple.com/id/app/milky-ice-jump/id6751799679' },
         ],
     },
     {
@@ -164,7 +169,9 @@ export const projects: Project[] = [
         title: 'Pet Jam',
         role: 'iOS DEVELOPER',
         description: 'A gamification app for motivating users to burn more calories, similar to Tamagotchi but for Apple Watch.',
-        thumbnail: '/images/petjam.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/vbAcI0mYJcc',
+        appStoreUrl: 'https://apps.apple.com/us/app/pet-jam/id6757231277',
         teamSize: 5,
         duration: '+5 Weeks',
         platform: 'iOS',
@@ -186,7 +193,7 @@ export const projects: Project[] = [
         title: 'Rantify',
         role: 'iOS DEVELOPER',
         description: 'Rantify is my first time trying to develop an iOS app, this app gives you a gamified random activity to do.',
-        thumbnail: '/images/rantify.jpg',
+        thumbnail: '',
         teamSize: 1,
         duration: '+3 Weeks',
         platform: 'iOS',
@@ -208,7 +215,8 @@ export const projects: Project[] = [
         title: 'Last Rite',
         role: 'GAME PROGRAMMER',
         description: 'You are an exorcist; the mortuary needs your help to get rid of the devil haunting the place.',
-        thumbnail: '/images/lastrite.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/msL-IpjbRNo',
         teamSize: 3,
         duration: '6 Months',
         platform: 'UE5',
@@ -231,7 +239,8 @@ export const projects: Project[] = [
         title: 'Fisherman Manager',
         role: 'GAME PROGRAMMER & DESIGNER',
         description: 'As a Manager of fishermen, you can tell your fishermen to sail them out, repair the boat, upgrade them, etc.',
-        thumbnail: '/images/fisherman.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/jEh9ddNSLk0',
         teamSize: 2,
         duration: '4 Months',
         platform: 'UE5',
@@ -253,8 +262,8 @@ export const projects: Project[] = [
         title: 'Xanthous',
         role: 'GAME PROGRAMMER',
         description: '"Xanthous" is a VR horror game and an academic project for my final project and thesis.',
-        thumbnail: '/images/xanthous.jpg',
-        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/R7RcHgE8FMI',
         teamSize: 5,
         duration: '10 Months',
         platform: 'UE4',
@@ -267,8 +276,9 @@ export const projects: Project[] = [
             engine: 'Unreal Engine 4',
         },
         sections: [
-            { heading: 'INTRODUCTION', content: 'VR horror game developed as final thesis project.' },
-            { heading: 'MY ROLE', content: 'AI programmer implementing Fuzzy Logic, Monte Carlo, and Behavior Trees.' },
+            { heading: 'INTRODUCTION', content: 'This game was created for our final project as a bachelor in computer engineering. At first, we thought it would be a great idea to use horror because it looked easy to market, and we also loved watching people playing horror games on YouTube. So we think a horror VR game is a great score, oh boy were we so ambitious. It was a pretty tough but very enlightening journey, from designing the game to having a struggle developing the game on VR.\n\nThe game is about a kid named Jaka who\'s looking for his family member inside his family\'s apartment unit. After the family\'s incident where they crashed, Jaka got a major concussion. When he woke up, he decided to go to his apartment and suddenly passed out as he approached his parent\'s room. Then the mystery and horror begins…..\n\nIn development it was an up-and-down moment, especially the VR part, sometimes it would just be tiresome, But we managed to pull through somehow. We managed to create a pretty good face on our campus having multiple great reviews during testing and the harsh critique was also there. The main problem with the game is if now its player is having problems understanding the game objectives and the story is poorly delivered. But as a team, we think the journey ends here for the game, to think about it sounds sad. Maybe sometime in the future, we will come back to it.' },
+            { heading: 'MY ROLE', content: 'In this project, my role is the AI programmer, in which I have the job of creating the algorithm for the behavior of the AI and also some mechanics that correlate to the AI.\n\nThere are multiple algorithms that I use and implement to create the AI such as fuzzy logic, monte carlo, finite state machine, behavior tree, and AI perception. The one that stands out the most is definitely the fuzzy logic, and the thing is I created all algorithms in an unreal blueprint for some that is not really efficient to think about after I created it.\n\nList of what I did:\n• Project Planning and Design: Conceptualized and planned the development of the game "Xanthous," focusing on integrating AI to control NPC behavior in a horror game environment.\n• AI Techniques Implementation:\n  - Finite State Machine (FSM): Implemented FSM to manage various states of NPCs like Mysterious Sound, Smoky Ghost, and Emily.\n  - Behavior Tree: Used Behavior Trees to create complex and modular AI behavior for NPCs.\n  - Fuzzy Logic: Integrated Fuzzy Logic into the NPCs to adjust their behavior based on gameplay conditions.\n  - Monte Carlo Simulation: Applied Monte Carlo simulations to improve the AI decision-making process.\n• AI Perception System: Implemented AI Perception, which allows NPCs to simulate human-like senses such as hearing and sight.' },
+            { heading: 'CONCLUSION', content: 'This project was a lot of fun to work on even though we had ups and downs, a lot of things were learned from this project hard and soft skill-wise.\n\nIn terms of hard skills, I learned algorithm concepts and development, also although visual scripting is really nice it\'s not really a good implementation for an algorithm that uses a good amount of calculation.\n\nSometimes I took the role of the leader especially when the project had just gone off from our main idea. We also are really open and help each other, which boosts our morale together to make the game much better.' },
         ],
     },
     {
@@ -276,7 +286,9 @@ export const projects: Project[] = [
         title: 'Coblos Son',
         role: 'GAME PROGRAMMER',
         description: '"Coblos Son" is a joke and meme-ish game created for Global Game Jam 2024 Surabaya.',
-        thumbnail: '/images/coblosson.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/dDXWPKiIFb8',
+        itchUrl: 'https://itch.io',
         teamSize: 4,
         duration: '38 Hours',
         platform: 'Unity',
@@ -289,8 +301,9 @@ export const projects: Project[] = [
             engine: 'Unity',
         },
         sections: [
-            { heading: 'INTRODUCTION', content: 'A humorous election simulation game.' },
-            { heading: 'EVENT', content: 'Created for Global Game Jam 2024 Surabaya.' },
+            { heading: 'INTRODUCTION', content: 'The Game Jam theme "Make Me Laugh" and my team did a pretty good job at it. The team was shuffled by the committee and the team composition I got is, me as Game Programmer, one Game Designer, one 2D artist, and one Sound Designer.\n\nWhen we was creating this game our way of thinking is to just laugh and enjoy it along the way and make the game just to make people laugh at it. The game idea itself was very absurd from the start which I think that\'s one of the essence for this game to be funny.\n\nThe game is a simulation or a story of one drunk individual participating the election, which able to pee and aim for the target for better accuracy of voting, while also this individual is imagining random Indonesian memes.\n\nThe gameplay maybe confusing because there\'s no indication or tutorial, honestly we don\'t have the time. When we present it to other participants, I\'m confident we got the most and loudest laugh from everyone. But it was not without critiques, because we displayed some face from the meme we put out.' },
+            { heading: 'MY ROLE', content: 'At this point I was familiar with unity and C#. I began on working the core game mechanics straight away with dummy assets.\n\nA problem occurred where I need to move the mouse cursor on its own to add some force feedback for the pee mechanic. There is several way to achieve this, but the one that I use is Mouse.current.WarpCursorPosition(Vector2) which upon using it, I encountered that the package using UnityEngine.InputSystem was not available. So I thought this was the engine problem, but then I searched in the package manager there it is, sitting there not activated.\n\nAnother problem with the pee mechanic. What I did for the pee is, an object will spawned a 3D sphere and shoot the object towards the cursor location. This fixes it but the pee doesn\'t look realistic, it will a close object the same as the further object. So what I did is took the depth of the target that the mouse hover on, which makes the pee direction more realistic.\n\nOther game mechanics went smooth, and I was able to make the code quick enough so the core gameplay is completed and playable. But there was a problem that I realized after the time is up. Apparently the credit video can\'t be played on WebGL. Which I replaced with only a text after.' },
+            { heading: 'CONCLUSION', content: 'My team was very fun to work with, it\'s a refreshing development since they will always be goofy and just laugh at everything. Our team communication I think was very good, even though I disagree on certain things that my team choose to do, but it\'s a fun experience.\n\nWhat I learned there was to enjoy it and not take things so serious can be more rewarding works in game development as well. On the technical side I learned that making easy to read code is not hard, you just need to have consistency all around.\n\nPlay Coblos Son on itch.io. There will be instruction on how to play in the description.' },
         ],
     },
     // 2023
@@ -299,7 +312,9 @@ export const projects: Project[] = [
         title: 'Echo Remnant',
         role: 'GAME PROGRAMMER & GAME DESIGNER',
         description: 'A hardcore-level stealth game utilizing AI Perception tools from UE4. Developed for Garena GameJam.',
-        thumbnail: '/images/echo-remnant.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/ap-CN9X1LHM',
+        itchUrl: 'https://itch.io',
         teamSize: 2,
         duration: '40 Hours',
         platform: 'UE4',
@@ -312,8 +327,9 @@ export const projects: Project[] = [
             engine: 'Unreal Engine 4',
         },
         sections: [
-            { heading: 'INTRODUCTION', content: 'A stealth game that challenges players with sophisticated AI detection systems.' },
-            { heading: 'MY ROLE', content: 'Implemented AI perception systems and designed core stealth mechanics.' },
+            { heading: 'INTRODUCTION', content: 'The Game Jam theme is "Replayability", when I heard this I wanted to be unique, so I came up with a hardcore-level game inspired by Only Up and Getting Over It. But I need something different so a stealth game is good because creating perception AI in the unreal engine is not that hard.\n\nThe challenge in this game was the animation because this was the first time I used montages and smooth transitions. The bottle throw is also a challenge, I decided to just spawn the bottle when the throw button is pressed and then add force, which caused the bottle to be unpredicted. This was unintentional, but it\'s in line with the game genre.\n\nThere\'s also a build problem I came across which I need to install some Visual Studio packages, and also a GitHub problem for uploading large data files, since we don\'t use LFS.' },
+            { heading: 'MY ROLE', content: 'This is the list of what I did:\n• Game Core Mechanics: Controls, Bottle Throw\n• Animation System: Enemy Animation Montage, Player Animation Montage\n• AI Behavior Tree: AI Perception (See, Hear), AI Attack' },
+            { heading: 'CONCLUSION', content: 'We encountered problems and barely managed to pull through with the game. We have planned larger than what we created, that idea is for another day.\n\nWhat I learned there was visuals and advanced mechanics are intriguing, but core mechanics will still be the heart of the game. I also learned a lot about games that don\'t have to be complex to be fun or immersive. On the technical side, I learned about the unreal engine animation blueprint and bone/socket. I also need to improve on the game optimization.\n\nDownload Echo Remnant on itch.io. There will be instructions on how to download in the description.' },
         ],
     },
     {
@@ -321,7 +337,8 @@ export const projects: Project[] = [
         title: 'F.U.R.Y',
         role: 'GAME PROGRAMMER',
         description: '"F.U.R.Y" (Fiendish Unrest Rattles You) is a first-person horror-action game developed for Candela GameJam.',
-        thumbnail: '/images/fury.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/_PCgHxttVJM',
         teamSize: 3,
         duration: '48 Hours',
         platform: 'UE5',
@@ -343,7 +360,8 @@ export const projects: Project[] = [
         title: 'Slime Sage',
         role: 'GAME PROGRAMMER',
         description: 'A movement-satisfying game using Mix and Jam\'s package for "The Pathless". Developed for GAMELOFT Game Designer Connect.',
-        thumbnail: '/images/slime-sage.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/aMS11Pzritw',
         teamSize: 3,
         duration: '1 Week',
         platform: 'Unity',
@@ -365,7 +383,8 @@ export const projects: Project[] = [
         title: 'Home Server',
         role: 'PERSONAL PROJECT',
         description: 'A personal server project to host useful services and learn more about technologies.',
-        thumbnail: '/images/homeserver.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/XFxLKTrspi0',
         teamSize: 1,
         duration: '3 Months',
         platform: 'Proxmox',
@@ -387,7 +406,8 @@ export const projects: Project[] = [
         title: 'Priority',
         role: 'APP DEVELOPER',
         description: 'A mobile app designed for booking store visits, developed as part of a government-sponsored business program.',
-        thumbnail: '/images/priority.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/DZLw_t2_WQU',
         teamSize: 2,
         duration: '4 Months',
         platform: 'Flutter',
@@ -410,7 +430,8 @@ export const projects: Project[] = [
         title: 'Bed Time',
         role: 'GAME PROGRAMMER & GAME DESIGNER',
         description: 'A side-scrolling survival horror game created for Indie Games Group Indonesia GameJam+ 2022.',
-        thumbnail: '/images/bedtime.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/FF_vFRcN8AU',
         teamSize: 6,
         duration: '48 Hours',
         platform: 'Unity',
@@ -432,7 +453,8 @@ export const projects: Project[] = [
         title: "Don't Get Hunted",
         role: 'GAME PROGRAMMER & GAME DESIGNER',
         description: 'A top-down multiplayer horror game utilizing Photon for multiplayer functionality.',
-        thumbnail: '/images/dontgethunted.jpg',
+        thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/4I9NwBpB0BI',
         teamSize: 2,
         duration: '1 Week',
         platform: 'Unity',
@@ -459,4 +481,13 @@ export function getProjectsByYear(year: Project['year']): Project[] {
 
 export function getProjectBySlug(slug: string): Project | undefined {
     return projects.find(p => p.slug === slug);
+}
+
+// Helper to get YouTube thumbnail from video URL
+export function getYouTubeThumbnail(videoUrl: string): string {
+    const match = videoUrl.match(/embed\/([a-zA-Z0-9_-]+)/);
+    if (match) {
+        return `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg`;
+    }
+    return '';
 }

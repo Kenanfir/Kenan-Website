@@ -26,6 +26,7 @@ export default function Projects() {
                                         role={project.role}
                                         description={project.description}
                                         thumbnail={project.thumbnail}
+                                        videoUrl={project.videoUrl}
                                         meta={{
                                             teamSize: project.teamSize,
                                             duration: project.duration,

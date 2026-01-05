@@ -78,6 +78,8 @@ export default async function DetailPage({ params }: PageProps) {
 
     // Get video URL if available (only for projects)
     const videoUrl = project?.videoUrl;
+    const appStoreUrl = project?.appStoreUrl;
+    const itchUrl = project?.itchUrl;
 
     return (
         <>
@@ -126,18 +128,39 @@ export default async function DetailPage({ params }: PageProps) {
                         </div>
                     ))}
 
-                    {publication && (
-                        <div className={styles.externalLink}>
+                    {/* External Links */}
+                    <div className={styles.externalLinks}>
+                        {appStoreUrl && (
+                            <a
+                                href={appStoreUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.externalButton}
+                            >
+                                📱 App Store →
+                            </a>
+                        )}
+                        {itchUrl && (
+                            <a
+                                href={itchUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.externalButton}
+                            >
+                                🎮 Play on itch.io →
+                            </a>
+                        )}
+                        {publication && (
                             <a
                                 href={publication.externalUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={styles.viewPaper}
                             >
-                                View Full Paper →
+                                📄 View Full Paper →
                             </a>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </main>
             <Footer />

@@ -134,9 +134,31 @@
     margin: 0;
 }
 
-.externalLink {
-    text-align: center;
+.externalLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
     margin-top: 2rem;
+}
+
+.externalButton {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--neon-purple);
+    border: 2px solid var(--neon-purple);
+    background: transparent;
+    text-decoration: none;
+    transition: all var(--transition-medium);
+}
+
+.externalButton:hover {
+    background: var(--neon-purple);
+    color: var(--text-primary);
+    box-shadow: var(--glow-purple);
 }
 
 .viewPaper {
