@@ -8,6 +8,8 @@ interface CardProps {
     description: string;
     thumbnail: string;
     videoUrl?: string;
+    year?: string;
+    isOngoing?: boolean;
     meta: {
         teamSize?: number;
         duration?: string;
@@ -35,7 +37,7 @@ function getYouTubeThumbnail(videoUrl: string): string {
     return '';
 }
 
-export default function Card({ slug, title, role, description, thumbnail, videoUrl, meta }: CardProps) {
+export default function Card({ slug, title, role, description, thumbnail, videoUrl, year, isOngoing, meta }: CardProps) {
     // Use YouTube thumbnail if no regular thumbnail provided
     const displayThumbnail = thumbnail || (videoUrl ? getYouTubeThumbnail(videoUrl) : '');
 
@@ -54,6 +56,7 @@ export default function Card({ slug, title, role, description, thumbnail, videoU
             )}
             <div className={styles.content}>
                 <div className={styles.meta}>
+                    {!isOngoing && year && <span className={styles.year}>📅 {year}</span>}
                     {meta.teamSize && <span>👥{meta.teamSize}</span>}
                     {meta.duration && <span>🕒{meta.duration}</span>}
                     {meta.platform && <span>🛠️{meta.platform}</span>}

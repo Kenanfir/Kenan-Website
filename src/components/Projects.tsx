@@ -27,6 +27,8 @@ export default function Projects() {
                                         description={project.description}
                                         thumbnail={project.thumbnail}
                                         videoUrl={project.videoUrl}
+                                        year={project.year}
+                                        isOngoing={project.category === 'ON_GOING'}
                                         meta={{
                                             teamSize: project.teamSize,
                                             duration: project.duration,
