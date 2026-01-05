@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   description: "Game Programmer specializing in AI/Gameplay, iOS Developer, and Web Developer. View my projects, experiences, and skills.",
   keywords: ["Game Developer", "iOS Developer", "Unreal Engine", "Unity", "Portfolio", "Kenan Firmansyah"],
   authors: [{ name: "Kenan Firmansyah" }],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Kenan Firmansyah – Portfolio Showcase",
     description: "Game Programmer specializing in AI/Gameplay, iOS Developer, and Web Developer.",
