@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from './Header.module.css';
 
 const navLinks = [
-    { href: 'https://kenan.serverkn.com/wp-content/uploads/2025/07/CV-2025-V1-2-Page.pdf', label: 'Resume', external: true },
+    { href: '/resume.pdf', label: 'Resume', external: true },
     { href: '#projects', label: 'Projects' },
     { href: '#education', label: 'Education' },
     { href: '#experiences', label: 'Experiences' },
