@@ -20,6 +20,8 @@
 
 .categoryGroup {
     margin-bottom: 3rem;
+    padding-top: 10px;
+    /* Space for hover lift effect */
 }
 
 .categoryHeader {
@@ -36,13 +38,15 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 0.9rem;
+    border-radius: 4px;
 }
 
 .horizontalScroll {
     display: flex;
     gap: 1.5rem;
     overflow-x: auto;
-    padding-bottom: 1rem;
+    padding: 10px 0 1rem 0;
+    /* Top padding for hover effect */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 }
@@ -61,13 +65,8 @@
     border-radius: 3px;
 }
 
-/* Responsive: Stack on mobile */
+/* Responsive: Keep scrollable on mobile */
 @media (max-width: 768px) {
-    .horizontalScroll {
-        flex-direction: column;
-        overflow-x: visible;
-    }
-
     .sectionTitle {
         font-size: 1.5rem;
     }

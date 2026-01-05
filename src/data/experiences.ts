@@ -121,7 +121,7 @@ export const experiences: Experience[] = [
         role: 'APPLE OS DEVELOPER',
         description: 'Work in an Apple environment for 10 months, learning hard and soft skills from teamwork.',
         thumbnail: '/images/ada.jpg',
-        duration: '2024 - 2025',
+        duration: '10 Months',
         category: 'ACADEMY',
         year: '2025',
         about: 'Work in an Apple environment for 10 months, learning hard and soft skills from teamwork, and always communicate respectfully with others to develop in terms of research, designing, to coding for an Apple OS app. Also made a game studio called Joybait Studio, more to come. Other than that, this experience really mean a lot to me, the people are one of the best people I\'ve ever met. First bali cohort first to bloom.',
