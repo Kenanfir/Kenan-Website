@@ -77,7 +77,7 @@ export const projects: Project[] = [
         role: 'iOS DEVELOPER',
         description: 'This app helps organizers manage costs and payments for recurring activities like sports, fitness, or dance classes.',
         thumbnail: '',
-        videoUrl: 'https://youtube.com/shorts/rHEImRNFWOo?feature=share',
+        videoUrl: 'https://www.youtube.com/embed/rHEImRNFWOo',
         teamSize: 3,
         duration: '+8 Weeks',
         platform: 'iOS',
