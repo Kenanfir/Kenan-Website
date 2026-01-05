@@ -49,20 +49,44 @@ export const projects: Project[] = [
         ],
     },
     {
-        slug: 'group-session-payment-tracker',
-        title: 'Group Session Payment Tracker',
+        slug: 'plan-hub',
+        title: 'Plan Hub',
+        role: 'SOLO DEVELOPER',
+        description: 'AI-powered personal planning assistant that creates packed daily schedules from your goals with OKR management and smart notifications.',
+        thumbnail: '',
+        teamSize: 1,
+        duration: 'Ongoing',
+        platform: 'iOS / Android / Web',
+        year: 'ON_GOING',
+        about: 'Plan Hub is a mobile-first AI-powered personal planning assistant. It creates and manages OKRs with AI assistance, generates packed daily schedules from your goals, reviews tomorrow\'s plan each night, sends push notifications for task reminders, and tracks progress with daily logs. Features include a freemium subscription model with Pro plan ($6.99/month), cross-platform support (iOS, Android, Web), and integration with OpenAI GPT-4 for intelligent scheduling.',
+        info: {
+            role: 'Solo Developer',
+            teamSize: '1 member',
+            timeFrame: 'Ongoing',
+            engine: 'NestJS / Supabase / Swift / Kotlin',
+        },
+        sections: [
+            { heading: 'INTRODUCTION', content: 'A comprehensive AI planning app with OKR management, daily schedule generation, and smart notifications.' },
+            { heading: 'KEY FEATURES', content: 'AI Plan Generation, OKR Management, Push Notifications (Morning Briefing, Task Reminders, Evening Review), Weekly Summary, Cross-platform sync, Freemium subscription model.' },
+        ],
+    },
+    // 2025
+    {
+        slug: 'paid-sport-split-bill',
+        title: 'Paid - Sport Split Bill',
         role: 'iOS DEVELOPER',
         description: 'This app helps organizers manage costs and payments for recurring activities like sports, fitness, or dance classes.',
         thumbnail: '',
+        videoUrl: 'https://www.youtube.com/embed/rHEImRNFWOo',
         teamSize: 3,
         duration: '+1 Weeks',
         platform: 'iOS',
-        year: 'ON_GOING',
+        year: '2025',
         about: 'This app helps organizers manage costs and payments for recurring activities like sports, fitness, or dance classes. Users create sessions with flexible pricing, add participants, and the app automatically calculates per-person costs and tracks who has paid versus who still owes money.',
         info: {
             role: 'iOS Developer',
             teamSize: '3 members',
-            timeFrame: 'Ongoing',
+            timeFrame: '1+ weeks',
             engine: 'Swift / iOS',
         },
         sections: [
@@ -70,7 +94,6 @@ export const projects: Project[] = [
             { heading: 'KEY FEATURES', content: 'Session creation, flexible pricing, automatic cost calculation, payment tracking.' },
         ],
     },
-    // 2025
     {
         slug: 'saturated',
         title: 'Saturated',

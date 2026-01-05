@@ -30,15 +30,17 @@ export default function Card({ slug, title, role, description, thumbnail, videoU
 
     return (
         <Link href={`/${slug}`} className={styles.card}>
-            <div className={styles.thumbnail}>
-                <div
-                    className={styles.image}
-                    style={{ backgroundImage: displayThumbnail ? `url(${displayThumbnail})` : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' }}
-                />
-                <div className={styles.overlay}>
-                    <span className={styles.overlayText}>View Project →</span>
+            {displayThumbnail && (
+                <div className={styles.thumbnail}>
+                    <div
+                        className={styles.image}
+                        style={{ backgroundImage: `url(${displayThumbnail})` }}
+                    />
+                    <div className={styles.overlay}>
+                        <span className={styles.overlayText}>View Project →</span>
+                    </div>
                 </div>
-            </div>
+            )}
             <div className={styles.content}>
                 <div className={styles.meta}>
                     {meta.teamSize && <span>👥{meta.teamSize}</span>}
