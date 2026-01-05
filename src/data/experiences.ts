@@ -159,6 +159,28 @@ export const experiences: Experience[] = [
     },
     // GAME JAMS
     {
+        slug: 'iplay-gamejam-2025',
+        title: 'iPlay Apple Developer Academy Game Jam 2025',
+        organization: 'Apple Developer Academy',
+        role: 'GAME DEVELOPER (AI)',
+        description: '🏆 Won 1st Place! Created "Until Dawn Do Us Part" - a survival twin-stick shooter themed "One Pixel" in just 2 days.',
+        thumbnail: '/images/iplay.jpg',
+        duration: '2 Days',
+        category: 'GAME_JAMS',
+        year: '2025',
+        about: 'Participated in iPlay Apple Developer Academy Game Jam 2025 themed "One Pixel". Our team of 4 (met during the jam) created "Until Dawn Do Us Part" - a top-down survival horror twin-stick shooter. The game won 1st Place! My role was System Developer and Enemy AI Programmer.',
+        info: {
+            role: 'System Developer & Enemy AI',
+            organization: 'Apple Developer Academy',
+            duration: '2 Days',
+            type: 'GameJam',
+        },
+        sections: [
+            { heading: 'ACHIEVEMENT', content: '🏆 Won 1st Place in iPlay Apple Developer Academy Game Jam 2025!' },
+            { heading: 'EXPERIENCE', content: 'Created a survival horror game with wave-based mechanics in just 2 days with teammates I just met at the jam. All assets handcrafted by the team.' },
+        ],
+    },
+    {
         slug: 'brackeys-jam-2024',
         title: 'Brackeys Game Jam 2024.2',
         organization: 'Brackeys',
