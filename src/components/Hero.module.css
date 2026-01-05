@@ -1,0 +1,77 @@
+.hero {
+    padding: 6rem 0 4rem;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    color: var(--neon-green);
+    text-shadow: var(--glow-green);
+    margin-bottom: 1.5rem;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(163, 255, 18, 0.5);
+    }
+
+    to {
+        text-shadow: 0 0 40px rgba(163, 255, 18, 0.8);
+    }
+}
+
+.bio {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.highlight {
+    color: var(--neon-cyan);
+    font-weight: 700;
+}
+
+.cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bg-dark);
+    background: var(--neon-green);
+    border: 2px solid var(--neon-green);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    box-shadow: var(--glow-green);
+}
+
+.cta:hover {
+    background: transparent;
+    color: var(--neon-green);
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(163, 255, 18, 0.6);
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 4rem 0 2rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .bio {
+        font-size: 1rem;
+    }
+}

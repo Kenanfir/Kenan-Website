@@ -1,0 +1,54 @@
+'use client';
+
+import Link from 'next/link';
+import styles from './Footer.module.css';
+
+const navLinks = [
+    { href: 'https://kenan.serverkn.com/wp-content/uploads/2025/07/CV-2025-V1-2-Page.pdf', label: 'Resume', external: true },
+    { href: '#projects', label: 'Projects' },
+    { href: '#education', label: 'Education' },
+    { href: '#experiences', label: 'Experiences' },
+    { href: '#skills', label: 'Skills' },
+    { href: '#contact', label: 'Contact' },
+];
+
+export default function Footer() {
+    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            const element = document.querySelector(href);
+            element?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    return (
+        <footer className={styles.footer}>
+            <div className={styles.container}>
+                <Link href="/" className={styles.logo}>
+                    <span className={styles.name}>Kenan Firmansyah</span>
+                    <span className={styles.divider}>/</span>
+                    <span className={styles.tagline}>Portfolio Showcase</span>
+                </Link>
+
+                <nav className={styles.nav}>
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.label}
+                            href={link.href}
+                            className={styles.navLink}
+                            target={link.external ? '_blank' : undefined}
+                            rel={link.external ? 'noopener noreferrer' : undefined}
+                            onClick={(e) => handleSmoothScroll(e, link.href)}
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                </nav>
+
+                <div className={styles.copyright}>
+                    © {new Date().getFullYear()} Kenan Firmansyah. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    );
+}

@@ -1,0 +1,128 @@
+.education {
+    padding: 4rem 0;
+    background: var(--bg-card);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    color: var(--neon-green);
+    text-shadow: var(--glow-green);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.card {
+    display: block;
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 500px;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-medium);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--neon-purple);
+    box-shadow: var(--glow-purple-strong);
+}
+
+.cardContent {
+    position: relative;
+}
+
+.institution {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.degree {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.arrow {
+    color: var(--neon-green);
+    transition: transform var(--transition-fast);
+}
+
+.card:hover .arrow {
+    transform: translateX(5px);
+}
+
+.major {
+    font-size: 1rem;
+    color: var(--neon-purple);
+    margin-bottom: 0.5rem;
+}
+
+.duration {
+    font-size: 0.9rem;
+    color: var(--neon-green);
+    margin-bottom: 1rem;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.card:hover .overlay {
+    opacity: 1;
+}
+
+.overlayText {
+    color: var(--neon-green);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+}
