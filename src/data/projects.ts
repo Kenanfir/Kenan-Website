@@ -1,4 +1,4 @@
-export type ProjectCategory = 'GAMES' | 'GAME_JAMS' | 'APPS' | 'OTHERS';
+export type ProjectCategory = 'ON_GOING' | 'GAMES' | 'GAME_JAMS' | 'APPS' | 'OTHERS';
 
 export interface Project {
     slug: string;
@@ -38,7 +38,7 @@ export const projects: Project[] = [
         teamSize: 5,
         duration: 'Ongoing',
         platform: 'Website',
-        category: 'APPS',
+        category: 'ON_GOING',
         year: 'Ongoing',
         about: 'This tool helps Game Developers specially asset creators to push their assets straight in to the Git project with only some push of a button. It streamline the process of integrating asset from the creator to the developer. This way it can help them to have standard rule for asset as well, like location, name, etc.',
         info: {
@@ -61,7 +61,7 @@ export const projects: Project[] = [
         teamSize: 1,
         duration: 'Ongoing',
         platform: 'App',
-        category: 'APPS',
+        category: 'ON_GOING',
         year: 'Ongoing',
         about: 'Plan Hub is a mobile-first AI-powered personal planning assistant. It creates and manages OKRs with AI assistance, generates packed daily schedules from your goals, reviews tomorrow\'s plan each night, sends push notifications for task reminders, and tracks progress with daily logs. Features include a freemium subscription model with Pro plan ($6.99/month), cross-platform support (iOS, Android, Web), and integration with OpenAI GPT-4 for intelligent scheduling.',
         info: {
@@ -520,6 +520,7 @@ export const projects: Project[] = [
 ];
 
 export const projectCategories: { key: ProjectCategory; label: string }[] = [
+    { key: 'ON_GOING', label: 'On Going' },
     { key: 'GAMES', label: 'Games' },
     { key: 'GAME_JAMS', label: 'Game Jams' },
     { key: 'APPS', label: 'Apps' },

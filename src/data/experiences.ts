@@ -1,4 +1,4 @@
-export type ExperienceCategory = 'WORK' | 'ACADEMY' | 'GAME_JAMS' | 'OTHER';
+export type ExperienceCategory = 'ON_GOING' | 'WORK' | 'ACADEMY' | 'GAME_JAMS' | 'OTHER';
 
 export interface Experience {
     slug: string;
@@ -33,7 +33,7 @@ export const experiences: Experience[] = [
         description: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people.',
         thumbnail: '/images/joybait.jpg',
         duration: 'On-Going',
-        category: 'WORK',
+        category: 'ON_GOING',
         year: 'Ongoing',
         about: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people. The team has made 2 games so far, and one of them is Saturated, which I\'m involved in. This studio has more to come.',
         info: {
@@ -393,6 +393,7 @@ export const experiences: Experience[] = [
 ];
 
 export const experienceCategories: { key: ExperienceCategory; label: string }[] = [
+    { key: 'ON_GOING', label: 'On Going' },
     { key: 'WORK', label: 'Work' },
     { key: 'ACADEMY', label: 'Academy' },
     { key: 'GAME_JAMS', label: 'Game Jams' },
