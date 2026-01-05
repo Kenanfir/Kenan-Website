@@ -16,7 +16,7 @@ export default function Hero() {
                     I&apos;m a <span className={styles.highlight}>Game Programmer</span> that specialized in{' '}
                     <span className={styles.highlight}>AI/Gameplay</span> based on Surabaya, Indonesia.
                     I love to express my creativity through games, apps, and everything digital in between!
-                    Currently, I&apos;m learning iOS Development and have joined the{' '}
+                    Currently, I&apos;m learning AI ML and  Optimization and have joined the{' '}
                     <span className={styles.highlight}>Apple Developer Academy</span>.
                 </p>
                 <button onClick={scrollToContact} className={styles.cta}>
