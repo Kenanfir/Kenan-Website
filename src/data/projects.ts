@@ -56,14 +56,14 @@ export const projects: Project[] = [
         thumbnail: '',
         teamSize: 1,
         duration: 'Ongoing',
-        platform: 'iOS / Android / Web',
+        platform: 'App',
         year: 'ON_GOING',
         about: 'Plan Hub is a mobile-first AI-powered personal planning assistant. It creates and manages OKRs with AI assistance, generates packed daily schedules from your goals, reviews tomorrow\'s plan each night, sends push notifications for task reminders, and tracks progress with daily logs. Features include a freemium subscription model with Pro plan ($6.99/month), cross-platform support (iOS, Android, Web), and integration with OpenAI GPT-4 for intelligent scheduling.',
         info: {
             role: 'Solo Developer',
             teamSize: '1 member',
             timeFrame: 'Ongoing',
-            engine: 'NestJS / Supabase / Swift / Kotlin',
+            engine: 'NestJS & Stuff',
         },
         sections: [
             { heading: 'INTRODUCTION', content: 'A comprehensive AI planning app with OKR management, daily schedule generation, and smart notifications.' },
