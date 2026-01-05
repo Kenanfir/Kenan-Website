@@ -229,7 +229,7 @@ export const projects: Project[] = [
         role: 'iOS DEVELOPER',
         description: 'Rantify is my first time trying to develop an iOS app, this app gives you a gamified random activity to do.',
         thumbnail: '',
-        videoUrl: 'https://youtu.be/ElrEUpE-_yA',
+        videoUrl: 'https://youtu.be/ElrEUpE-_yA?si=Xp_MsPMJRKI3c7Zk',
         teamSize: 1,
         duration: '+3 Weeks',
         platform: 'iOS',
