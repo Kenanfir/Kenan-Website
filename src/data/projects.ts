@@ -258,7 +258,7 @@ export const projects: Project[] = [
         duration: '6 Months',
         platform: 'UE5',
         category: 'GAMES',
-        year: '2024 - 2025',
+        year: '2024-2025',
         about: 'You are an exorcist; the mortuary needs your help to get rid of the devil haunting the place. Well, that\'s basically the game scenario. You can also play with your friend in a multiplayer session. Imagine it\'s mortuary assistant combined with phasmophobia.',
         info: {
             role: 'Game Programmer',
@@ -307,7 +307,7 @@ export const projects: Project[] = [
         duration: '10 Months',
         platform: 'UE4',
         category: 'GAMES',
-        year: '2023 - 2024',
+        year: '2023-2024',
         about: '"Xanthous" is a VR horror game and an academic project for my final project and thesis. I was an AI programmer creating algorithm designs such as Fuzzy Logic, Monte Carlo, Behavior Tree, and more.',
         info: {
             role: 'Game Programmer (AI)',
