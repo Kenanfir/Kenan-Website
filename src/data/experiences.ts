@@ -24,7 +24,30 @@ export interface Experience {
 }
 
 export const experiences: Experience[] = [
-    // WORK
+    // ON_GOING
+    {
+        slug: 'indonesia-game-island-2026',
+        title: 'Indonesia Game Island 2026',
+        organization: 'JoyBait Studio',
+        role: 'LOGISTICS & COMMUNITY MANAGER',
+        description: 'Preparing to showcase Tales of Tula and Saturated at Ciputra World Surabaya. JoyBait Studio booth at the biggest gaming event in East Java!',
+        thumbnail: '',
+        duration: 'Jan 23-25, 2026',
+        category: 'ON_GOING',
+        year: '2026',
+        about: 'Indonesia Game Island is a gaming expo event happening at Ciputra World Surabaya from January 23-25, 2026. JoyBait Studio will be showcasing two games: Tales of Tula (an action platformer inspired by Bali myths) and Saturated (first-person underwater horror). My role involves logistics coordination, social media, and community management at the booth.',
+        info: {
+            role: 'Logistics & Community Manager',
+            organization: 'JoyBait Studio',
+            duration: 'Jan 23-25, 2026',
+            type: 'Game Expo',
+        },
+        sections: [
+            { heading: 'EVENT DETAILS', content: 'Indonesia Game Island at Ciputra World Surabaya, January 23-25, 2026 (12:00-20:00 WIB). JoyBait Studio booth featuring playable demos of Tales of Tula and Saturated.' },
+            { heading: 'MY RESPONSIBILITIES', content: 'Logistics coordination (equipment, travel, booth setup), social media promotion (pre/during/post event), and community management (Discord engagement, collecting signups at booth).' },
+            { heading: 'GOALS', content: 'Collect 100+ contact signups, gain 200+ new Discord members, and get media/influencer coverage for JoyBait Studio.' },
+        ],
+    },
     {
         slug: 'joybait-studio',
         title: 'JoyBait Studio',
