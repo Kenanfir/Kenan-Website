@@ -184,7 +184,7 @@ export const projects: Project[] = [
         teamSize: 2,
         duration: '+2 Weeks',
         platform: 'iOS',
-        category: 'APPS',
+        category: 'GAMES',
         year: '2025',
         about: 'This game is an quick arcade game where your going up and up while jumping between the walls, my role here was more into porting and publishing the game on App Store.',
         info: {
