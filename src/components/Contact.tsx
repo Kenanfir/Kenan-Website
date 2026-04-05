@@ -39,6 +39,17 @@ export default function Contact() {
                         <span className={styles.label}>GitHub</span>
                         <span className={styles.value}>Kenanfir</span>
                     </a>
+
+                    <a
+                        href="https://www.instagram.com/kenanfir_dev/"
+                        className={styles.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span className={styles.icon}>📸</span>
+                        <span className={styles.label}>Instagram</span>
+                        <span className={styles.value}>@kenanfir_dev</span>
+                    </a>
                 </div>
             </div>
         </section>

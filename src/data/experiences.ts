@@ -26,6 +26,27 @@ export interface Experience {
 export const experiences: Experience[] = [
     // ON_GOING
     {
+        slug: 'agate',
+        title: 'Agate',
+        organization: 'Agate',
+        role: 'GAME DEVELOPER',
+        description: 'Currently working at Agate. Still on-going (game tba).',
+        thumbnail: '/images/agate.jpg',
+        duration: 'On-Going',
+        category: 'ON_GOING',
+        year: 'Ongoing',
+        about: 'Currently working at Agate as a game developer. The project that I am working on is still on-going and the game is TBA.',
+        info: {
+            role: 'Game Developer',
+            organization: 'Agate',
+            duration: 'On-Going',
+            type: 'Game Studio',
+        },
+        sections: [
+            { heading: 'RESPONSIBILITIES', content: 'Developing an unannounced game.' },
+        ],
+    },
+    {
         slug: 'indonesia-game-island-2026',
         title: 'Indonesia Game Island 2026',
         organization: 'JoyBait Studio',
@@ -53,12 +74,12 @@ export const experiences: Experience[] = [
         title: 'JoyBait Studio',
         organization: 'JoyBait Studio',
         role: 'GAME DEVELOPER',
-        description: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people.',
+        description: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people. Joybait is still on-going (game tba).',
         thumbnail: '/images/joybait.jpg',
         duration: 'On-Going',
         category: 'ON_GOING',
         year: 'Ongoing',
-        about: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people. The team has made 2 games so far, and one of them is Saturated, which I\'m involved in. This studio has more to come.',
+        about: 'So this studio was made from the last project of Apple Developer Academy Bali. My role here is the Lead Developer, and we\'re a team of 8 people. The team has made 2 games so far, and one of them is Saturated, which I\'m involved in. This studio has more to come and is currently working on an unannounced game (tba).',
         info: {
             role: 'Lead Developer',
             organization: 'JoyBait Studio',
