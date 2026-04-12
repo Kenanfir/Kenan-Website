@@ -1,0 +1,158 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=0.75in}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{lmodern}
+\usepackage{tabularx}
+
+% Formatting hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    pdftitle={Kenan Firmansyah - CV},
+    pdfpagemode=FullScreen,
+}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries\scshape}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{1.5ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+% Custom list spacing
+\setlist[itemize]{leftmargin=*, parsep=0pt, itemsep=0pt, topsep=1pt}
+
+\pagestyle{empty} % No page numbers
+
+\begin{document}
+
+\begin{center}
+    {\huge \textbf{Kenan Firmansyah}} \\ \vspace{4pt}
+    \textbf{Game Developer \& AI Researcher} \\ \vspace{4pt}
+    realkenanfir@gmail.com \quad \textbar \quad +62 851-7544-7540 \quad \textbar \quad Jakarta, Indonesia \\
+    \href{https://nandev.dev}{nandev.dev} \quad \textbar \quad \href{https://www.linkedin.com/in/kenanfir/}{LinkedIn} \quad \textbar \quad \href{https://github.com/Kenanfir}{GitHub}
+\end{center}
+
+\vspace{0.5em}
+
+\section*{Professional Summary}
+Game developer and Computer Engineering graduate. I build agent-based AI for VR/XR and gameplay in Unreal Engine and Unity, mostly using Fuzzy Logic, Behavior Trees, and ML. On my own time I am researching long-term memory and personality consistency for autonomous AI agents.
+
+\section*{Education}
+\noindent
+\textbf{Bachelor of Computer Engineering (Game Technology)} \hfill 2020 -- 2024 \\
+\textit{Electronic Engineering Polytechnic Institute of Surabaya (EEPIS), Indonesia}
+\begin{itemize}
+    \item \textbf{Thesis/Final Project:} \textit{Xanthous} -- A VR horror game built in Unreal Engine with layered NPC AI. Implemented Fuzzy Logic, Monte Carlo Simulation, FSMs, and Behavior Trees to drive agent perception and decision-making.
+\end{itemize}
+
+\section*{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+    \textbf{Game Engines:} & Unreal Engine 4/5, Unity\\
+    \textbf{Programming:} & C++, C\#, Python, Swift \\
+    \textbf{AI \& ML:} & Reinforcement Learning (Q-Learning), Fuzzy Logic, Behavior Trees, Monte Carlo, LLM Integration, PyTorch \\
+    \textbf{Infrastructure:} & Git, Docker, CI/CD, Firebase, GCP \\
+    \textbf{Mobile \& Web:} & iOS SDK (SwiftUI, CoreML, WatchKit, SpriteKit), Flutter \\
+    \textbf{Data:} & Scraping (Selenium), Analysis, Visualization (Tableau, Gephi)
+\end{tabularx}
+
+\section*{Licenses \& Certifications}
+\noindent
+\textbf{Unity Certified Associate: Programmer} \hfill Sep 2024 -- Sep 2027 \\
+\textit{Issued by Unity Technologies} \quad \textbar \quad \href{https://www.credly.com/badges/4f8af0ff-885c-4b59-bfa3-b8d528355479/linked_in_profile}{Verify on Credly}
+
+\section*{Selected Publications}
+\begin{itemize}
+    \item \textbf{Adaptive Radio System Using MetaSounds for Serious VR Game.} \textit{IEEE Access} (2025). Built adaptive audio in Unreal Engine using State Machines and MetaSounds.
+    \item \textbf{Real Time Procedural Audio for Immersive Gameplay with MetaSounds.} \textit{TCCE} (2025). Generated environmental audio (rain, wind, thunder) procedurally in Unreal Engine, cutting storage needs while keeping realistic output.
+    \item \textbf{Dynamic Level of Difficulties Using Q-Learning and Fuzzy Logic.} \textit{IEEE Access} (2024). Q-Learning + Fuzzy Logic for real-time difficulty adjustment in a management sim.
+    \item \textbf{Enhancing Serious Game Experience Through In-Game Radio Using Context-Aware Recommender System.} \textit{INASS IJIES} (2024). Deep learning recommender that adapts to in-game context in real time.
+    \item \textbf{Dynamic Day and Night Cycle Impact in a Serious VR Game.} \textit{ICVR Conference} (2024).
+\end{itemize}
+
+\section*{Academic \& Independent Research}
+\noindent
+\textbf{Clone World: AI Agents Personality \& Memory Research} \hfill Ongoing \\
+\textit{Lead AI Researcher / Developer}
+\begin{itemize}
+    \item Building a life simulation where AI agents remember past interactions and shift personality based on what happens to them.
+    \item Using Hexagonal Architecture so the system can run on any engine.
+    \item Wiring in local LLMs so agents can hold conversations and generate their own story threads.\\
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Fisherman Manager: Dynamic Difficulty Adjustment (DDA) Research} \hfill 2024 \\
+\textit{Lead Programmer \& Designer}
+\begin{itemize}
+    \item Built a management simulation in Unreal Engine 5 as a testbed for dynamic difficulty adjustment research.
+    \item Combined Q-Learning with Fuzzy Logic to read player behavior and adjust game state variables in real time.
+\end{itemize}
+
+\section*{Professional Experience}
+
+\noindent
+\textbf{Game Developer} \hfill Ongoing \\
+\textit{Agate, Indonesia}
+\begin{itemize}
+    \item Working on core gameplay systems for an unannounced title using the studio's engineering pipeline.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Lead Developer} \hfill Jul 2025 -- Present \\
+\textit{JoyBait Studio, Indonesia}
+\begin{itemize}
+    \item Running a team of 8 developers in an indie studio spun off from the Apple Developer Academy.
+    \item Leading development on \textit{Saturated}, coordinating between roles and writing gameplay code.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Game Developer (Unity) \& QA} \hfill Mar -- May 2025 \\
+\textit{Ecosoft Interactive, Remote}
+\begin{itemize}
+    \item Handled iOS development and QA testing for a mobile arcade project.
+    \item Found and fixed logic bugs in the core gameplay loop; improved UI responsiveness.
+    \item Set up testing protocols and build schedules for a remote team.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Apple OS Developer} \hfill Feb -- Desember 2025 \\
+\textit{Apple Developer Academy @ BINUS, Bali, Indonesia}
+\begin{itemize}
+    \item Completed a 10-month program building native iOS and WatchOS applications from scratch.
+    \item Used CoreML for on-device image analysis (\textit{Tona}, a photo grading app) and integrated LLMs for semantic matching (\textit{Findect}, a networking app).
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Lead Developer (Unreal Engine)} \hfill 2024 -- February 2025 \\
+\textit{Starpixel Studio, Remote}
+\begin{itemize}
+    \item Built gameplay and system mechanics for an undisclosed multiplayer horror game.
+    \item Wrote multiplayer synchronization and AI replication logic for low-latency client interactions.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Data Scientist (Intern)} \hfill 2023 \\
+\textit{PT. eBdesk, Indonesia}
+\begin{itemize}
+    \item Wrote Python scripts with Selenium to scrape and clean web data at scale.
+    \item Analyzed and visualized datasets using Gephi and Tableau for B2B client reports.
+\end{itemize}
+
+\section*{Selected Achievements}
+\begin{itemize}
+    \item \textbf{1st Place Winner, iPlay Game Jam 2025:} System Developer \& Enemy AI Programmer (Apple Developer Academy).
+    \item \textbf{Google Play x Unity Certification:} Completed 7-month technical training in game programming and architecture.
+    \item \textbf{Game Jams (10+):} Shipped playable builds in ScoreSpace, GMTK, Brackeys, and others, using Unity, UE, and Photon multiplayer.
+\end{itemize}
+
+\end{document}
