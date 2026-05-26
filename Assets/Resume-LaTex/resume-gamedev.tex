@@ -1,0 +1,265 @@
+%----------------------------------------------------------------------------------------
+%	KENAN FIRMANSYAH - GAME DEVELOPER VARIANT
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0cm]{geometry}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{calc}
+
+\definecolor{sidebar}{RGB}{245, 245, 245}
+\definecolor{mainbg}{RGB}{255, 255, 255}
+\definecolor{accent}{RGB}{180, 150, 100}
+\definecolor{darktext}{RGB}{40, 40, 40}
+\definecolor{lighttext}{RGB}{100, 100, 100}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darktext,
+    urlcolor=accent,
+    pdftitle={Kenan Firmansyah - Game Developer Resume},
+    pdfauthor={Kenan Firmansyah}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\sidesection}[1]{%
+    {\large\bfseries\MakeUppercase{#1}}\\[6pt]%
+}
+
+\newcommand{\mainsection}[1]{%
+    {\large\bfseries\MakeUppercase{#1}}\\[8pt]%
+}
+
+\newcommand{\jobentry}[2]{%
+    \textbf{#1}\\
+    {\small\color{lighttext}#2}\\[4pt]%
+}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[sidebar] (current page.north west) rectangle ([xshift=6.5cm]current page.south west);
+    \fill[mainbg] ([xshift=6.5cm]current page.north west) rectangle (current page.south east);
+    \fill[accent] ([xshift=6.5cm, yshift=-1cm]current page.north west) rectangle ([yshift=-1.05cm]current page.north east);
+\end{tikzpicture}
+
+% SIDEBAR
+\begin{minipage}[t]{6cm}
+\vspace{0.8cm}
+\hspace{0.5cm}
+\begin{minipage}[t]{5.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \clip (0,0) rectangle (4.5cm, 4.5cm);
+    \node[anchor=center] at (2.25cm, 2.25cm) {\includegraphics[width=4.5cm]{CV_ProfilePic.jpg}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.8cm}
+
+\sidesection{Education}
+
+\textbf{Bachelor of Computer Engineering, Major in Game Technology}\\[4pt]
+{\small Electronic Engineering Polytechnic Institute of Surabaya (2020 - 2024)\\
+GPA 3.67 (Cumlaude)}
+
+\vspace{0.8cm}
+
+\sidesection{Engines \& Tools}
+
+\begin{itemize}[leftmargin=*, nosep, itemsep=4pt]
+    \item Unreal Engine (Blueprint + C++)
+    \item Unity (C\#)
+    \item Multiplayer / Networking
+    \item Gameplay AI (Behavior Trees, FSM, Q-Learning)
+    \item Game Design \& Prototyping
+    \item Git, Perforce, JIRA
+\end{itemize}
+
+\vspace{0.8cm}
+
+\sidesection{Contact}
+
+\faIcon{linkedin} \href{https://linkedin.com/in/kenanfirmansyah}{Kenan Firmansyah}\\[6pt]
+\faIcon{github} \href{https://github.com/Kenanfir}{Kenanfir}\\[6pt]
+\faIcon{globe} \href{https://nandev.dev}{nandev.dev}\\[6pt]
+\faIcon{phone} +6285175447540\\[6pt]
+\faIcon{envelope} realkenanfir@gmail.com\\[10pt]
+
+{\small\color{lighttext}Kalijudan, Mulyorejo, Surabaya, Jawa Timur 60114}\\[6pt]
+
+{\small\color{lighttext}Holland Village Jakarta, Cemp. Putih, Jakarta Pusat, DKI Jakarta 10510}
+
+\end{minipage}
+\end{minipage}%
+%
+\begin{minipage}[t]{14cm}
+\vspace{0.5cm}
+\hspace{0.8cm}
+\begin{minipage}[t]{12.5cm}
+
+{\Huge\bfseries\MakeUppercase{Kenan Firmansyah}}\\[6pt]
+{\large\bfseries GAME DEVELOPER | GAMEPLAY \& AI}\\[12pt]
+
+{\small Game developer with multi-engine experience across Unreal and Unity, shipped titles on iOS and Mac App Store, and a research background in gameplay AI and adaptive systems. Comfortable owning gameplay systems end-to-end, from prototype to release.}
+
+\vspace{0.6cm}
+
+\mainsection{Experiences and Projects}
+
+\jobentry{Game Developer}{Agate | 2026 Feb - 2026 May}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Contributed to an unannounced commercial title at one of Indonesia's largest game studios.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\jobentry{Lead Developer (Unreal Engine)}{Starpixel Studios | 2024 Oct - 2025 April}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Led development of a multiplayer horror title; owned gameplay and networking systems.
+    \item Built in Blueprint with C++ integration for performance-critical paths.
+    \item Delivered weekly builds, ran bug triage, and authored internal technical documentation.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\jobentry{Lead Developer / Project Manager}{JoyBait Studio (Saturated) | 2025 Oct - 2025 Dec}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Project-managed and programmed \textbf{Saturated}, a first-person underwater horror game.
+    \item Shipped on Mac App Store for Apple Silicon (\href{https://apps.apple.com/id/app/saturated/id6755347604}{\color{accent}\underline{App Store}}).
+\end{itemize}
+
+\vspace{0.4cm}
+
+\jobentry{Game QA + Technical Support}{Ecosoft Interactive | 2025 April - 2025 June}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item QA and iOS-side support for a mobile arcade title in Unity; identified critical gameplay bugs.
+    \item Helped align designers and programmers on game feel and production timelines.
+\end{itemize}
+
+\end{minipage}
+\end{minipage}
+
+\newpage
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[accent] (current page.north west) rectangle ([yshift=-0.8cm]current page.north east);
+\end{tikzpicture}
+
+\vspace{1.2cm}
+
+\begin{center}
+{\large\bfseries\MakeUppercase{Additional Experiences \& Projects}}
+\end{center}
+
+\vspace{0.5cm}
+
+\hspace{1cm}
+\begin{minipage}[t]{18cm}
+
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 1}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries SHIPPED \& NOTABLE GAMES}\\[8pt]
+
+\textbf{Milky Ice Jump (Freelance iOS Port)}\\
+{\small 2025 Oct \textbar{} Unity iOS}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item QA-tested iOS build and implemented ad integration for the iOS release (\href{https://apps.apple.com/id/app/milky-ice-jump/id6751799679}{\color{accent}\underline{App Store}}).
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Xanthous (VR Horror, AI-driven Enemy)}\\
+{\small EEPIS Final Thesis | 2023 Feb - 2024 July \textbar{} Unreal Engine}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Designed AI systems and core mechanics for a serious VR horror game; thesis basis.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Apple Developer Academy @ BINUS}\\
+{\small 2025 Feb - 2025 Dec}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item \textbf{Won 1st Place at iPlay ADA Game Jam 2025} as System \& Enemy AI Programmer (Until Dawn Do Us Part).
+\end{itemize}
+
+\end{minipage}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 2}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries SELECTED GAME JAMS}\\[8pt]
+
+\textbf{Brackeys Game Jam 2024.2} (Unity + Unreal, dual-team) \textbar{} \textbf{ScoreSpace Jam \#31} (solo, Unity)\\
+\textbf{GMTK 2024} (Unity, multiplayer) \textbar{} \textbf{Ryan Laley Jam} (Unreal 5) \textbar{} \textbf{Global Game Jam Surabaya 2024} (Unity, offline)
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item 9+ jams across Unity and Unreal; recurring roles as gameplay programmer, AI programmer, and solo dev.
+\end{itemize}
+
+\end{minipage}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 3}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries RESEARCH BACKING GAMEPLAY WORK}\\[8pt]
+
+\textbf{Adaptive Radio System Using MetaSounds for Serious VR Game}\\
+{\small IEEE Access (Vol. 13), Nov 2, 2025}
+
+\vspace{0.2cm}
+
+\textbf{Dynamic Level of Difficulties Using Q-Learning and Fuzzy Logic}\\
+{\small IEEE Access (Vol. 12), Sep 12, 2024}
+
+\vspace{0.2cm}
+
+\textbf{Enhancing Serious Game Experience Through In-Game Radio Using Context-Aware Recommender System}\\
+{\small INASS IJIES, Sep 2, 2024}
+
+\end{minipage}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 4}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries OTHER}\\[8pt]
+
+\textbf{Indonesia Game Island 2026} — Logistics \& Community Manager for JoyBait Studio booth, Ciputra World Surabaya (Jan 23-25, 2026).
+
+\end{minipage}
+
+\vspace{0.8cm}
+
+\begin{center}
+\href{https://nandev.dev}{\bfseries\color{accent}\underline{View More...}}\\[4pt]
+{\small nandev.dev}
+\end{center}
+
+\end{minipage}
+
+\end{document}
