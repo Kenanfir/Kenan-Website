@@ -24,26 +24,26 @@ export interface Experience {
 }
 
 export const experiences: Experience[] = [
-    // ON_GOING
+    // WORK
     {
         slug: 'agate',
         title: 'Agate',
         organization: 'Agate',
         role: 'GAME DEVELOPER',
-        description: 'Currently working at Agate. Still on-going (game tba).',
+        description: 'Worked at Agate as a Game Developer on an unannounced project (TBA).',
         thumbnail: '/images/agate.jpg',
-        duration: 'On-Going',
-        category: 'ON_GOING',
-        year: 'Ongoing',
-        about: 'Currently working at Agate as a game developer. The project that I am working on is still on-going and the game is TBA.',
+        duration: 'Feb 2026 - May 2026',
+        category: 'WORK',
+        year: '2026',
+        about: 'Worked at Agate as a Game Developer for roughly four months, contributing to an unannounced project (TBA).',
         info: {
             role: 'Game Developer',
             organization: 'Agate',
-            duration: 'On-Going',
+            duration: 'Feb 2026 - May 2026',
             type: 'Game Studio',
         },
         sections: [
-            { heading: 'RESPONSIBILITIES', content: 'Developing an unannounced game.' },
+            { heading: 'RESPONSIBILITIES', content: 'Game development on an unannounced project.' },
         ],
     },
 

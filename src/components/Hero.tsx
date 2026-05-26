@@ -16,9 +16,9 @@ export default function Hero() {
                     I&apos;m a <span className={styles.highlight}>Game Programmer</span> that specialized in{' '}
                     <span className={styles.highlight}>AI/Gameplay</span> based on Surabaya, Indonesia.
                     I love to express my creativity through games, apps, and everything digital in between!
-                    Currently working as a Game Developer at{' '}
-                    <span className={styles.highlight}>Agate</span>, after completing the{' '}
-                    <span className={styles.highlight}>Apple Developer Academy</span>.
+                    Recently a Game Developer at <span className={styles.highlight}>Agate</span> and an alum of the{' '}
+                    <span className={styles.highlight}>Apple Developer Academy</span>.{' '}
+                    <span className={styles.highlight}>Open to new opportunities.</span>
                 </p>
                 <button onClick={scrollToContact} className={styles.cta}>
                     Contact Me!!
