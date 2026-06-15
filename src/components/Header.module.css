@@ -57,6 +57,93 @@
     color: var(--neon-green);
 }
 
+/* Hamburger button — hidden on desktop, shown on mobile */
+.menuButton {
+    display: none;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+}
+
+.bar {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background: var(--neon-green);
+    border-radius: 2px;
+    transition: transform 200ms ease, opacity 200ms ease, top 200ms ease;
+    box-shadow: 0 0 6px rgba(132, 255, 0, 0.45);
+}
+
+.bar:nth-child(1) { top: 9px; }
+.bar:nth-child(2) { top: 15px; }
+.bar:nth-child(3) { top: 21px; }
+
+.menuButtonOpen .bar:nth-child(1) {
+    top: 15px;
+    transform: rotate(45deg);
+}
+.menuButtonOpen .bar:nth-child(2) {
+    opacity: 0;
+}
+.menuButtonOpen .bar:nth-child(3) {
+    top: 15px;
+    transform: rotate(-45deg);
+}
+
+/* Mobile dropdown menu */
+.mobileMenu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    transition: max-height 240ms ease;
+    z-index: 105;
+}
+
+.mobileMenuOpen {
+    max-height: calc(100vh - 64px);
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+}
+
+.mobileNavLink {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.mobileNavLink:last-child {
+    border-bottom: none;
+}
+
+.mobileNavLink:hover,
+.mobileNavLink:focus-visible {
+    color: var(--neon-green);
+    background: rgba(132, 255, 0, 0.04);
+    outline: none;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -68,5 +155,9 @@
 
     .tagline {
         display: none;
+    }
+
+    .menuButton {
+        display: block;
     }
 }

@@ -18,7 +18,7 @@ export default function Footer() {
         if (href.startsWith('#')) {
             e.preventDefault();
             const element = document.querySelector(href);
-            element?.scrollIntoView({ behavior: 'smooth' });
+            element?.scrollIntoView();
         }
     };
 
