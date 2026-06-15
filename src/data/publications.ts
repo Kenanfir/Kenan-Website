@@ -20,6 +20,27 @@ export interface Publication {
 }
 
 export const publications: Publication[] = [
+    // 2026
+    {
+        slug: 'adaptive-vr-cybersickness',
+        title: 'Toward Adaptive VR Design: Physiological and Cognitive Predictors of Cybersickness in Serious Games',
+        venue: 'IJHCI (Taylor & Francis)',
+        date: '2026',
+        description: 'A study of cybersickness predictors in a VR fishery-management serious game built in Unreal Engine 5, using physiological signals, cognitive load, and session duration.',
+        thumbnail: '/images/cybersickness.jpg',
+        externalUrl: 'https://www.tandfonline.com/doi/full/10.1080/10447318.2026.2684064',
+        about: 'A study of cybersickness predictors in a VR fishery-management serious game built in Unreal Engine 5. We recorded HRV, GSR, and HR from 105 participants and collected post-session cognitive load and duration ratings. Hierarchical regression on 94 complete cases explained 35.8% of the cybersickness variance, with duration dominating (β = 0.87), then cognitive load (β = 0.52) and GSR (β = 0.54). The results point to duration, cognitive load, and GSR as candidate inputs for adaptive VR comfort systems in serious games.',
+        info: {
+            venue: 'International Journal of Human-Computer Interaction (Taylor & Francis)',
+            date: '2026',
+            type: 'Journal Article',
+            doi: '10.1080/10447318.2026.2684064',
+        },
+        sections: [
+            { heading: 'ABSTRACT', content: 'Multivariate cybersickness prediction in a free-play VR serious game (UE5 fishery-management sim) using physiological signals, cognitive load, and session duration.' },
+            { heading: 'RESULTS', content: 'R² = 0.358 on 94 cases. Duration (β = 0.87), cognitive load (β = 0.52), and GSR (β = 0.54) emerged as the strongest predictors — candidate inputs for adaptive VR comfort systems.' },
+        ],
+    },
     // 2025
     {
         slug: 'metasounds-adaptive-radio',
