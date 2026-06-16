@@ -18,7 +18,10 @@ export default function Education() {
                                     <span className={styles.arrow}>➤</span>
                                 </h3>
                                 <div className={styles.major}>{edu.info.major}</div>
-                                <div className={styles.duration}>{edu.duration}</div>
+                                <div className={styles.duration}>
+                                    {edu.duration}
+                                    {edu.info.gpa && <> · GPA {edu.info.gpa}</>}
+                                </div>
                                 <p className={styles.description}>{edu.description}</p>
                                 <div className={styles.overlay}>
                                     <span className={styles.overlayText}>View Details →</span>

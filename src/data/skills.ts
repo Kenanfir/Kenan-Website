@@ -38,6 +38,17 @@ export const skillCategories: SkillCategory[] = [
         ],
     },
     {
+        name: 'Backend & DevOps',
+        skills: [
+            { name: 'Node.js', level: 3 },
+            { name: 'Redis', level: 2 },
+            { name: 'Docker', level: 3 },
+            { name: 'Dokploy', level: 2 },
+            { name: 'Proxmox', level: 3 },
+            { name: 'Jupyter', level: 3 },
+        ],
+    },
+    {
         name: 'Productivity',
         skills: [
             { name: 'Word', level: 3 },

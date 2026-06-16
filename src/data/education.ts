@@ -12,6 +12,7 @@ export interface Education {
         institution: string;
         duration: string;
         major: string;
+        gpa?: string;
     };
     sections: {
         heading: string;
@@ -34,6 +35,7 @@ export const education: Education[] = [
             institution: 'EEPIS',
             duration: '2020 - 2024',
             major: 'Game Technology',
+            gpa: '3.67 (Cumlaude)',
         },
         sections: [
             { heading: 'LEARNING', content: 'Where I learned game development from the ground up, like the psychology of players, I learned and practiced all roles in game development, the journalistic and game review in the game industry, and so on.' },

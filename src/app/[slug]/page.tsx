@@ -64,6 +64,7 @@ export default async function DetailPage({ params }: PageProps) {
             { label: 'Institution', value: educationItem.info.institution },
             { label: 'Duration', value: educationItem.info.duration },
             { label: 'Major', value: educationItem.info.major },
+            ...(educationItem.info.gpa ? [{ label: 'GPA', value: educationItem.info.gpa }] : []),
         ];
     } else if (publication) {
         type = 'publication';
