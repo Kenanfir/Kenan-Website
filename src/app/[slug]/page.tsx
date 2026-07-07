@@ -72,6 +72,7 @@ export default async function DetailPage({ params }: PageProps) {
             { label: 'Venue', value: publication.info.venue },
             { label: 'Date', value: publication.info.date },
             { label: 'Type', value: publication.info.type },
+            ...(publication.info.doi ? [{ label: 'DOI', value: publication.info.doi }] : []),
         ];
     } else {
         type = 'item';

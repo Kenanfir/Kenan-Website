@@ -153,7 +153,7 @@ export const projects: Project[] = [
         description: 'SATURATED is a first-person horror game where you play as a commercial diver. Descend, fix the pipe, finish your job.',
         thumbnail: '',
         videoUrl: 'https://www.youtube.com/embed/0wkXfAQb-wY',
-        appStoreUrl: 'https://apps.apple.com/id/app/saturated/id6755347604?mt=12Saturated',
+        appStoreUrl: 'https://apps.apple.com/id/app/saturated/id6755347604',
         teamSize: 8,
         duration: '+8 Weeks',
         platform: 'Unity',
@@ -164,7 +164,7 @@ export const projects: Project[] = [
             role: 'Game Developer',
             teamSize: '8 members',
             timeFrame: '8+ weeks',
-            engine: 'Unreal Engine 5',
+            engine: 'Unity',
         },
         sections: [
             { heading: 'INTRODUCTION', content: 'A first-person horror experience set in the depths of commercial diving.' },

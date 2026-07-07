@@ -52,9 +52,10 @@ export const publications: Publication[] = [
         externalUrl: 'https://ieeexplore.ieee.org/abstract/document/11223216',
         about: 'This journal article is about building an adaptive in-game radio for VR that reacts to player context using Unreal Engine\'s MetaSounds and a finite-state machine. Instead of fixed playlists, the system switches between three affective music states: Happy, Excited, and Intense with smooth crossfades, loudness balancing, and optional beat-synced transitions. Tested with 30 VR users, the approach was rated intuitive and more immersive than non-adaptive audio, suggesting that this engine-native MetaSounds–FSM method can meaningfully enhance engagement in serious VR experiences.',
         info: {
-            venue: 'IEEE Access',
+            venue: 'IEEE Access (Vol. 13)',
             date: 'November 2, 2025',
             type: 'Journal Article',
+            doi: '10.1109/ACCESS.2025.3627544',
         },
         sections: [
             { heading: 'ABSTRACT', content: 'Building an adaptive in-game radio for VR using MetaSounds and FSM.' },
@@ -88,12 +89,13 @@ export const publications: Publication[] = [
         date: 'Sep 12, 2024',
         description: 'This journal introduces a dynamic difficulty adjustment (DDA) system that combines fuzzy logic and Q-learning to improve player engagement.',
         thumbnail: '/images/dda.jpg',
-        externalUrl: 'https://ieeexplore.ieee.org/',
+        externalUrl: 'https://doi.org/10.1109/ACCESS.2024.3457801',
         about: 'This journal introduces a dynamic difficulty adjustment (DDA) system that combines fuzzy logic and Q-learning to improve player engagement in serious management games. By adapting game complexity based on real-time performance and player behavior, the system increased session length by 35% and overall player effectiveness by 28%. The results show a significant boost in satisfaction and replayability through smarter, more personalized difficulty tuning.',
         info: {
-            venue: 'IEEE Access',
+            venue: 'IEEE Access (Vol. 12)',
             date: 'September 12, 2024',
             type: 'Journal Article',
+            doi: '10.1109/ACCESS.2024.3457801',
         },
         sections: [
             { heading: 'ABSTRACT', content: 'DDA system combining fuzzy logic and Q-learning for player engagement.' },
@@ -107,12 +109,13 @@ export const publications: Publication[] = [
         date: 'Sep 2, 2024',
         description: 'This journal presents a context-aware recommender system (CARS) for in-game radio that adapts music selection based on real-time factors.',
         thumbnail: '/images/cars.jpg',
-        externalUrl: 'https://inass.org/',
+        externalUrl: 'https://doi.org/10.22266/ijies2024.1031.26',
         about: 'This journal presents a context-aware recommender system (CARS) for in-game radio that adapts music selection based on real-time factors like weather, time of day, player status, and in-game seasons. By leveraging deep learning and hybrid filtering, the system achieved F1 scores up to 0.71 and outperformed traditional recommendation methods. The results highlight how dynamic, context-driven audio can enhance immersion and player engagement through smarter, personalized music experiences.',
         info: {
             venue: 'INASS International Journal of Intelligent Engineering and Systems',
             date: 'September 2, 2024',
             type: 'Journal Article',
+            doi: '10.22266/ijies2024.1031.26',
         },
         sections: [
             { heading: 'ABSTRACT', content: 'Context-aware music recommendation based on real-time game factors.' },

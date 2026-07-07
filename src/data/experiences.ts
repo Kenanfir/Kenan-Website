@@ -179,6 +179,28 @@ export const experiences: Experience[] = [
             { heading: 'LEARNING', content: 'Unity engine certification, Google Play platform success strategies.' },
         ],
     },
+    {
+        slug: 'unity-certified-associate',
+        title: 'Unity Certified Associate: Programmer',
+        organization: 'Unity Technologies',
+        role: 'CERTIFICATION',
+        description: 'Unity Certified Associate: Programmer credential, valid Sep 2024 - Sep 2027.',
+        thumbnail: '',
+        duration: 'Sep 2024 - Sep 2027',
+        category: 'ACADEMY',
+        year: '2024',
+        about: 'Earned the Unity Certified Associate: Programmer certification, validating core competency in C# scripting, Unity engine systems, and game programming fundamentals. Achieved through the Google Play x Unity training program and issued by Unity Technologies.',
+        info: {
+            role: 'Certified Associate: Programmer',
+            organization: 'Unity Technologies',
+            duration: 'Sep 2024 - Sep 2027',
+            type: 'Certification',
+        },
+        sections: [
+            { heading: 'CREDENTIAL', content: 'Unity Certified Associate: Programmer, issued by Unity Technologies. Valid September 2024 - September 2027.' },
+            { heading: 'VERIFICATION', content: 'Verifiable on Credly: https://www.credly.com/badges/4f8af0ff-885c-4b59-bfa3-b8d528355479/linked_in_profile' },
+        ],
+    },
     // GAME JAMS
     {
         slug: 'iplay-gamejam-2025',

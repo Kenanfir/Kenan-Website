@@ -13,8 +13,8 @@ export default function Hero() {
             <div className={styles.container}>
                 <h1 className={styles.title}>Hello, I&apos;m Kenan!</h1>
                 <p className={styles.bio}>
-                    I&apos;m a <span className={styles.highlight}>Game Programmer</span> that specialized in{' '}
-                    <span className={styles.highlight}>AI/Gameplay</span> based on Surabaya, Indonesia.
+                    I&apos;m a <span className={styles.highlight}>Game Programmer</span> specializing in{' '}
+                    <span className={styles.highlight}>AI/Gameplay</span>, based in Jakarta, Indonesia.
                     I love to express my creativity through games, apps, and everything digital in between!
                     Recently a Game Developer at <span className={styles.highlight}>Agate</span> and an alum of the{' '}
                     <span className={styles.highlight}>Apple Developer Academy</span>.{' '}
