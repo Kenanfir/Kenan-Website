@@ -46,6 +46,28 @@ export const experiences: Experience[] = [
             { heading: 'RESPONSIBILITIES', content: 'Game development on an unannounced project.' },
         ],
     },
+    {
+        slug: 'milky-ice-jump-ios-release',
+        title: 'Milky Ice Jump — iOS Release',
+        organization: 'Freelance',
+        role: 'iOS DEVELOPER (FREELANCE)',
+        description: 'Freelance work porting and releasing the Unity arcade game Milky Ice Jump to iOS, including QA and ad integration.',
+        thumbnail: '',
+        duration: 'Oct 2025',
+        category: 'WORK',
+        year: '2025',
+        about: 'Freelance engagement to port and release the Unity arcade game Milky Ice Jump to iOS. I handled QA testing of the iOS build and implemented the ad system for the iOS version, then shipped it to the App Store.',
+        info: {
+            role: 'iOS Developer (Freelance)',
+            organization: 'Freelance',
+            duration: 'Oct 2025',
+            type: 'Freelance',
+        },
+        sections: [
+            { heading: 'RESPONSIBILITIES', content: 'QA testing the iOS Unity build and implementing the ad system for the iOS version.' },
+            { heading: 'OUTCOME', content: 'Released Milky Ice Jump on the App Store: https://apps.apple.com/id/app/milky-ice-jump/id6751799679' },
+        ],
+    },
 
     {
         slug: 'joybait-studio',
