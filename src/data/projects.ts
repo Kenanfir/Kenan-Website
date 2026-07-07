@@ -15,6 +15,7 @@ export interface Project {
     about: string;
     appStoreUrl?: string;
     itchUrl?: string;
+    archived?: boolean; // hidden from the site, kept for reference
     info: {
         role: string;
         teamSize: string;
@@ -54,6 +55,7 @@ export const projects: Project[] = [
     },
     {
         slug: 'vibe-coding-tycoon',
+        archived: true,
         title: 'Vibe Coding Tycoon',
         role: 'GAME DEVELOPER',
         description: 'A tycoon game where you manage a game dev studio with vibe coding mechanics. (On-going, not released)',
@@ -77,6 +79,7 @@ export const projects: Project[] = [
     },
     {
         slug: 'roasting-ur-decision',
+        archived: true,
         title: 'Roasting Ur Decision',
         role: 'APP DEVELOPER',
         description: 'An AI app that straight up roasts your life decisions. (On-going, not released)',
@@ -721,7 +724,7 @@ export const projectCategories: { key: ProjectCategory; label: string }[] = [
 ];
 
 export function getProjectsByCategory(category: ProjectCategory): Project[] {
-    return projects.filter(p => p.category === category);
+    return projects.filter(p => p.category === category && !p.archived);
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {

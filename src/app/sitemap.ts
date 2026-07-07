@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]
 
     // Project pages
-    const projectRoutes = projects.map((project) => ({
+    const projectRoutes = projects.filter((project) => !project.archived).map((project) => ({
         url: `${BASE_URL}/${project.slug}`,
         lastModified: currentDate,
         changeFrequency: 'monthly' as const,

@@ -10,7 +10,7 @@ import styles from './page.module.css';
 
 // Generate static params for all detail pages
 export function generateStaticParams() {
-    const projectSlugs = projects.map((p) => ({ slug: p.slug }));
+    const projectSlugs = projects.filter((p) => !p.archived).map((p) => ({ slug: p.slug }));
     const experienceSlugs = experiences.map((e) => ({ slug: e.slug }));
     const educationSlugs = education.map((e) => ({ slug: e.slug }));
     const publicationSlugs = publications.map((p) => ({ slug: p.slug }));
