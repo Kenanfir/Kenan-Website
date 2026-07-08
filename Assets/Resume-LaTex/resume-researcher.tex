@@ -1,0 +1,271 @@
+%----------------------------------------------------------------------------------------
+%	KENAN FIRMANSYAH - RESEARCHER VARIANT
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0cm]{geometry}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{calc}
+
+\definecolor{sidebar}{RGB}{245, 245, 245}
+\definecolor{mainbg}{RGB}{255, 255, 255}
+\definecolor{accent}{RGB}{180, 150, 100}
+\definecolor{darktext}{RGB}{40, 40, 40}
+\definecolor{lighttext}{RGB}{100, 100, 100}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darktext,
+    urlcolor=accent,
+    pdftitle={Kenan Firmansyah - Researcher Resume},
+    pdfauthor={Kenan Firmansyah}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\sidesection}[1]{%
+    {\large\bfseries\MakeUppercase{#1}}\\[6pt]%
+}
+
+\newcommand{\mainsection}[1]{%
+    {\large\bfseries\MakeUppercase{#1}}\\[8pt]%
+}
+
+\newcommand{\jobentry}[2]{%
+    \textbf{#1}\\
+    {\small\color{lighttext}#2}\\[4pt]%
+}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[sidebar] (current page.north west) rectangle ([xshift=6.5cm]current page.south west);
+    \fill[mainbg] ([xshift=6.5cm]current page.north west) rectangle (current page.south east);
+    \fill[accent] ([xshift=6.5cm, yshift=-1cm]current page.north west) rectangle ([yshift=-1.05cm]current page.north east);
+\end{tikzpicture}
+
+\begin{minipage}[t]{6cm}
+\vspace{0.8cm}
+\hspace{0.5cm}
+\begin{minipage}[t]{5.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \clip (0,0) rectangle (4.5cm, 4.5cm);
+    \node[anchor=center] at (2.25cm, 2.25cm) {\includegraphics[width=4.5cm]{CV_ProfilePic.jpg}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.8cm}
+
+\sidesection{Education}
+
+\textbf{Bachelor of Computer Engineering, Major in Game Technology}\\[4pt]
+{\small Electronic Engineering Polytechnic Institute of Surabaya (2020 - 2024)\\
+GPA 3.67 (Cumlaude)}\\[4pt]
+{\small\color{lighttext}Thesis: \emph{Xanthous} --- layered NPC AI for a serious VR horror game (Fuzzy Logic, Monte Carlo, FSM, Behavior Trees).}
+
+\vspace{0.7cm}
+
+\sidesection{Research Interests}
+
+\begin{itemize}[leftmargin=*, nosep, itemsep=3pt]
+    \item Adaptive systems for serious games \& VR
+    \item Game AI: agent behavior, dynamic difficulty
+    \item Affective computing \& cybersickness
+    \item Autonomous agents with memory \& personality
+    \item Procedural \& context-aware audio
+\end{itemize}
+
+\vspace{0.7cm}
+
+\sidesection{Methods \& Tools}
+
+\begin{itemize}[leftmargin=*, nosep, itemsep=3pt]
+    \item Reinforcement Learning (Q-Learning), Fuzzy Logic, Monte Carlo, Behavior Trees
+    \item Recommender systems (deep / hybrid filtering)
+    \item Physiological signal analysis (HRV, GSR, HR)
+    \item Statistical modeling (hierarchical regression), experimental design \& user studies
+    \item Python (NumPy, scikit-learn, PyTorch, Jupyter)
+    \item Unreal Engine 5 \& Unity as research testbeds; C++ / C\#
+    \item Data scraping \& visualization (Selenium, Gephi, Tableau)
+\end{itemize}
+
+\vspace{0.7cm}
+
+\sidesection{Contact}
+
+\faIcon{linkedin} \href{https://linkedin.com/in/kenanfirmansyah}{Kenan Firmansyah}\\[6pt]
+\faIcon{github} \href{https://github.com/Kenanfir}{Kenanfir}\\[6pt]
+\faIcon{globe} \href{https://nandev.dev}{nandev.dev}\\[6pt]
+\faIcon{phone} +6285175447540\\[6pt]
+\faIcon{envelope} realkenanfir@gmail.com\\[10pt]
+
+{\small\color{lighttext}Holland Village Jakarta, Cemp. Putih, Jakarta Pusat, DKI Jakarta 10510}
+
+\end{minipage}
+\end{minipage}%
+%
+\begin{minipage}[t]{14cm}
+\vspace{0.5cm}
+\hspace{0.8cm}
+\begin{minipage}[t]{12.5cm}
+
+{\Huge\bfseries\MakeUppercase{Kenan Firmansyah}}\\[6pt]
+{\large\bfseries GAME \& INTERACTIVE-SYSTEMS RESEARCHER}\\[12pt]
+
+{\small Computer Engineering graduate with \textbf{six peer-reviewed publications} on adaptive game AI, dynamic difficulty, context-aware audio, and cybersickness in serious VR games. I design and run empirical studies inside Unreal Engine and Unity testbeds, combining classical AI (Q-Learning, Fuzzy Logic, Monte Carlo) with physiological and statistical analysis. Currently researching long-term memory and personality consistency for autonomous AI agents.}
+
+\vspace{0.5cm}
+
+\mainsection{Selected Publications}
+
+\textbf{Toward Adaptive VR Design: Physiological and Cognitive Predictors of Cybersickness in Serious Games}\\
+{\small IJHCI, Taylor \& Francis | 2026 \textbar{} DOI: 10.1080/10447318.2026.2684064}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Multivariate cybersickness model in a UE5 fishery-management serious game (n=105). Hierarchical regression on 94 complete cases; \textbf{R\textsuperscript{2} = 0.358}, with session duration, cognitive load, and GSR as the strongest predictors for adaptive comfort systems.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Adaptive Radio System Using MetaSounds for Serious VR Game}\\
+{\small IEEE Access (Vol. 13) | Nov 2, 2025 \textbar{} DOI: 10.1109/ACCESS.2025.3627544}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item FSM-driven adaptive audio across affective states (Happy, Excited, Intense); n=30 VR user study, rated more immersive than a non-adaptive baseline.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Dynamic Level of Difficulties Using Q-Learning and Fuzzy Logic}\\
+{\small IEEE Access (Vol. 12) | Sep 12, 2024 \textbar{} DOI: 10.1109/ACCESS.2024.3457801}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Hybrid Q-Learning + Fuzzy Logic dynamic difficulty adjustment; \textbf{+35\% session length, +28\% player effectiveness}.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Enhancing Serious Game Experience Through In-Game Radio Using Context-Aware Recommender System}\\
+{\small INASS IJIES | Sep 2, 2024 \textbar{} DOI: 10.22266/ijies2024.1031.26}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Deep-learning hybrid recommender adapting to weather, time, and player state; \textbf{F1 up to 0.71}, outperforming traditional baselines.
+\end{itemize}
+
+\end{minipage}
+\end{minipage}
+
+\newpage
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[accent] (current page.north west) rectangle ([yshift=-0.8cm]current page.north east);
+\end{tikzpicture}
+
+\vspace{1.2cm}
+
+\begin{center}
+{\large\bfseries\MakeUppercase{Research Experience, Projects \& Additional Work}}
+\end{center}
+
+\vspace{0.5cm}
+
+\hspace{1cm}
+\begin{minipage}[t]{18cm}
+
+% Section 1: Research Experience
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 1}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries RESEARCH EXPERIENCE \& PROJECTS}\\[8pt]
+
+\textbf{Clone World --- Personality \& Memory for Autonomous AI Agents}\\
+{\small Independent Research | Lead Researcher / Developer \textbar{} Ongoing}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Life-simulation testbed where agents retain long-term memory and shift personality based on past interactions.
+    \item Engine-agnostic design via Hexagonal Architecture; local LLMs drive dialogue and emergent story threads.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Fisherman Manager --- Dynamic Difficulty Adjustment (DDA) Research}\\
+{\small EEPIS | Lead Programmer \& Designer \textbar{} 2024 \textbar{} Unreal Engine 5}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Built a management-sim testbed for DDA research; combined Q-Learning with Fuzzy Logic to read player behavior and adjust game-state variables in real time. Basis for the IEEE Access (2024) DDA paper.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Xanthous --- AI in a Serious VR Horror Game (Undergraduate Thesis)}\\
+{\small EEPIS | AI Programmer \textbar{} 2023 Feb - 2024 July \textbar{} Unreal Engine}
+\begin{itemize}[leftmargin=*, nosep, itemsep=2pt, topsep=2pt]
+    \item Designed and implemented layered NPC AI (Fuzzy Logic, Monte Carlo, FSM, Behavior Trees, AI Perception) driving agent perception and decision-making; underlying research published.
+\end{itemize}
+
+\end{minipage}
+
+\vspace{0.6cm}
+
+% Section 2: Additional Publications
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 2}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries ADDITIONAL PUBLICATIONS}\\[8pt]
+
+\textbf{Real Time Procedural Audio for Immersive Gameplay with MetaSounds}\\
+{\small TCCE 2025, Trends in Computational and Cognitive Engineering | 2025 \textbar{} Procedural environmental audio (rain, wind, thunder) in Unreal Engine, cutting storage while keeping realistic output.}
+
+\vspace{0.25cm}
+
+\textbf{Dynamic Day and Night Cycle Impact in a Serious VR Game}\\
+{\small ICVR 2024, International Conference on Virtual Reality | 2024 \textbar{} 10-minute day/night loop; \textbf{+25\% player immersion} and increased strategic depth.}
+
+\end{minipage}
+
+\vspace{0.6cm}
+
+% Section 3: Applied Data & Other Experience
+\begin{minipage}[t]{0.8cm}
+{\Large\bfseries 3}
+\end{minipage}%
+\begin{minipage}[t]{17cm}
+{\large\bfseries APPLIED DATA \& OTHER EXPERIENCE}\\[8pt]
+
+\textbf{Data Scientist (Intern) --- PT. eBdesk} (2023, 6 months) --- Python pipelines for scraping, analysis, and visualization (Selenium, Gephi, Tableau).
+
+\vspace{0.2cm}
+
+\textbf{Game Developer --- Agate} (2026 Feb - 2026 May) --- Production game-systems work on an unannounced title.
+
+\vspace{0.2cm}
+
+\textbf{Apple Developer Academy @ BINUS} (2025 Feb - 2025 Dec) --- Interdisciplinary product research: user studies, prototyping, iterative testing; CoreML and on-device LLM integration.
+
+\vspace{0.2cm}
+
+\textbf{Unity Certified Associate: Programmer} (Sep 2024 - Sep 2027) --- Issued by Unity Technologies.
+
+\end{minipage}
+
+\vspace{0.8cm}
+
+\begin{center}
+\href{https://nandev.dev}{\bfseries\color{accent}\underline{View More...}}\\[4pt]
+{\small nandev.dev}
+\end{center}
+
+\end{minipage}
+
+\end{document}
