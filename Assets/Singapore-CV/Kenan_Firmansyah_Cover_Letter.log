@@ -237,59 +237,60 @@ LaTeX Font Info:    ... okay on input line 19.
 * \textwidth=489.10287pt
 * \textheight=736.64185pt
 * \oddsidemargin=-18.06749pt
-* \evensidemargin=-18.06749pt
-* \topmargin=-55.06749pt
-* \headheight=12.0pt
-* \headsep=25.0pt
-* \topskip=10.0pt
-* \footskip=30.0pt
-* \marginparwidth=57.0pt
-* \marginparsep=11.0pt
-* \columnsep=10.0pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/color.sty
+* \evensidemargin=-18.06749pex/latex/graphics/color.sty
 Package: color 2024/06/23 v1.3e Standard LaTeX Color (DPC)
- (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
- (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count286
-\scratchdimen=\dimen154
+\scratchcounter=\count279
+\scratchdimen=\dimen155
 \scratchbox=\box53
-\nofMPsegments=\count287
-\nofMParguments=\count288
+\nofMPsegments=\count280
+\nofMParguments=\count281
 \everyMPshowfont=\toks21
-\MPscratchCnt=\count289
-\MPscratchDim=\dimen155
-\MPnumerator=\count290
-\makeMPintoPDFobject=\count291
+\MPscratchCnt=\count282
+\MPscratchDim=\dimen156
+\MPnumerator=\count283
+\makeMPintoPDFobject=\count284
 \everyMPtoPDFconversion=\toks22
 )) (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/mathcolor.ltx))
-Package hyperref Info: Link coloring ON on input line 19.
- (./Kenan_Firmansyah_Cover_Letter.out) (./Kenan_Firmansyah_Cover_Letter.out)
+Package hyperref Info: Link coloring ON on input line 17.
 \@outlinefile=\write3
 \openout3 = `Kenan_Firmansyah_Cover_Letter.out'.
 
 
+! Missing number, treated as zero.
+<to be read again> 
+                   E
+l.21     [Email Address]
+                         \\
+? 
+! Emergency stop.
+<to be read again> 
+                   E
+l.21     [Email Address]
+                         \\
+End of file on the terminal!
 
-[1
-
-{/Users/kenanfirmansyah/Library/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] (./Kenan_Firmansyah_Cover_Letter.aux)
- ***********
-LaTeX2e <2024-11-01> patch level 2
+ 
+Here is how much of TeX's memory you used:
+ 8847 strings out of 473190
+ 137183 string characters out of 5715799
+ 533048 words of memory out of 5000000
+ 32044 multiletter control sequences out of 15000+600000
+ 565891 words of font info for 40 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 75i,1n,79p,275b,128s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!
+tch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `Kenan_Firmansyah_Cover_Letter.out' has not changed.

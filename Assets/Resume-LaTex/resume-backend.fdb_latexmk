@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1781528790.62564 "resume.tex" "resume.pdf" "resume" 1781528791.19563 0
+["pdflatex"] 1780803734.392 "resume-backend.tex" "resume-backend.pdf" "resume-backend" 1780803734.88405 0
   "/Users/kenanfirmansyah/Library/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1772854809 5468506 dd8aa7e8c120d0e2cce4f74b033f5d4e ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/fontawesome5/fa5brands0.enc" 1622837620 2920 d63721872b8c77041b88e51b8f7c291d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free1.enc" 1622837620 3042 0e2b14b9be7d01075a4c4591d5d1781b ""
@@ -17,6 +17,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr10.tfm" 1254269338 12056 7e13df7fe4cbce21b072ba7c4f4deb6e ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm" 1254269338 12092 7b1546e2d096cfd5dcbd4049b0b1ec2e ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm" 1254269338 12156 ca1ae6a3c8564e89597f1f993fba1608 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm" 1254269338 17148 9556e1b5f936b77a796f68d2d559ba99 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmex10.tfm" 1148093231 992 ce925c9346c7613270a79afbee98c070 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmmi10.tfm" 1148093231 1528 6d36b2385e0ca062a654de6ac59cb34f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmmi6.tfm" 1148093231 1512 94a3fd88c6f27dbd9ecb46987e297a4e ""
@@ -33,6 +34,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb" 1255129361 121021 1bf809ce4a594679006bd72263eba59b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb" 1255129361 116908 1fca96723793882c2e0160350c192fc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb" 1255129361 119235 f35b44530a1d90eb90fe15d9cba67ea0 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb" 1255129361 112593 fda2373ba4420af33949610de4c28fe8 ""
   "/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2025/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2025/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -168,12 +170,12 @@
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1766896208 3345746 20fa2ff72af90efa22695458279ba52f ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "CV_ProfilePic.jpg" 1767676246.03837 45842 8b1bcb8a2d426b096d9381a42b790ba1 ""
-  "resume.aux" 1781528791.12966 236 3979f91d988a43385903b3e6a06a5e44 "pdflatex"
-  "resume.out" 1781528790.98212 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "resume.tex" 1781528783.33656 10748 9053febb05e7963b19dba7120080d730 ""
+  "resume-backend.aux" 1780803734.82155 236 3979f91d988a43385903b3e6a06a5e44 "pdflatex"
+  "resume-backend.out" 1780803734.69642 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resume-backend.tex" 1780803729.75518 8290 cb33dcf49e12d6e65211e6f7fa53f8fc ""
   (generated)
-  "resume.aux"
-  "resume.log"
-  "resume.out"
-  "resume.pdf"
+  "resume-backend.aux"
+  "resume-backend.log"
+  "resume-backend.out"
+  "resume-backend.pdf"
   (rewritten before read)
