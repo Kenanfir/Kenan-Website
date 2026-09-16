@@ -22,6 +22,46 @@ export interface Publication {
 export const publications: Publication[] = [
     // 2026
     {
+        slug: 'brain-tumor-mri-transfer-learning',
+        title: 'Evaluating VGG16, ResNet50, and EfficientNet-B0 for Brain Tumor MRI Classification: A Two-Phase Transfer Learning Approach',
+        venue: 'ISIBER 2026',
+        date: '2026',
+        description: 'A comparison of VGG16, ResNet50, and EfficientNet-B0 for brain tumor MRI classification using a two-phase transfer-learning approach.',
+        thumbnail: '/images/braintumor.jpg',
+        externalUrl: 'https://doi.org/10.1109/ISIBER68248.2026.11469939',
+        about: 'This conference paper compares VGG16, ResNet50, and EfficientNet-B0 for multi-class brain tumor classification from MRI images. It uses a two-phase transfer-learning approach to evaluate how the three convolutional neural network architectures perform on the same classification task.',
+        info: {
+            venue: '2026 International Seminar on Intelligent Business and Edge-Computing Research (ISIBER)',
+            date: 'February 2026',
+            type: 'Conference Paper',
+            doi: '10.1109/ISIBER68248.2026.11469939',
+        },
+        sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, A. B. Gumelar, K. Firmansyah' },
+            { heading: 'SUMMARY', content: 'Comparison of three convolutional neural network architectures for multi-class brain tumor MRI classification using a two-phase transfer-learning approach.' },
+        ],
+    },
+    {
+        slug: 'rl-supervised-llm-question-generation',
+        title: 'Reinforcement Learning-Supervised LLM Question Generation from Educational Textbooks: A Comparative Study of Prompt Engineering and Post-Hoc Filtering',
+        venue: 'ETASR',
+        date: 'Jun 2026',
+        description: 'A study of LLM-based question generation from educational textbooks, comparing prompt engineering and post-hoc filtering.',
+        thumbnail: '/images/rlllm.jpg',
+        externalUrl: 'https://doi.org/10.48084/etasr.17900',
+        about: 'This journal article studies reinforcement learning-supervised large language model question generation from educational textbooks. It compares prompt engineering and post-hoc filtering as approaches for improving generated questions.',
+        info: {
+            venue: 'Engineering, Technology & Applied Science Research, Vol. 16(3), pp. 35162–35170',
+            date: 'June 2026',
+            type: 'Journal Article',
+            doi: '10.48084/etasr.17900',
+        },
+        sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, A. B. Gumelar, K. Firmansyah' },
+            { heading: 'SUMMARY', content: 'A comparative study of prompt engineering and post-hoc filtering for reinforcement learning-supervised LLM question generation.' },
+        ],
+    },
+    {
         slug: 'adaptive-vr-cybersickness',
         title: 'Toward Adaptive VR Design: Physiological and Cognitive Predictors of Cybersickness in Serious Games',
         venue: 'IJHCI (Taylor & Francis)',
@@ -37,8 +77,28 @@ export const publications: Publication[] = [
             doi: '10.1080/10447318.2026.2684064',
         },
         sections: [
+            { heading: 'AUTHORS', content: 'F. Annisa Damastuti, K. Firmansyah, Y. M. Arif, R. Yuniar Hakkun, M. Hariadi' },
             { heading: 'ABSTRACT', content: 'Multivariate cybersickness prediction in a free-play VR serious game (UE5 fishery-management sim) using physiological signals, cognitive load, and session duration.' },
             { heading: 'RESULTS', content: 'R² = 0.358 on 94 cases. Duration (β = 0.87), cognitive load (β = 0.52), and GSR (β = 0.54) emerged as the strongest predictors — candidate inputs for adaptive VR comfort systems.' },
+        ],
+    },
+    {
+        slug: 'hierarchical-memory-llm-npc',
+        title: 'Hierarchical Memory Consolidation and Context-Efficient Retrieval for Persistent Personality in LLM-Based Game NPCs',
+        venue: 'SSRN (Preprint)',
+        date: '2026',
+        description: 'A preprint on hierarchical memory and context-efficient retrieval for persistent personality in LLM-based game NPCs.',
+        thumbnail: '/images/llmnpc.jpg',
+        externalUrl: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6536138',
+        about: 'This preprint presents a three-tier memory architecture for LLM-based game NPCs, combining short-term, episodic, and core memory with context-efficient retrieval. The work focuses on maintaining character personality while managing longer interaction histories.',
+        info: {
+            venue: 'SSRN Preprint 6536138',
+            date: '2026',
+            type: 'Preprint (under review)',
+        },
+        sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, K. Firmansyah, A. Barakbah, M. Hariadi' },
+            { heading: 'SUMMARY', content: 'Hierarchical memory consolidation and context-efficient retrieval for maintaining persistent personality in LLM-driven game NPCs.' },
         ],
     },
     // 2025
@@ -58,6 +118,7 @@ export const publications: Publication[] = [
             doi: '10.1109/ACCESS.2025.3627544',
         },
         sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, K. Firmansyah, Y. M. Arif, D. Pramadihanto, S. Criollo-C' },
             { heading: 'ABSTRACT', content: 'Building an adaptive in-game radio for VR using MetaSounds and FSM.' },
             { heading: 'RESULTS', content: 'Tested with 30 VR users, rated intuitive and more immersive than non-adaptive audio.' },
         ],
@@ -98,6 +159,7 @@ export const publications: Publication[] = [
             doi: '10.1109/ACCESS.2024.3457801',
         },
         sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, K. Firmansyah, Y. M. Arif, T. Dutono, A. Barakbah, M. Hariadi' },
             { heading: 'ABSTRACT', content: 'DDA system combining fuzzy logic and Q-learning for player engagement.' },
             { heading: 'RESULTS', content: 'Increased session length by 35% and player effectiveness by 28%.' },
         ],
@@ -118,6 +180,7 @@ export const publications: Publication[] = [
             doi: '10.22266/ijies2024.1031.26',
         },
         sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, K. Firmansyah, Y. M. Arif, T. Dutono, A. Barakbah, M. Hariadi' },
             { heading: 'ABSTRACT', content: 'Context-aware music recommendation based on real-time game factors.' },
             { heading: 'RESULTS', content: 'Achieved F1 scores up to 0.71, outperforming traditional methods.' },
         ],
@@ -137,6 +200,7 @@ export const publications: Publication[] = [
             type: 'Conference Paper',
         },
         sections: [
+            { heading: 'AUTHORS', content: 'F. A. Damastuti, K. Firmansyah, Y. M. Arif, A. R. Barakbah, M. Hariadi' },
             { heading: 'ABSTRACT', content: 'Real-time day/night cycle impact on VR game immersion.' },
             { heading: 'RESULTS', content: 'Up to 25% improvement in player immersion and increased strategic depth.' },
         ],
