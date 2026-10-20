@@ -115,7 +115,7 @@ function openTeam(k){location.hash='game='+k;go('lab');runLab(k)}
   Object.entries(TEAMS).forEach(([k,T])=>{const saved=store.get(progressKey(k))||[],n=T.missions.length,d=saved.filter(Boolean).length;
     box.append(h('button',{class:'gamecard',onclick:()=>openTeam(k)},
       h('div',{class:'thumb'},h('img',{src:'assets/'+T.thumb,alt:''})),
-      h('div',{class:'gtxt'},h('span',{class:'tag',text:T.eng}),h('h3',{text:T.name}),h('p',{text:T.pitch}),h('span',{class:'prog',text:d?(d+' of '+n+' missions done'):n+' missions, about 15 minutes'}))))})})();
+      h('div',{class:'gtxt'},h('span',{class:'tag',text:T.eng}),h('h3',{text:T.name}),h('p',{text:T.pitch}),h('span',{class:'prog',text:d?(d+' of '+n+' missions done'):'Bug hunt, then '+(n-1)+' missions, about 20 minutes'}))))})})();
 loadPreset('plat');
 if(location.hash.startsWith('#matrix=')){const d=decode(location.hash.slice(8));if(d){MX=d;curPreset=d.preset;go('ref');refTab('matrix')}}
 else if(location.hash.startsWith('#game=')&&TEAMS[location.hash.slice(6)])openTeam(location.hash.slice(6));

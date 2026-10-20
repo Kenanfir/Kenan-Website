@@ -52,7 +52,8 @@ function platCfg(){return{W:672,H:384,preset:'plat',controls:'Move: A D or arrow
     if(S.opt.ledge&&e.vy===0){const ax=e.x+e.w/2+Math.sign(e.vx)*(e.w/2+4),ay=e.y+e.h+6;e.ray={x:ax,y:ay};if(!worlds.some(w=>ax>=w.x&&ax<=w.x+w.w&&ay>=w.y&&ay<=w.y+w.h))e.vx*=-1}else e.ray=null;
     if(e.y>S.H+80){e.x=e.sx;e.y=e.sy;e.vy=0;S.count('efall');S.say('A slime walked off the edge and fell.','efall',2)}
     if(Math.abs(e.vx)<1)e.vx=50}
-  const hurt=()=>{if(S.opt.invuln){if(p.inv<=0){p.hp--;p.inv=1;S.say('Hit! Invulnerable for 1 second.','hit',.1)}}else{p.hp-=1;S.count('drain');S.say('Overlap is true every frame: -1 heart per frame.','drain',.5)}};
+  const hurt=(pl,o)=>{const body={x:pl.x+pl.w/2-18,y:pl.y+pl.h-46,w:36,h:46};if(!overlap(body,o))S.count('unfair');
+    if(S.opt.invuln){if(p.inv<=0){p.hp--;p.inv=1;S.say('Hit! Invulnerable for 1 second.','hit',.1)}}else{p.hp-=1;S.count('drain');S.say('Overlap is true every frame: -1 heart per frame.','drain',.5)}};
   S.pairs('Player','Enemy',hurt);S.pairs('Player','Hazard',hurt);
   S.pairs('Player','Pickup',(a,c)=>{c.dead=true;S.score++;S.fx.push({x:c.x+11,y:c.y+11,t:0});if(c.bonus){S.count('bonus');S.say('You climbed the wall: that berry should be unreachable.','bonus',0)}else S.say('Berry collected.','berry',.1)});
   S.pairs('Player','Trigger',(a,t)=>{if(!t.got){t.got=true;S.cp={x:t.x-6,y:FLOOR-p.h};S.say('Checkpoint set. Detection only: nothing pushed you.','cp')}});
@@ -87,6 +88,19 @@ function platCfg(){return{W:672,H:384,preset:'plat',controls:'Move: A D or arrow
 TEAMS.plat={name:'Platformer',eng:'GDevelop',preset:'plat',thumb:'pf_pl_idle_0_r.png',
  pitch:'You move by hand-tuned code. Collision is mostly detection: hurt, collect, checkpoint.',cfg:platCfg,
  missions:[
+  {type:'hunt',title:'This level is broken',story:'Five things are wrong with this level. Walk, jump and touch things until you find them all.',
+   rules:{'Pickup|Enemy':true},opts:{feet:false,invuln:false,ledge:false,hurt:130},
+   bugs:[
+    {id:'wall',name:'You can climb a wall that is too tall',hintText:'A berry floats above the tall wall. Run at the wall and keep jumping.',done:S=>(S.ev.bonus||0)>=1,
+     cause:'The ground check is the whole body, so touching a wall counts as standing and you can jump again in mid-air.',fix:{opts:{feet:true}}},
+    {id:'drain',name:'Spikes drain every heart at once',hintText:'Touch the spikes near the start.',done:S=>(S.ev.drain||0)>=1,
+     cause:'Overlap is true on every frame, so one touch hurts sixty times. There is no invulnerability window.',fix:{opts:{invuln:true}}},
+    {id:'ledge',name:'A slime walks off its platform',hintText:'Watch the slime on the high platform for a few seconds.',done:S=>(S.ev.efall||0)>=1,
+     cause:'Nothing looks ahead of it. A short ray pointing down in front of the slime would say the floor has ended.',fix:{opts:{ledge:true}}},
+    {id:'eat',name:'Slimes eat your berries',hintText:'Watch the slime on the ground at the right, near a berry.',done:S=>(S.ev.eat||0)>=1,
+     cause:'The pair Pickup x Enemy is ticked, so slimes collect berries too. Nobody decided that.',fix:{rules:{'Pickup|Enemy':false}}},
+    {id:'unfair',name:'You get hurt without being touched',hintText:'Walk close to the spikes without touching them.',done:S=>(S.ev.unfair||0)>=1,
+     cause:'The hurtbox is bigger than the character. Players call that unfair, and they are right.',fix:{opts:{hurt:80}}}]},
   {title:'Walk through the floor',term:'Detection vs response',story:'A collision rule is a pair of groups. A ticked pair is tested every frame and has an effect. Right now Player x World is ticked, so the ground holds you up.',
    predict:{q:'If you untick Player x World, what happens to the floor under you?',opts:['Nothing, the floor is still solid','You fall straight through it'],ans:1,why:'Nothing tests that pair any more, so nothing pushes you back out. The ground is still drawn, but the game no longer knows it is there.'},
    task:'Untick Player x World, then watch.',wait:'Waiting for you to untick Player x World and fall...',focus:['r:Player|World'],done:S=>(S.ev.fell||0)>=1,
@@ -146,6 +160,7 @@ const check=S=>{const gh=S.ghost;
   S.tests+=S.on('PlacementGhost','PlacementZone')?S.of('PlacementZone').length:0;
   const towerHit=S.on('PlacementGhost','Tower')&&S.of('Tower').some(t=>overlap(gh,t));
   S.tests+=S.on('PlacementGhost','Tower')?S.of('Tower').length:0;
+  gh.onPath=S.of('Path').some(p=>dSeg(gh.x+24,gh.y+24,p.seg)<28+20);gh.onTower=S.of('Tower').some(t=>overlap(gh,t));
   gh.inZone=inZone;gh.ok=zoneOk&&!pathHit&&!towerHit;gh.why=!zoneOk?'not on a pad':pathHit?'on the path':towerHit?'on a tower':'ok'};
 const newEnemy=(s)=>({g:'Enemy',s,hp:3,x:0,y:0,w:26,h:26,sp:45,slow:1,hd:0});
 function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map to build a tower (50 gold).',legend:'Debug view: cyan circle = tower range, green box = enemy hitbox.',pad:[],
@@ -169,7 +184,7 @@ function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map t
   if(!S.bound){S.bound=true;const cv=S.cv.c;
    cv.addEventListener('pointermove',e=>{const q=S.cv.pos(e);S.ghost.x=q.x-24;S.ghost.y=q.y-24});
    cv.addEventListener('pointerdown',e=>{const q=S.cv.pos(e);S.ghost.x=q.x-24;S.ghost.y=q.y-24;check(S);
-     if(S.ghost.ok&&S.gold>=50){S.gold-=50;S.add({g:'Tower',x:S.ghost.x,y:S.ghost.y,w:48,h:48,cd:0,ang:-Math.PI/2});if(!S.ghost.inZone)S.count('builtOff');S.say('Tower built (-50 gold).','build',.2)}
+     if(S.ghost.ok&&S.gold>=50){S.gold-=50;S.add({g:'Tower',x:S.ghost.x,y:S.ghost.y,w:48,h:48,cd:0,ang:-Math.PI/2});if(!S.ghost.inZone)S.count('builtOff');if(S.ghost.onPath)S.count('builtPath');if(S.ghost.onTower)S.count('builtOverlap');S.say('Tower built (-50 gold).','build',.2)}
      else S.say(S.gold<50?'Not enough gold (50).':'Cannot build there: the matrix says no ('+S.ghost.why+').','nobuild',.4)})}},
  update(S,dt){
   const en=S.of('Enemy');
@@ -177,8 +192,9 @@ function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map t
   check(S);
   en.forEach(e=>e.slow=1);
   S.pairs('Enemy','Enemy',(a,b)=>{(a.s<b.s?a:b).slow=.25});
-  for(const e of en){e.s+=e.sp*e.slow*dt;const q=at(e.s);e.hd=q[2];e.x=q[0]-13;e.y=q[1]-13;if(e.s>total+40)e.dead=true}
+  for(const e of en){e.s+=e.sp*e.slow*dt;const q=at(e.s);e.hd=q[2];e.x=q[0]-13;e.y=q[1]-13;if(e.s>total+40){e.dead=true;if(!S.on('Enemy','Base'))S.count('basePass')}}
   S.pairs('Enemy','Base',e=>{e.dead=true;S.lives--;S.say('An enemy reached the base: -1 life.','base',.1)});
+  if(!S.on('Enemy','Base')){const bs=S.of('Base')[0];for(const e of en)if(!e.passed&&overlap(e,bs)){e.passed=true;S.count('basePass');S.say('An enemy walked through the base and nothing happened.','bp',.5)}}
   S.beams=S.beams.filter(b=>(b.t+=dt)<.12);
   for(const t of S.of('Tower')){t.cd-=dt;
     let best=null,bd=1e9;for(const e of en){if(e.s<0||e.dead)continue;const d=Math.hypot(e.x+13-(t.x+24),e.y+13-(t.y+24));if(d<S.opt.range&&d<bd){bd=d;best=e}}
@@ -213,6 +229,20 @@ function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map t
 TEAMS.td={name:'Tower defense',eng:'GDevelop',preset:'td',thumb:'td_tower_g.png',
  pitch:'Almost all detection: in range, shot reached it, enemy reached the base. The danger is object count.',cfg:tdCfg,
  missions:[
+  {type:'hunt',title:'This tower defense is broken',story:'Five things are wrong with it. Build towers, watch a wave, and find them all. You start with 100 gold.',
+   rules:{'PlacementGhost|Path':false,'PlacementGhost|Tower':false,'Enemy|Base':false,'Enemy|Enemy':true},opts:{del:false},
+   setup:S=>{S.of('Tower')[1].dead=true;for(let i=0;i<4;i++)S.add(newEnemy(880+i*14))},
+   bugs:[
+    {id:'path',name:'You can build on the road',hintText:'Tap a tower right onto the brown road.',done:S=>(S.ev.builtPath||0)>=1,
+     cause:'The pair PlacementGhost x Path is not ticked, so nothing stops a tower going on the road.',fix:{rules:{'PlacementGhost|Path':true}}},
+    {id:'stack',name:'Towers stack on top of each other',hintText:'Build a tower on top of an existing tower.',done:S=>(S.ev.builtOverlap||0)>=1,
+     cause:'PlacementGhost x Tower is not ticked, so the build check never looks at other towers.',fix:{rules:{'PlacementGhost|Tower':true}}},
+    {id:'multi',name:'One shot kills an enemy at once',hintText:'Watch what happens to the first enemy a tower shoots.',done:S=>(S.ev.multi||0)>=1,
+     cause:'The shot is not deleted when it hits, so it damages the enemy again on every frame it overlaps.',fix:{opts:{del:true}}},
+    {id:'base',name:'Enemies walk through the base for free',hintText:'Press Send 20 enemies and watch the right edge.',done:S=>(S.ev.basePass||0)>=1,
+     cause:'Enemy x Base is not ticked, so nothing happens when an enemy reaches it. No life is lost.',fix:{rules:{'Enemy|Base':true}}},
+    {id:'cost',name:'The game does far more checks than it needs',hintText:'Press Send 20 enemies. Open "All collision rules" and watch the pair-test counter.',done:S=>S.on('Enemy','Enemy')&&S.tests>=80,
+     cause:'Enemy x Enemy is ticked, so every enemy is tested against every other enemy, every frame, for nothing.',fix:{rules:{'Enemy|Enemy':false}}}]},
   {title:'Shots that pass through',term:'Detection vs response',story:'A shot only hurts an enemy if the pair Projectile x Enemy is ticked. Nothing here is pushed or bounced: touching just triggers an effect.',
    predict:{q:'If you untick Projectile x Enemy, what do the shots do?',opts:['They still hurt enemies','They fly straight through, harmless'],ans:1,why:'Nothing tests that pair, so the game never notices the touch.'},
    task:'Untick Projectile x Enemy and watch a few shots.',wait:'Waiting for shots to pass through enemies...',focus:['r:Projectile|Enemy'],done:S=>(S.ev.pass||0)>=4,

@@ -155,6 +155,18 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:#666;font-size
 .adv[open] summary{margin-bottom:12px}
 @media (hover:hover) and (pointer:fine){.pad{display:none}}
 body.inlab header .kicker{display:none}
+
+.hunt{display:grid;gap:8px;margin:10px 0}
+.bug{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#070707}
+.bug.found{border-color:#2c4a12;background:#0a1205}
+.bughead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bughead i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#222;color:#888;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;flex:none}
+.bug.found .bughead i{background:var(--green);color:#000}
+.bughead b{font-size:.84rem;color:#fff}.bug.locked .bughead b{color:#666;letter-spacing:.2em}
+.bughead .hint{font-size:.76rem;color:var(--cyan)}.bughead .link{margin-left:auto}
+.cause{font-size:.78rem!important;color:#cfcfcf!important;margin:6px 0 8px!important}
+.fixed{color:var(--green);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.bug .b{padding:4px 12px;font-size:.72rem}
 </style>
 </head>
 <body>
@@ -172,11 +184,11 @@ body.inlab header .kicker{display:none}
 <main class="wrap">
 <section class="view on" id="view-home">
   <h2>Pick your game</h2>
-  <p>Each one is a small playable version of a game like yours. You get five short missions: predict what will happen, break it on purpose, then see why. At the end you have a collision matrix for your own game.</p>
+  <p>Each one is a small playable game like yours, and each one is broken. Play it, find the bugs, then fix them. After that there are five short missions, and at the end you have a collision matrix for your own game.</p>
   <div class="how">
-    <div><b>1 Predict</b>Say what you think will happen before you try it.</div>
-    <div><b>2 Break it</b>Untick a rule or flip a switch and watch the game.</div>
-    <div><b>3 Understand</b>One idea, in one sentence, with the engine version.</div>
+    <div><b>1 Find the bugs</b>Play a broken game and see what is wrong.</div>
+    <div><b>2 Fix them</b>Each bug is a collision rule that is missing, off or too loose.</div>
+    <div><b>3 Then your game</b>Hunt the same bugs in your own game and write your matrix.</div>
   </div>
   <div class="cards4" id="gameCards"></div>
 </section>
@@ -240,9 +252,9 @@ body.inlab header .kicker{display:none}
   Art: Kenney, Tower Defense (Top-Down) and Tiny Dungeon, CC0. Platformer art from the Week 5 project: pixelgearz (CC0), Pixel Frog "Pixel Adventure 1" (CC BY 4.0), Val_DeMar "Tundra" (CC0). Plinko art drawn for this course.<br>
   GDevelop instruction names were checked against GDevelop 5.6.282. Roblox API names are from memory: check them against create.roblox.com/docs before relying on them.
 </div></footer>
-<script src="core.js?v=4"></script>
-<script src="sandboxes-a.js?v=4"></script>
-<script src="sandboxes-b.js?v=4"></script>
-<script src="reference.js?v=4"></script>
+<script src="core.js?v=7"></script>
+<script src="sandboxes-a.js?v=7"></script>
+<script src="sandboxes-b.js?v=7"></script>
+<script src="reference.js?v=7"></script>
 </body>
 </html>

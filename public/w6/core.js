@@ -139,7 +139,10 @@ function runLab(team){
   const stageHost=h('div',{class:'stage'});document.body.classList.add('inlab');const side=h('aside',{class:'mission',id:'mission'});
   body.append(head,h('div',{class:'labgrid'},stageHost,side));
   LAB.st=mkSandbox(stageHost,T.cfg());
-  LAB.st.S.frameHook=S=>{const m=T.missions[LAB.i];if(m&&m.done&&!LAB.m.ok&&LAB.m.started&&m.done(S))completeMission()};
+  LAB.st.S.frameHook=S=>{const m=T.missions[LAB.i];if(!m||LAB.m.ok||!LAB.m.started)return;
+    if(m.type==='hunt'){let ch=false;m.bugs.forEach(b=>{if(!b.found&&b.done(S)){b.found=true;ch=true;S.say('Bug found: '+b.name,'bf'+b.id,0)}});
+      if(ch){if(m.bugs.every(b=>b.found))completeMission();else renderMission()}}
+    else if(m.done&&m.done(S))completeMission()};
   const first=LAB.done.findIndex(d=>!d);
   startMission(first<0?T.missions.length:first)}
 function renderDots(){const d=$('#dots');d.textContent='';const n=LAB.T.missions.length;
@@ -147,6 +150,7 @@ function renderDots(){const d=$('#dots');d.textContent='';const n=LAB.T.missions
 function startMission(i){
   LAB.i=i;LAB.m={pred:null,ok:false,started:false};const T=LAB.T,st=LAB.st,m=T.missions[i];
   st.reset();st.defaults();st.highlight([]);
+  if(m&&m.type==='hunt')m.bugs.forEach(b=>{b.found=false;b.fixed=false;b.hint=false});
   if(m){if(m.rules)for(const k in m.rules){const [a,b]=k.split('|');st.setRule(a,b,m.rules[k])}
     if(m.opts)for(const k in m.opts)st.setOpt(k,m.opts[k]);
     if(m.setup)m.setup(st.S);
@@ -160,11 +164,12 @@ function completeMission(){
 function renderMission(){
   const box=$('#mission');LAB.st.restoreRows();box.textContent='';const T=LAB.T,n=T.missions.length,i=LAB.i,m=T.missions[i];
   if(!m)return renderFinal(box);
+  if(m.type==='hunt')return renderHunt(box,m);
   const state=LAB.m,finished=state.ok||LAB.done[i];
   const phase=finished?'learn':(m.predict&&state.pred==null)?'predict':'try';
   const idx={predict:0,try:m.predict?1:0,learn:m.predict?2:1}[phase];
   const labels=m.predict?['Predict','Try it','Why']:['Try it','Why'];
-  box.append(h('div',{class:'mtop'},h('span',{class:'kicker',text:'Mission '+(i+1)+' of '+n}),h('span',{class:'tag',text:m.term})),
+  box.append(h('div',{class:'mtop'},h('span',{class:'kicker',text:'Mission '+i+' of '+(n-1)}),h('span',{class:'tag',text:m.term})),
     h('h2',{text:m.title}),
     h('div',{class:'phases'},labels.map((l,k)=>h('span',{class:'ph'+(k===idx?' now':k<idx?' past':''),text:l}))));
   if(phase==='predict'){
@@ -185,6 +190,26 @@ function renderMission(){
   box.append(h('div',{class:'ctl foot'},next,
     i>0?h('button',{class:'link',text:'‹ Back',onclick:()=>startMission(i-1)}):null,
     !finished?h('button',{class:'link',text:'Skip',onclick:()=>startMission(i+1)}):null,
+    h('button',{class:'link',text:'Restart',onclick:()=>startMission(i)})))}
+function renderHunt(box,m){
+  const i=LAB.i,n=LAB.T.missions.length,found=m.bugs.filter(b=>b.found).length,all=found===m.bugs.length;
+  box.append(h('div',{class:'mtop'},h('span',{class:'kicker',text:'Start here'}),h('span',{class:'tag',text:'Bug hunt'})),
+    h('h2',{text:m.title}),h('p',{class:'story',text:m.story}),
+    h('p',{class:'ask',text:'Bugs found: '+found+' of '+m.bugs.length}));
+  const list=h('div',{class:'hunt'});
+  m.bugs.forEach((b,k)=>{
+    if(!b.found){list.append(h('div',{class:'bug locked'},h('div',{class:'bughead'},h('i',{text:String(k+1)}),h('b',{text:'???'}),
+      b.hint?h('span',{class:'hint',text:'Hint: '+b.hintText}):h('button',{class:'link',text:'Hint',onclick:()=>{b.hint=true;renderMission()}}))))}
+    else{list.append(h('div',{class:'bug found'},h('div',{class:'bughead'},h('i',{text:'✓'}),h('b',{text:b.name})),
+      h('p',{class:'cause',text:b.cause}),
+      b.fixed?h('span',{class:'fixed',text:'Fixed.'}):h('button',{class:'b',text:'Fix it',onclick:()=>{const st=LAB.st;if(b.fix.rules)for(const k2 in b.fix.rules){const [a,c]=k2.split('|');st.setRule(a,c,b.fix.rules[k2])}
+        if(b.fix.opts)for(const k2 in b.fix.opts)st.setOpt(k2,b.fix.opts[k2]);b.fixed=true;st.S.say('Fixed: '+b.name,'fx'+b.id,0);renderMission()}})))}});
+  box.append(list);
+  if(all)box.append(h('div',{class:'status ok',text:'Every bug found. Each one is a collision rule that was missing, switched off or too loose.'}));
+  else box.append(h('div',{class:'status',text:'Play the game. Use '+(window.matchMedia&&matchMedia('(pointer:coarse)').matches?'the buttons':'the keyboard')+' and try things you would not normally do.'}));
+  box.append(h('div',{class:'ctl foot'},
+    all?h('button',{class:'b',text:'Next: the missions ▶',onclick:()=>startMission(i+1)}):null,
+    !all?h('button',{class:'link',text:'Skip the hunt',onclick:()=>startMission(i+1)}):null,
     h('button',{class:'link',text:'Restart',onclick:()=>startMission(i)})))}
 function renderFinal(box){
   const T=LAB.T;LAB.st.restoreRows();

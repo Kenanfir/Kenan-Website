@@ -36,7 +36,8 @@ function plinkoCfg(){return{W,H,preset:'plinko',controls:'Tap or click the board
     const circ=(o,kick)=>{const dx=b.x+BR-o.cx,dy=b.y+BR-o.cy,d=Math.hypot(dx,dy),m=BR+o.r;if(d<m&&d>0){const nx=dx/d,ny=dy/d;b.x=o.cx+nx*m-BR;b.y=o.cy+ny*m-BR;const vn=b.vx*nx+b.vy*ny;if(vn<0){const e=kick?1.35:1+rest;b.vx-=e*vn*nx;b.vy-=e*vn*ny;if(S.opt.nudge)b.vx+=(Math.random()-.5)*10;b.contacts++;if(kick)S.say('Bumper kick!','bump',.4)}}};
     if(S.on('Ball','Peg'))for(const p of S.of('Peg'))circ(p,false);
     if(S.on('Ball','Bumper')){S.tests+=S.of('Bumper').length;for(const p of S.of('Bumper'))circ(p,true)}
-    if(b.y>H+30||b.x<-30||b.x>W+30){b.dead=true;if(!S.on('Ball','Bin')&&b.y>H)S.count('lost');S.say(b.y>H?'A ball fell out of the bottom and nothing counted it.':'A ball left the board.','lost',.8)}}
+    else if(!b.bm&&S.of('Bumper').some(o=>Math.hypot(b.x+BR-o.cx,b.y+BR-o.cy)<BR+o.r)){b.bm=1;S.count('bumperMiss')}
+    if(b.y>H+30||b.x<-30||b.x>W+30){b.dead=true;if(b.x<-30||b.x>W+30)S.count('side');if(b.fast&&b.contacts<=1)S.count('skip');if(!S.on('Ball','Bin')&&b.y>H)S.count('lost');S.say(b.y>H?'A ball fell out of the bottom and nothing counted it.':'A ball left the board.','lost',.8)}}
    if(!b.dead&&Math.hypot(b.vx,b.vy)<8&&b.y<binY-30){b.still+=dt;if(b.still>1&&!b.flag){b.flag=1;S.count('stuck');S.say('A ball is stuck on a peg.','stuck',3)}}else b.still=0}
   S.pairs('Ball','Bin',(b,bin)=>{if(b.done)return;b.done=1;S.score+=vals[bin.i];S.n++;
     if(!S.on('Ball','Peg'))S.count('slotNoPeg');
@@ -64,6 +65,18 @@ function plinkoCfg(){return{W,H,preset:'plinko',controls:'Tap or click the board
 TEAMS.plinko={name:'Dropper / Plinko',eng:'GDevelop (Physics2)',preset:'plinko',thumb:'pl_ball.png',
  pitch:'The one type where a physics engine is right: the bounce is the game. The slots still just count.',cfg:plinkoCfg,
  missions:[
+  {type:'hunt',title:'This board is broken',story:'Four things are wrong with this plinko board. Drop balls, tap the board, and find them all.',
+   rules:{'Ball|Wall':false,'Ball|Bumper':false},opts:{bullet:false,nudge:false,vy:3000},
+   setup:S=>{S.of('Ball').forEach(b=>b.dead=true);for(let i=0;i<6;i++)S.drop();const sb=S.drop(pegs[3].x-BR);sb.vy=0;sb.fast=false},
+   bugs:[
+    {id:'skip',name:'Fast balls skip right through the pegs',hintText:'Drop a few balls and watch the fast ones fall.',done:S=>(S.ev.skip||0)>=1,
+     cause:'A fast ball moves further in one frame than a peg is wide, and the game only checks once per frame.',fix:{opts:{bullet:true,vy:0}}},
+    {id:'stuck',name:'A ball gets stuck on a peg',hintText:'One ball starts on top of a peg. Wait a few seconds.',done:S=>(S.ev.stuck||0)>=1,
+     cause:'Perfect shapes and perfect physics: nothing pushes the ball sideways, so it balances forever.',fix:{opts:{nudge:true}}},
+    {id:'side',name:'Balls fall out through the sides',hintText:'Tap the board close to the left or right edge.',done:S=>(S.ev.side||0)>=1,
+     cause:'The pair Ball x Wall is not ticked, so nothing keeps the ball inside the board.',fix:{rules:{'Ball|Wall':true}}},
+    {id:'bump',name:'The bumpers do nothing',hintText:'Tap the board right above a red bumper.',done:S=>(S.ev.bumperMiss||0)>=1,
+     cause:'The pair Ball x Bumper is not ticked, so a ball just passes through the bumper.',fix:{rules:{'Ball|Bumper':true}}}]},
   {title:'Bounce vs count',term:'Detection vs response',story:'Pegs push the ball (response). Slots only notice it (detection). Both are pairs. Right now every rule is ticked.',
    predict:{q:'If you untick Ball x Peg, what do the balls do?',opts:['Still bounce off the pegs','Fall straight through the pegs'],ans:1,why:'The pegs are still drawn, but nothing tests the pair, so nothing pushes the ball.'},
    task:'Untick Ball x Peg and drop a ball. Watch it fall.',wait:'Waiting for a ball to reach a slot without bouncing...',focus:['r:Ball|Peg'],done:S=>(S.ev.slotNoPeg||0)>=1,
@@ -148,6 +161,8 @@ function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use
   if(I.act&&!S.prevAct&&hit&&!hit.self){
    if(hit.g==='Interactable'){hit.dead=true;S.keys++;S.say('Picked up the key.','key')}
    else if(hit.g==='Door'){if(hit.lock&&!S.keys)S.say('Locked. You need the key.','lock');else{hit.open=!hit.open;S.say((hit.open?'Opened the ':'Closed the ')+hit.name+'.','dr')}}}
+  if(I.act&&!S.prevAct&&hit&&hit.self)S.count('selfUse');
+  if(!S.on('Player','Prop')&&S.of('Prop').some(e=>overlap(p,e)))S.count('thruProp');
   S.prevAct=I.act;
   // monster: chases on a clear line of sight, hunts by sound, otherwise patrols
   const cm={x:m.x+12,y:m.y+12},cp={x:p.x+10,y:p.y+10},dist=Math.hypot(cp.x-cm.x,cp.y-cm.y);
@@ -189,6 +204,18 @@ function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use
 TEAMS.rbx={name:'Roblox horror',eng:'Roblox Studio (Luau)',preset:'rbx',thumb:'dg_monster.png',
  pitch:'Roblox has collision groups, a real matrix. Interaction and sight are raycasts.',cfg:horrorCfg,
  missions:[
+  {type:'hunt',title:'This dungeon is broken',story:'Four things are wrong with it. Explore, touch everything, and find them all. The first door is already open.',
+   rules:{'Player|Prop':false,'Player|World':false},opts:{noself:false,once:false},
+   setup:S=>{S.of('Door')[0].open=true},
+   bugs:[
+    {id:'walls',name:'You can walk out through the walls',hintText:'Walk into any wall and keep going.',done:S=>(S.ev.outside||0)>=1,
+     cause:'Player x World is not ticked, so the walls exist on screen but nothing tests them.',fix:{rules:{'Player|World':true}}},
+    {id:'props',name:'You walk through the barrel and the crates',hintText:'Walk into the barrel in the left room.',done:S=>(S.ev.thruProp||0)>=1,
+     cause:'Player x Prop is not ticked, so props are scenery the player ignores.',fix:{rules:{'Player|Prop':true}}},
+    {id:'use',name:'Using things does nothing',hintText:'Face the key or a door and press E.',done:S=>(S.ev.selfUse||0)>=1,
+     cause:'The interaction ray starts inside your own body, so the first thing it hits is you.',fix:{opts:{noself:true}}},
+    {id:'scare',name:'The jump scare fires over and over',hintText:'Walk into the glowing rubble square in the corridor.',done:S=>S.scares>=3,
+     cause:'A trigger zone is true on every frame you stand in it. Without a flag it fires every frame.',fix:{opts:{once:true}}}]},
   {title:'Walk through the walls',term:'Detection vs response',story:'Walls stop you because Player x World is ticked: the engine tests it and pushes you back. Your character is next to the left wall.',
    predict:{q:'If you untick Player x World, what happens at the wall?',opts:['It still stops you','You walk straight through it'],ans:1,why:'Nothing tests the pair, so nothing pushes you out of the wall.'},
    task:'Untick Player x World and walk left (A) into the wall.',wait:'Waiting for you to walk through a wall...',focus:['r:Player|World'],setup:S=>{S.p.x=64;S.p.y=128;S.m.freeze=true},done:S=>(S.ev.outside||0)>=1,
