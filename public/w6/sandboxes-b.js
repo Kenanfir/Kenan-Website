@@ -18,7 +18,7 @@ function plinkoCfg(){return{W,H,preset:'plinko',controls:'Tap or click the board
  sliders:[{id:'vy',label:'Drop speed',min:0,max:3500,step:100,val:0,unit:' px/s'},{id:'rest',label:'Bounce',min:10,max:95,val:55,unit:'%'}],
  buttons:[['Drop ball',S=>S.drop()],['Drop 10',S=>{for(let i=0;i<10;i++)S.drop()}],['Drop on a peg',S=>S.drop(pegs[3].x-BR)]],
  init(S){S.ent=[];S.score=0;S.n=0;S.aimX=null;S.aimMoved=0;S.aimHit=null;
-  S.drop=x=>S.add({g:'Ball',x:(x==null?60+Math.random()*(W-120):x),y:10,w:BR*2,h:BR*2,vx:0,vy:S.opt.vy,contacts:0,fast:S.opt.vy>=2500,done:0,t:0,still:0});
+  S.drop=x=>{if(S.of('Ball').length>=60)return{x:0,y:0,vx:0,vy:0,w:16,h:16,g:'Ball',dead:true,done:1,t:9};return S.add({g:'Ball',x:(x==null?60+Math.random()*(W-120):x),y:10,w:BR*2,h:BR*2,vx:0,vy:S.opt.vy,contacts:0,fast:S.opt.vy>=2500,done:0,t:0,still:0})};
   pegs.forEach(p=>S.add({g:'Peg',x:p.x-PR,y:p.y-PR,w:PR*2,h:PR*2,cx:p.x,cy:p.y,r:PR}));
   bumpers.forEach(b=>S.add({g:'Bumper',x:b[0]-20,y:b[1]-20,w:40,h:40,cx:b[0],cy:b[1],r:20}));
   for(let i=0;i<bins;i++)S.add({g:'Bin',x:i*bw+3,y:binY,w:bw-6,h:60,i});
@@ -51,6 +51,7 @@ function plinkoCfg(){return{W,H,preset:'plinko',controls:'Tap or click the board
     S.aimHit=best||{y:binY,what:'Bin'};S.tests+=S.of('Peg').length+S.of('Bumper').length;if(S.aimMoved>3)S.count('aimed')}
  },
  draw(S){const c=S.ctx;
+  rect(c,0,0,S.W,S.H,'#0e2430');
   for(let ty=0;ty<6;ty++)for(let tx=0;tx<10;tx++)spr(c,'pl_board.png',tx*64,ty*64,64,64);
   for(let i=0;i<bins;i++){spr(c,'pl_bin.png',i*bw+2,binY,bw-4,60,{alpha:S.on('Ball','Bin')?1:.4});outline(c,String(vals[i]),i*bw+bw/2,binY+40,S.on('Ball','Bin')?C.g:'#667',16,'center')}
   for(let i=0;i<=bins;i++)spr(c,'pl_divider.png',i*bw-4,binY-6,8,66);
@@ -146,7 +147,7 @@ function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use
   S.m=S.add({g:'Monster',x:11*T+4,y:4*T+4,w:24,h:24,state:'patrol',wp:0,freeze:false});
   S.zone=S.add({g:'Trigger',x:256,y:128,w:64,h:64});S.exit={x:512,y:128,w:96,h:64}},
  update(S,dt){
-  const p=S.p,m=S.m,I=S.input();
+  const p=S.p,m=S.m,I=S.input();S.selfFlash=Math.max(0,(S.selfFlash||0)-dt);
   const solidsFor=who=>{const o=[];if(S.on(who,'World'))o.push(...S.of('World'));if(S.on(who,'Door'))o.push(...S.of('Door').filter(d=>!d.open));if(who==='Player'&&S.on('Player','Prop'))o.push(...S.of('Prop'));return o};
   let dx=(I.r?1:0)-(I.l?1:0),dy=(I.d?1:0)-(I.u?1:0);if(dx||dy){const l=Math.hypot(dx,dy);S.face={x:dx/l,y:dy/l};dx=dx/l*115*dt;dy=dy/l*115*dt}
   const ps=solidsFor('Player');S.tests+=ps.length;moveAxis(p,dx,0,ps);moveAxis(p,0,dy,ps);
@@ -157,11 +158,11 @@ function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use
   else for(const e of [...S.of('World'),...S.of('Door'),...S.of('Prop'),...S.of('Interactable')]){const t=segRect(ox,oy,x1,y1,e);if(t!==null&&t<best&&!(e.g==='Door'&&e.open)){best=t;hit=e}}
   S.tests+=S.of('World').length+S.of('Door').length;
   S.ray={x0:ox,y0:oy,x1:ox+(x1-ox)*best,y1:oy+(y1-oy)*best,hit};
-  S.prompt=!hit?'':hit.self?'the ray hit YOU first':hit.g==='Door'?(hit.lock&&!S.keys?'locked, find the key':hit.open?'close the '+hit.name:'open the '+hit.name):hit.g==='Interactable'?'pick up the '+hit.name:'';
+  S.prompt=!hit?'':hit.self?(S.selfFlash>0?'the ray hit YOU first':''):hit.g==='Door'?(hit.lock&&!S.keys?'locked, find the key':hit.open?'close the '+hit.name:'open the '+hit.name):hit.g==='Interactable'?'pick up the '+hit.name:'';
   if(I.act&&!S.prevAct&&hit&&!hit.self){
    if(hit.g==='Interactable'){hit.dead=true;S.keys++;S.say('Picked up the key.','key')}
    else if(hit.g==='Door'){if(hit.lock&&!S.keys)S.say('Locked. You need the key.','lock');else{hit.open=!hit.open;S.say((hit.open?'Opened the ':'Closed the ')+hit.name+'.','dr')}}}
-  if(I.act&&!S.prevAct&&hit&&hit.self)S.count('selfUse');
+  if(I.act&&!S.prevAct&&hit&&hit.self){S.count('selfUse');S.selfFlash=1.6;S.say('You pressed USE and the ray hit your own body first.','selfuse',.5)}
   if(!S.on('Player','Prop')&&S.of('Prop').some(e=>overlap(p,e)))S.count('thruProp');
   S.prevAct=I.act;
   // monster: chases on a clear line of sight, hunts by sound, otherwise patrols
@@ -181,6 +182,7 @@ function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use
   if(overlap(p,S.exit)&&!S.won){S.won=1;S.say('You escaped. Resetting.','win',3);setTimeout(()=>{S.ent=[];S.cfg.init(S)},2200)}
  },
  draw(S){const c=S.ctx,p=S.p,m=S.m;
+  rect(c,0,0,W,H,'#3a1c1c');
   for(let r=0;r<11;r++)for(let k=0;k<20;k++)spr(c,'dg_floor_'+(hashN(k,r)%7===0?1:0)+'.png',k*T,r*T,T,T);
   for(let k=0;k<20;k++)for(let r=0;r<11;r++){const wall=WALLS.some(w=>k*T>=w[0]&&k*T<w[0]+w[2]&&r*T>=w[1]&&r*T<w[1]+w[3]);if(wall)spr(c,'dg_wall.png',k*T,r*T,T,T,{alpha:S.on('Player','World')?1:.45})}
   [3,11,17].forEach(k=>spr(c,'dg_torch.png',k*T,0,T,T));
@@ -231,9 +233,9 @@ TEAMS.rbx={name:'Roblox horror',eng:'Roblox Studio (Luau)',preset:'rbx',thumb:'d
    task:'Turn the flag OFF, then walk into the rubble zone (down from where you stand).',wait:'Waiting for the scare to fire five times...',focus:['t:once'],setup:S=>{S.p.x=272;S.p.y=96;S.m.freeze=true},done:S=>S.scares>=5,
    why:'A trigger is detection: it never moves you, and it tests every frame. Anything that should happen once needs a flag or a timer, same as spikes in a platformer.',
    engine:'Roblox: debounce a Touched or overlap event with a variable, or disconnect the connection after the first hit.'},
-  {title:'Look at what you use',term:'Raycast',story:'To use the key, a ray goes forward from your character. You are facing the key, but the prompt says the ray hit you.',
+  {title:'Look at what you use',term:'Raycast',story:'To use the key, a ray goes forward from your character. You are facing the key. Press USE (E) and see what happens.',
    predict:{q:'The ray starts inside your own body. What does it hit first?',opts:['The key in front of you','Your own body'],ans:1,why:'A ray reports the first thing along the line, and it starts inside you.'},
-   task:'Turn "Interaction ray ignores your own character" ON, then press USE (E) to pick up the key.',wait:'Waiting for you to pick up the key...',opts:{noself:false},focus:['t:noself'],setup:S=>{S.p.x=166;S.p.y=84;S.face={x:0,y:-1};S.m.freeze=true},done:S=>S.keys>=1,
+   task:'Press USE (E): the prompt says the ray hit you. Then turn "Interaction ray ignores your own character" ON and press USE again.',wait:'Waiting for you to pick up the key...',opts:{noself:false},focus:['t:noself'],setup:S=>{S.p.x=166;S.p.y=84;S.face={x:0,y:-1};S.m.freeze=true},done:S=>S.keys>=1,
    why:'A raycast needs a start, a direction and a filter. If the filter does not exclude yourself, the first hit is always you.',
    engine:'Roblox: workspace:Raycast(origin, direction, params) with params.FilterType = Exclude and your character in FilterDescendantsInstances.'},
   {title:'Hide from the line of sight',term:'Raycast',story:'The monster chases only while a ray from it to you is clear of walls, closed doors and props. Block the ray and it loses you.',

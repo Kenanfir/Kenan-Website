@@ -62,7 +62,7 @@ function platCfg(){return{W:672,H:384,preset:'plat',controls:'Move: A D or arrow
   S.fx.forEach(f=>f.t+=dt);S.fx=S.fx.filter(f=>f.t<.4);
  },
  draw(S){const c=S.ctx,p=S.p;
-  spr(c,'pf_bg_sky.jpg',0,0,672,384);
+  rect(c,0,0,S.W,S.H,'#8cc3ee');spr(c,'pf_bg_sky.jpg',0,0,672,384);
   const hi=img('pf_bg_hill.png');if(ready(hi))c.drawImage(hi,0,0,672,hi.naturalHeight,0,384-hi.naturalHeight,672,hi.naturalHeight);
   spr(c,'pf_tree_2.png',506,FLOOR-137,67,137);
   const rk=img('pf_rock.png');
@@ -211,6 +211,7 @@ function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map t
   if(S.lives<=0){S.say('The base fell. Restarting the wave.','lose',2);S.lives=5;S.ent=S.ent.filter(e=>e.g!=='Enemy'&&e.g!=='Projectile')}
  },
  draw(S){const c=S.ctx,gh=S.ghost;
+  rect(c,0,0,S.W,S.H,'#2ecc71');
   for(let ty=0;ty<6;ty++)for(let tx=0;tx<10;tx++)spr(c,'td_grass_'+((tx*5+ty*3)%4)+'.png',tx*64,ty*64,64,64);
   c.lineJoin='round';c.lineCap='round';c.strokeStyle='#7a4a22';c.lineWidth=64;c.beginPath();path.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();
   const dirt=img('td_dirt_0.png');if(ready(dirt)){c.strokeStyle=c.createPattern(dirt,'repeat');c.lineWidth=56;c.stroke()}

@@ -24,8 +24,9 @@ function codeEl(text){const pre=h('pre');text.split('\n').forEach((ln,i,a)=>{
   if(i<a.length-1)pre.append('\n')});return pre}
 
 /* ============================================================ assets */
-const IM={};
-function img(n){let i=IM[n];if(!i){i=IM[n]=new Image();i.src='assets/'+n}return i}
+const IM={},ASSET_FAIL=[];
+function img(n){let i=IM[n];if(!i){i=IM[n]=new Image();i.onerror=()=>ASSET_FAIL.push(n);i.src='assets/'+n}return i}
+const PRELOAD=(typeof ASSET_NAMES!=='undefined'?Promise.all(ASSET_NAMES.map(n=>new Promise(res=>{const i=img(n);if(i.complete)return res();i.addEventListener('load',res);i.addEventListener('error',res)}))):Promise.resolve());
 const ready=i=>i&&i.complete&&i.naturalWidth>0;
 // draw a sprite at x,y size w,hh. o: {flip, rot (radians, about the centre), alpha, sx,sy,sw,sh}
 function spr(c,name,x,y,w,hh,o){const i=img(name);if(!ready(i))return;o=o||{};
@@ -67,7 +68,7 @@ const inp=()=>({l:!!(KB.a||KB.arrowleft||VK.l),r:!!(KB.d||KB.arrowright||VK.r),u
 function mkSandbox(host,cfg){
   const W=cfg.W||640,H=cfg.H||384;
   const cv=mkCanvas(host,W,H);
-  const S={cv,ctx:cv.ctx,W,H,ent:[],tick:{},opt:{},log:[],tests:0,debug:true,t:0,cfg,logT:{},ev:{},frameHook:null};
+  const S={cv,ctx:cv.ctx,W,H,ent:[],tick:{},opt:{},log:[],tests:0,debug:false,t:0,cfg,logT:{},ev:{},frameHook:null};
   const ui={rules:{},toggles:{},sliders:{}};
   cv.c.addEventListener('pointerenter',()=>SB.active=true);cv.c.addEventListener('pointerleave',()=>SB.active=false);cv.c.addEventListener('pointerdown',()=>SB.active=true);
   S.on=(a,b)=>!!S.tick[pk(a,b)];
@@ -93,8 +94,8 @@ function mkSandbox(host,cfg){
     const row=h('label',{class:'rule'},cb,h('b',{text:t.label}),h('span',{text:t.fx}));togBox.append(row);ui.toggles[t.id]={cb,row};rowHome.push([row,togBox])});
   (cfg.sliders||[]).forEach(s=>{const v=h('b',{text:s.val+(s.unit||''),style:'color:#fff'});const r=h('input',{type:'range',min:s.min,max:s.max,step:s.step||1,value:s.val});
     r.oninput=()=>{S.opt[s.id]=+r.value;v.textContent=r.value+(s.unit||'')};const row=h('div',{class:'rule slider'},h('label',{},s.label+' ',r,v));togBox.append(row);ui.sliders[s.id]={r,v,u:s.unit||'',row};rowHome.push([row,togBox])});
-  const dbg=h('input',{type:'checkbox'});dbg.checked=true;dbg.onchange=()=>S.debug=dbg.checked;
-  const btns=h('div',{class:'ctl'},h('label',{},dbg,' Debug view'));
+  const dbg=h('input',{type:'checkbox'});dbg.checked=false;dbg.onchange=()=>S.debug=dbg.checked;
+  const btns=h('div',{class:'ctl'},h('label',{},dbg,' Show hitboxes and rays (debug view)'));
   const actions=h('div',{class:'ctl actions'},(cfg.buttons||[]).map(([l,fn])=>h('button',{class:'b',text:l,onclick:()=>fn(S)})));
   const statT=h('b',{class:'big',text:'0'}),statN=h('b',{class:'big red',text:'0'});
   const stat=h('div',{class:'stat'},h('div',{},h('span',{text:'Pair tests per frame (your matrix)'}),statT),h('div',{},h('span',{text:'If everything were tested against everything'}),statN));
@@ -138,16 +139,22 @@ function runLab(team){
     h('div',{class:'dots',id:'dots'}));
   const stageHost=h('div',{class:'stage'});document.body.classList.add('inlab');const side=h('aside',{class:'mission',id:'mission'});
   body.append(head,h('div',{class:'labgrid'},stageHost,side));
+  const loading=h('div',{class:'loading',text:'Loading art...'});stageHost.append(loading);
+  const myLab=LAB;
+  PRELOAD.then(()=>{if(LAB!==myLab)return;loading.remove();
+  if(ASSET_FAIL.length)stageHost.append(h('div',{class:'warn',text:'Some images did not load ('+ASSET_FAIL.slice(0,3).join(', ')+'). Reload the page with Cmd+Shift+R (Ctrl+Shift+R on Windows).'}));
   LAB.st=mkSandbox(stageHost,T.cfg());
   LAB.st.S.frameHook=S=>{const m=T.missions[LAB.i];if(!m||LAB.m.ok||!LAB.m.started)return;
     if(m.type==='hunt'){let ch=false;m.bugs.forEach(b=>{if(!b.found&&b.done(S)){b.found=true;ch=true;S.say('Bug found: '+b.name,'bf'+b.id,0)}});
       if(ch){if(m.bugs.every(b=>b.found))completeMission();else renderMission()}}
     else if(m.done&&m.done(S))completeMission()};
   const first=LAB.done.findIndex(d=>!d);
-  startMission(first<0?T.missions.length:first)}
+  startMission(first<0?T.missions.length:first)});
+  renderDots()}
 function renderDots(){const d=$('#dots');d.textContent='';const n=LAB.T.missions.length;
   for(let i=0;i<=n;i++)d.append(h('button',{class:'dot'+(i===LAB.i?' now':'')+((i<n&&LAB.done[i])?' ok':''),text:i<n?String(i+1):'✓',title:i<n?LAB.T.missions[i].title:'Your matrix',onclick:()=>startMission(i)}))}
 function startMission(i){
+  if(!LAB||!LAB.st)return;
   LAB.i=i;LAB.m={pred:null,ok:false,started:false};const T=LAB.T,st=LAB.st,m=T.missions[i];
   st.reset();st.defaults();st.highlight([]);
   if(m&&m.type==='hunt')m.bugs.forEach(b=>{b.found=false;b.fixed=false;b.hint=false});
