@@ -4,7 +4,7 @@
 const W=640,H=384,BR=8,PR=6,sp=W/13,binY=H-60,bins=8,bw=W/bins,vals=[100,10,5,1,1,5,10,100];
 const bumpers=[[213,150],[427,150],[320,222]];
 const pegs=[];for(let r=0;r<7;r++){const odd=r%2===1,n=odd?12:13;for(let i=0;i<n;i++){const x=odd?(i+1)*sp:(i+.5)*sp,y=66+r*34;if(!bumpers.some(b=>Math.hypot(x-b[0],y-b[1])<36))pegs.push({x,y})}}
-function plinkoCfg(){return{W,H,preset:'plinko',pad:[],
+function plinkoCfg(){return{W,H,preset:'plinko',controls:'Tap or click the board to drop a ball.',legend:'Debug view: green outlines show every hitbox.',pad:[],
  rules:[
   {a:'Ball',b:'Peg',on:true,fx:'The ball bounces off pegs (collision RESPONSE).'},
   {a:'Ball',b:'Wall',on:true,fx:'The board sides keep the ball in.'},
@@ -59,7 +59,7 @@ function plinkoCfg(){return{W,H,preset:'plinko',pad:[],
   for(const b of S.of('Ball')){spr(c,'pl_ball.png',b.x,b.y,16,16,{alpha:b.done?.6:1});if(S.debug){c.strokeStyle=C.g;c.lineWidth=1;c.strokeRect(b.x+.5,b.y+.5,16,16)}}
   if(S.aimHit){c.setLineDash([5,4]);c.strokeStyle=C.c;c.lineWidth=2;c.beginPath();c.moveTo(S.aimX,0);c.lineTo(S.aimX,S.aimHit.y);c.stroke();c.setLineDash([]);c.fillStyle=C.c;c.beginPath();c.arc(S.aimX,S.aimHit.y,4,0,7);c.fill();outline(c,'ray hit: '+S.aimHit.what,S.aimX+8,Math.max(14,S.aimHit.y-6),C.c,11)}
   if(!S.on('Ball','Wall')){c.setLineDash([4,4]);c.strokeStyle=C.r;c.strokeRect(1,1,W-2,H-2);c.setLineDash([])}
-  outline(c,'score '+S.score+'    tap the board to drop',10,20,'#fff',13);
+  outline(c,'score '+S.score,10,20,'#fff',14);
  }}}
 TEAMS.plinko={name:'Dropper / Plinko',eng:'GDevelop (Physics2)',preset:'plinko',thumb:'pl_ball.png',
  pitch:'The one type where a physics engine is right: the bounce is the game. The slots still just count.',cfg:plinkoCfg,
@@ -111,7 +111,7 @@ Action:    Apply a small random horizontal force to Ball`,
 const T=32,W=640,H=352;
 const WALLS=[[0,0,640,32],[0,320,640,32],[0,0,32,352],[608,0,32,352],[224,32,32,96],[224,192,32,128],[480,32,32,96],[480,192,32,128]];
 const hashN=(x,y)=>((x*73856093)^(y*19349663))>>>0;
-function horrorCfg(){return{W,H,preset:'rbx',pad:[['u','▲'],['d','▼'],['l','◀'],['r','▶'],['a','USE']],
+function horrorCfg(){return{W,H,preset:'rbx',controls:'Move: WASD or arrows. Use: E or X.',legend:'Debug view: green = your hitbox and ray, red = trigger zone and monster.',pad:[['u','▲'],['d','▼'],['l','◀'],['r','▶'],['a','USE']],
  rules:[
   {a:'Player',b:'World',on:true,fx:'Walls stop you.'},
   {a:'Player',b:'Door',on:true,fx:'A closed door stops you. Open it with USE.'},
@@ -169,7 +169,7 @@ function horrorCfg(){return{W,H,preset:'rbx',pad:[['u','▲'],['d','▼'],['l','
   for(let r=0;r<11;r++)for(let k=0;k<20;k++)spr(c,'dg_floor_'+(hashN(k,r)%7===0?1:0)+'.png',k*T,r*T,T,T);
   for(let k=0;k<20;k++)for(let r=0;r<11;r++){const wall=WALLS.some(w=>k*T>=w[0]&&k*T<w[0]+w[2]&&r*T>=w[1]&&r*T<w[1]+w[3]);if(wall)spr(c,'dg_wall.png',k*T,r*T,T,T,{alpha:S.on('Player','World')?1:.45})}
   [3,11,17].forEach(k=>spr(c,'dg_torch.png',k*T,0,T,T));
-  const z=S.zone;spr(c,'dg_rubble.png',z.x,z.y,32,32);spr(c,'dg_rubble.png',z.x+32,z.y+32,32,32);
+  const z=S.zone;spr(c,'dg_rubble.png',z.x,z.y,32,32,{alpha:.45});spr(c,'dg_rubble.png',z.x+32,z.y+32,32,32,{alpha:.45});
   for(let r=4;r<6;r++)spr(c,'dg_exit.png',17*T,r*T,T,T);
   for(const d of S.of('Door'))for(let r=0;r<2;r++)spr(c,d.open?'dg_door_open.png':(d.lock?'dg_door_locked.png':'dg_door.png'),d.x,d.y+r*T,T,T);
   for(const e of S.of('Prop'))spr(c,'dg_'+e.sp+'.png',e.x-2,e.y-2,32,32,{alpha:S.on('Player','Prop')?1:.5});
@@ -185,7 +185,6 @@ function horrorCfg(){return{W,H,preset:'rbx',pad:[['u','▲'],['d','▼'],['l','
   if(S.prompt)outline(c,'[USE] '+S.prompt,p.x+10,p.y-12,S.ray.hit&&S.ray.hit.self?C.r:C.g,12,'center');
   if(S.flick>0){c.fillStyle='rgba(0,0,0,'+Math.min(.92,S.flick*1.8)+')';c.fillRect(0,0,W,H);outline(c,'THE LIGHTS GO OUT',W/2,H/2,C.r,22,'center')}
   outline(c,'keys '+S.keys+'    scares '+S.scares+'    caught '+S.caught,12,H-10,'#fff',11);
-  outline(c,'WASD move   E use',W-12,24,'#fff',10,'right');
  }}}
 TEAMS.rbx={name:'Roblox horror',eng:'Roblox Studio (Luau)',preset:'rbx',thumb:'dg_monster.png',
  pitch:'Roblox has collision groups, a real matrix. Interaction and sight are raycasts.',cfg:horrorCfg,

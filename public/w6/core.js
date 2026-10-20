@@ -75,8 +75,8 @@ function mkSandbox(host,cfg){
   S.add=e=>{S.ent.push(e);return e};
   S.count=k=>{S.ev[k]=(S.ev[k]||0)+1};
   S.input=inp;
-  const logBox=h('div',{class:'logbox'});
-  S.say=(m,key,gap)=>{const k=key||m,now=S.t;if(S.logT[k]!=null&&now-S.logT[k]<(gap==null?.6:gap))return;S.logT[k]=now;S.log.unshift(m);S.log.length=Math.min(S.log.length,3);logBox.textContent=S.log.join('\n')};
+  const logBox=h('div',{class:'logbox',text:'Nothing has happened yet.'});
+  S.say=(m,key,gap)=>{const k=key||m,now=S.t;if(S.logT[k]!=null&&now-S.logT[k]<(gap==null?.6:gap))return;S.logT[k]=now;S.log.unshift(m);S.log.length=Math.min(S.log.length,2);logBox.textContent=S.log.join('\n')};
   S.pairs=(a,b,fn)=>{if(!S.on(a,b))return;const A=S.of(a),B=S.of(b);
     if(a===b){S.tests+=A.length*(A.length-1)/2;for(let i=0;i<A.length;i++)for(let j=i+1;j<A.length;j++)if(!A[i].dead&&!A[j].dead&&overlap(A[i],A[j]))fn(A[i],A[j]);return}
     S.tests+=A.length*B.length;for(const x of A)for(const y of B)if(!x.dead&&!y.dead&&overlap(x,y))fn(x,y)};
@@ -84,17 +84,18 @@ function mkSandbox(host,cfg){
   cfg.toggles.forEach(t=>S.opt[t.id]=t.on);(cfg.sliders||[]).forEach(s=>S.opt[s.id]=s.val);
   const pad=h('div',{class:'pad'},(cfg.pad||[]).map(([k,l])=>{const b=h('button',{class:'b padbtn',text:l});
     b.addEventListener('pointerdown',e=>{e.preventDefault();VK[k]=1;SB.active=true});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>{VK[k]=0}));return b}));
-  const rulesBox=h('div',{class:'rules'});
+  const rulesBox=h('div',{class:'rules'}),rowHome=[];
   cfg.rules.forEach(r=>{const key=pk(r.a,r.b),cb=h('input',{type:'checkbox'});cb.checked=r.on;
     cb.onchange=()=>{S.tick[key]=cb.checked;S.say((cb.checked?'Ticked ':'Unticked ')+r.a+' x '+r.b,'tk'+key,0)};
-    const row=h('label',{class:'rule'},cb,h('b',{text:r.a+' x '+r.b+(r.extra?'  (extra)':'')}),h('span',{text:r.fx}));rulesBox.append(row);ui.rules[key]={cb,row}});
+    const row=h('label',{class:'rule'},cb,h('b',{text:r.a+' x '+r.b+(r.extra?'  (extra)':'')}),h('span',{text:r.fx}));rulesBox.append(row);ui.rules[key]={cb,row};rowHome.push([row,rulesBox])});
   const togBox=h('div',{class:'rules'});
   cfg.toggles.forEach(t=>{const cb=h('input',{type:'checkbox'});cb.checked=t.on;cb.onchange=()=>{S.opt[t.id]=cb.checked;S.say(t.label+': '+(cb.checked?'on':'off'),'op'+t.id,0)};
-    const row=h('label',{class:'rule'},cb,h('b',{text:t.label}),h('span',{text:t.fx}));togBox.append(row);ui.toggles[t.id]={cb,row}});
+    const row=h('label',{class:'rule'},cb,h('b',{text:t.label}),h('span',{text:t.fx}));togBox.append(row);ui.toggles[t.id]={cb,row};rowHome.push([row,togBox])});
   (cfg.sliders||[]).forEach(s=>{const v=h('b',{text:s.val+(s.unit||''),style:'color:#fff'});const r=h('input',{type:'range',min:s.min,max:s.max,step:s.step||1,value:s.val});
-    r.oninput=()=>{S.opt[s.id]=+r.value;v.textContent=r.value+(s.unit||'')};const row=h('div',{class:'rule slider'},h('label',{},s.label+' ',r,v));togBox.append(row);ui.sliders[s.id]={r,v,u:s.unit||'',row}});
+    r.oninput=()=>{S.opt[s.id]=+r.value;v.textContent=r.value+(s.unit||'')};const row=h('div',{class:'rule slider'},h('label',{},s.label+' ',r,v));togBox.append(row);ui.sliders[s.id]={r,v,u:s.unit||'',row};rowHome.push([row,togBox])});
   const dbg=h('input',{type:'checkbox'});dbg.checked=true;dbg.onchange=()=>S.debug=dbg.checked;
-  const btns=h('div',{class:'ctl'},h('label',{},dbg,' Debug view'),(cfg.buttons||[]).map(([l,fn])=>h('button',{class:'b',text:l,onclick:()=>fn(S)})));
+  const btns=h('div',{class:'ctl'},h('label',{},dbg,' Debug view'));
+  const actions=h('div',{class:'ctl actions'},(cfg.buttons||[]).map(([l,fn])=>h('button',{class:'b',text:l,onclick:()=>fn(S)})));
   const statT=h('b',{class:'big',text:'0'}),statN=h('b',{class:'big red',text:'0'});
   const stat=h('div',{class:'stat'},h('div',{},h('span',{text:'Pair tests per frame (your matrix)'}),statT),h('div',{},h('span',{text:'If everything were tested against everything'}),statN));
   const api={S,ui,cfg,cv};
@@ -102,11 +103,17 @@ function mkSandbox(host,cfg){
   api.setOpt=(id,v)=>{S.opt[id]=v;const t=ui.toggles[id];if(t)t.cb.checked=!!v;const s=ui.sliders[id];if(s){s.r.value=v;s.v.textContent=v+s.u}};
   api.highlight=ids=>{[...Object.values(ui.rules),...Object.values(ui.toggles),...Object.values(ui.sliders)].forEach(x=>x.row.classList.remove('hl'));
     (ids||[]).forEach(id=>{const k=id.slice(0,1),v=id.slice(2);const x=k==='r'?ui.rules[v]:k==='t'?ui.toggles[v]:ui.sliders[v];if(x)x.row.classList.add('hl')})};
-  api.reset=()=>{S.ent=[];S.log=[];logBox.textContent='';S.t=0;S.ev={};S.logT={};cfg.init(S)};
+  api.reset=()=>{S.ent=[];S.log=[];logBox.textContent='Nothing has happened yet.';S.t=0;S.ev={};S.logT={};cfg.init(S)};
   api.defaults=()=>{cfg.rules.forEach(r=>api.setRule(r.a,r.b,r.on));cfg.toggles.forEach(t=>api.setOpt(t.id,t.on));(cfg.sliders||[]).forEach(s=>api.setOpt(s.id,s.val))};
-  api.panel=h('div',{class:'stage-extra'},
-    h('div',{class:'strip'},stat,h('div',{class:'logwrap'},h('span',{text:'What just happened'}),logBox)),
-    h('div',{class:'grid2 tight'},h('div',{class:'card'},h('h3',{text:'Collision rules (your matrix, live)'}),rulesBox),h('div',{class:'card'},h('h3',{text:'Break it'}),togBox,btns)));
+  const statHome=h('div',{class:'stathome'},stat);
+  api.stat=stat;
+  api.takeRows=ids=>(ids||[]).map(id=>{const k=id.slice(0,1),v=id.slice(2);const x=k==='r'?ui.rules[v]:k==='t'?ui.toggles[v]:ui.sliders[v];return x&&x.row}).filter(Boolean);
+  api.restoreRows=()=>{rowHome.forEach(([row,box])=>box.append(row));statHome.append(stat)};
+  api.actions=actions;
+  const adv=h('details',{class:'adv'},h('summary',{text:'All collision rules and switches'}),
+    h('div',{class:'grid2 tight'},h('div',{class:'card'},h('h3',{text:'Collision rules (your matrix)'}),rulesBox),h('div',{class:'card'},h('h3',{text:'Switches'}),togBox,btns)),statHome);
+  const caption=h('div',{class:'caption'},h('span',{text:cfg.controls||''}),h('span',{class:'legend',text:cfg.legend||''}));
+  api.panel=h('div',{class:'stage-extra'},(cfg.buttons||[]).length?actions:null,caption,h('div',{class:'logline'},logBox),adv);
   host.append(pad,api.panel);
   cfg.init(S);
   let fr=0;
@@ -126,10 +133,10 @@ function runLab(team){
   const saved=store.get(progressKey(team))||[];
   LAB={team,T,st:null,i:0,done:T.missions.map((m,i)=>!!saved[i]),m:{pred:null,ok:false,started:false}};
   const head=h('div',{class:'labhead'},
-    h('button',{class:'b p',text:'‹ Change game',onclick:()=>{if(LAB&&LAB.st)LAB.st.destroy();LAB=null;go('home')}}),
+    h('button',{class:'b p',text:'‹ Change game',onclick:()=>{if(LAB&&LAB.st)LAB.st.destroy();LAB=null;document.body.classList.remove('inlab');go('home')}}),
     h('div',{},h('span',{class:'tag',text:T.eng}),h('b',{text:T.name,style:'color:#fff;margin-left:6px'})),
     h('div',{class:'dots',id:'dots'}));
-  const stageHost=h('div',{class:'stage'});const side=h('aside',{class:'mission',id:'mission'});
+  const stageHost=h('div',{class:'stage'});document.body.classList.add('inlab');const side=h('aside',{class:'mission',id:'mission'});
   body.append(head,h('div',{class:'labgrid'},stageHost,side));
   LAB.st=mkSandbox(stageHost,T.cfg());
   LAB.st.S.frameHook=S=>{const m=T.missions[LAB.i];if(m&&m.done&&!LAB.m.ok&&LAB.m.started&&m.done(S))completeMission()};
@@ -151,27 +158,36 @@ function startMission(i){
 function completeMission(){
   LAB.m.ok=true;LAB.done[LAB.i]=true;store.set(progressKey(LAB.team),LAB.done);LAB.st.S.say('Mission complete.','mc',0);renderDots();renderMission()}
 function renderMission(){
-  const box=$('#mission');box.textContent='';const T=LAB.T,n=T.missions.length,i=LAB.i,m=T.missions[i];
+  const box=$('#mission');LAB.st.restoreRows();box.textContent='';const T=LAB.T,n=T.missions.length,i=LAB.i,m=T.missions[i];
   if(!m)return renderFinal(box);
   const state=LAB.m,finished=state.ok||LAB.done[i];
-  box.append(h('div',{class:'kicker',text:'Mission '+(i+1)+' of '+n}),h('h2',{text:m.title}),h('span',{class:'tag',text:m.term}),h('p',{class:'story',text:m.story}));
-  if(m.predict){
-    const pq=h('div',{class:'step'},h('div',{class:'stephead'},h('i',{text:'1'}),'Predict first'),h('p',{text:m.predict.q}));
+  const phase=finished?'learn':(m.predict&&state.pred==null)?'predict':'try';
+  const idx={predict:0,try:m.predict?1:0,learn:m.predict?2:1}[phase];
+  const labels=m.predict?['Predict','Try it','Why']:['Try it','Why'];
+  box.append(h('div',{class:'mtop'},h('span',{class:'kicker',text:'Mission '+(i+1)+' of '+n}),h('span',{class:'tag',text:m.term})),
+    h('h2',{text:m.title}),
+    h('div',{class:'phases'},labels.map((l,k)=>h('span',{class:'ph'+(k===idx?' now':k<idx?' past':''),text:l}))));
+  if(phase==='predict'){
+    box.append(h('p',{class:'story',text:m.story}),h('p',{class:'ask',text:m.predict.q}));
     const opts=h('div',{class:'opts'});
-    m.predict.opts.forEach((o,k)=>opts.append(h('button',{class:'opt'+(state.pred===k?(k===m.predict.ans?' right':' wrong'):''),text:o,onclick:()=>{if(state.pred!=null)return;state.pred=k;state.started=true;renderMission()}})));
-    pq.append(opts);
-    if(state.pred!=null)pq.append(h('p',{class:'fb '+(state.pred===m.predict.ans?'good':'bad'),text:(state.pred===m.predict.ans?'Good call. ':'Not quite. ')+m.predict.why}));
-    box.append(pq)}
-  const locked=m.predict&&state.pred==null&&!finished;
-  box.append(h('div',{class:'step'+(locked?' locked':'')},h('div',{class:'stephead'},h('i',{text:m.predict?'2':'1'}),'Try it'),h('p',{text:m.task}),
-    h('div',{class:'status'+(finished?' ok':''),text:finished?'Done.':(locked?'Answer the prediction to unlock.':m.wait)})));
-  if(finished)box.append(h('div',{class:'step why'},h('div',{class:'stephead'},h('i',{text:'✓'}),'Why it matters'),h('p',{text:m.why}),h('p',{class:'engine',text:m.engine})));
-  box.append(h('div',{class:'ctl'},
-    i>0?h('button',{class:'b p',text:'‹ Back',onclick:()=>startMission(i-1)}):null,
-    h('button',{class:'b',text:finished?(i<n-1?'Next mission ▶':'Finish ▶'):'Skip this one',style:finished?'':'opacity:.55',onclick:()=>startMission(i+1)}),
-    h('button',{class:'b p',text:'Restart mission',onclick:()=>startMission(i)})))}
+    m.predict.opts.forEach((o,k)=>opts.append(h('button',{class:'opt',text:o,onclick:()=>{state.pred=k;state.started=true;renderMission()}})));
+    box.append(opts)}
+  else if(phase==='try'){
+    if(m.predict&&state.pred!=null)box.append(h('p',{class:'fb '+(state.pred===m.predict.ans?'good':'bad'),text:(state.pred===m.predict.ans?'Good call. ':'Not quite. ')+m.predict.why}));
+    else box.append(h('p',{class:'story',text:m.story}));
+    box.append(h('p',{class:'ask',text:m.task}));
+    const rows=LAB.st.takeRows(m.focus);if(rows.length)box.append(h('div',{class:'try-controls'},rows));
+    if(m.cost)box.append(LAB.st.stat);
+    box.append(h('div',{class:'status',text:m.wait}))}
+  else{
+    box.append(h('div',{class:'status ok',text:'Done.'}),h('p',{class:'ask',text:m.why}),h('p',{class:'engine',text:m.engine}))}
+  const next=finished?h('button',{class:'b',text:i<n-1?'Next mission ▶':'Finish ▶',onclick:()=>startMission(i+1)}):null;
+  box.append(h('div',{class:'ctl foot'},next,
+    i>0?h('button',{class:'link',text:'‹ Back',onclick:()=>startMission(i-1)}):null,
+    !finished?h('button',{class:'link',text:'Skip',onclick:()=>startMission(i+1)}):null,
+    h('button',{class:'link',text:'Restart',onclick:()=>startMission(i)})))}
 function renderFinal(box){
-  const T=LAB.T;
+  const T=LAB.T;LAB.st.restoreRows();
   box.append(h('div',{class:'kicker',text:'Your matrix'}),h('h2',{text:'Now make it your game'}),
     h('p',{class:'story',text:'Everything you ticked and unticked here is a collision matrix for a game like yours. Open it in the builder, rename the groups to your own objects, and save it as docs/collision-matrix.md.'}));
   const ul=h('ul',{class:'tight'});T.cfg().rules.forEach(r=>ul.append(h('li',{},h('b',{text:r.a+' x '+r.b+(r.on?': tested. ':': not tested. ')}),r.fx)));

@@ -6,7 +6,7 @@ const CELLS=new Set();BLOCKS.forEach(([c0,r0,c1,r1])=>{for(let c=c0;c<=c1;c++)fo
 const solid=(c,r)=>CELLS.has(c+','+r);
 const FLOOR=336;
 const frame=(t,n,fps)=>Math.floor(t*fps)%n;
-function platCfg(){return{W:672,H:384,preset:'plat',pad:[['l','◀'],['r','▶'],['j','JUMP']],
+function platCfg(){return{W:672,H:384,preset:'plat',controls:'Move: A D or arrows. Jump: W, Space or Z.',legend:'Debug view: green = hurtbox, cyan = ground check or ray.',pad:[['l','◀'],['r','▶'],['j','JUMP']],
  rules:[
   {a:'Player',b:'World',on:true,fx:'Solid: you stand on it and cannot walk through it.'},
   {a:'Player',b:'Enemy',on:true,fx:'Touching a slime hurts you.'},
@@ -63,14 +63,14 @@ function platCfg(){return{W:672,H:384,preset:'plat',pad:[['l','◀'],['r','▶']
  draw(S){const c=S.ctx,p=S.p;
   spr(c,'pf_bg_sky.jpg',0,0,672,384);
   const hi=img('pf_bg_hill.png');if(ready(hi))c.drawImage(hi,0,0,672,hi.naturalHeight,0,384-hi.naturalHeight,672,hi.naturalHeight);
-  spr(c,'pf_tree_2.png',520,FLOOR-137,67,137);spr(c,'pf_tree_0.png',70,FLOOR-137,67,137);
+  spr(c,'pf_tree_2.png',506,FLOOR-137,67,137);
   const rk=img('pf_rock.png');
   if(ready(rk))for(const k of CELLS){const [col,row]=k.split(',').map(Number);
     const m=(solid(col,row-1)?1:0)|(solid(col+1,row)?2:0)|(solid(col,row+1)?4:0)|(solid(col-1,row)?8:0),v=(col*7+row*3)%3;
     c.drawImage(rk,(v*16+m)*48,0,48,48,col*T,row*T,48,48)}
   for(const e of S.ent){if(e.dead)continue;
     if(e.g==='Hazard')spr(c,'pf_spike_up.png',e.x-3,e.y-30,48,48);
-    else if(e.g==='Pickup'){const f=frame(S.t+e.x*.01,17,14);spr(c,'pf_berry_'+f+'.png',e.x-10,e.y-10,44,44);if(e.bonus&&S.debug)txt(c,'bonus',e.x+11,e.y-14,'#ffd23f',10,'center')}
+    else if(e.g==='Pickup'){const f=frame(S.t+e.x*.01,17,14);spr(c,'pf_berry_'+f+'.png',e.x-10,e.y-10,44,44);}
     else if(e.g==='Trigger'){spr(c,e.got?'pf_cp_idle_'+frame(S.t,10,10)+'.png':'pf_cp_off_0.png',e.x-22,e.y-4,64,64)}
     else if(e.g==='Enemy'){spr(c,'dg_slime.png',e.x+e.w/2-20,e.y+e.h-35,40,40,{flip:e.vx<0})}}
   S.fx.forEach(f=>spr(c,'pf_pop_'+Math.min(5,Math.floor(f.t/.4*6))+'.png',f.x-32,f.y-32,64,64));
@@ -80,10 +80,9 @@ function platCfg(){return{W:672,H:384,preset:'plat',pad:[['l','◀'],['r','▶']
   if(S.debug){c.lineWidth=1.5;c.strokeStyle=C.g;c.strokeRect(p.x+.5,p.y+.5,p.w,p.h);c.strokeStyle=C.c;c.lineWidth=2;c.strokeRect(p.sensor.x,p.sensor.y,p.sensor.w,p.sensor.h);
     for(const e of S.of('Enemy')){c.strokeStyle=C.g;c.lineWidth=1.5;c.strokeRect(e.x+.5,e.y+.5,e.w,e.h);if(e.ray){c.strokeStyle=C.c;c.lineWidth=2;c.beginPath();c.moveTo(e.ray.x,e.ray.y-6);c.lineTo(e.ray.x,e.ray.y);c.stroke()}}
     for(const e of S.of('Hazard')){c.strokeStyle=C.r;c.strokeRect(e.x+.5,e.y+.5,e.w,e.h)}
-    outline(c,'green: hurtbox   cyan: ground check / ray',8,376,C.g,10)}
+  }
   for(let i=0;i<5;i++){outline(c,'♥',10+i*18,24,i<p.hp?C.r:'#4a2a32',18)}
   outline(c,'berries '+S.score,10,46,'#ffd23f',12);
-  outline(c,'A D move   W or Space jump',S.W-8,20,'#fff',10,'right');
  }}}
 TEAMS.plat={name:'Platformer',eng:'GDevelop',preset:'plat',thumb:'pf_pl_idle_0_r.png',
  pitch:'You move by hand-tuned code. Collision is mostly detection: hurt, collect, checkpoint.',cfg:platCfg,
@@ -149,7 +148,7 @@ const check=S=>{const gh=S.ghost;
   S.tests+=S.on('PlacementGhost','Tower')?S.of('Tower').length:0;
   gh.inZone=inZone;gh.ok=zoneOk&&!pathHit&&!towerHit;gh.why=!zoneOk?'not on a pad':pathHit?'on the path':towerHit?'on a tower':'ok'};
 const newEnemy=(s)=>({g:'Enemy',s,hp:3,x:0,y:0,w:26,h:26,sp:45,slow:1,hd:0});
-function tdCfg(){return{W:640,H:384,preset:'td',pad:[],
+function tdCfg(){return{W:640,H:384,preset:'td',controls:'Tap or click the map to build a tower (50 gold).',legend:'Debug view: cyan circle = tower range, green box = enemy hitbox.',pad:[],
  rules:[
   {a:'Projectile',b:'Enemy',on:true,fx:'A shot that reaches an enemy damages it.'},
   {a:'Enemy',b:'Base',on:true,fx:'An enemy reaching the base costs a life.'},
@@ -209,7 +208,7 @@ function tdCfg(){return{W:640,H:384,preset:'td',pad:[],
   S.fx.forEach(f=>spr(c,'td_smoke.png',f.x-24,f.y-24,48,48,{alpha:1-f.t/.4}));
   c.globalAlpha=.75;spr(c,'td_tower_g.png',gh.x-4,gh.y-4,56,56,{rot:-Math.PI/2});c.globalAlpha=.35;c.fillStyle=gh.ok?C.g:C.r;c.beginPath();c.arc(gh.x+24,gh.y+24,26,0,7);c.fill();c.globalAlpha=1;
   outline(c,gh.ok?'tap to build (50)':gh.why,gh.x+24,gh.y-8,gh.ok?C.g:'#ff8aa0',11,'center');
-  outline(c,'gold '+S.gold,10,20,'#ffd23f',14);outline(c,'lives '+S.lives,10,40,'#fff',14);
+  outline(c,'gold '+S.gold,S.W-10,20,'#ffd23f',14,'right');outline(c,'lives '+S.lives,S.W-10,40,'#fff',14,'right');
  }}}
 TEAMS.td={name:'Tower defense',eng:'GDevelop',preset:'td',thumb:'td_tower_g.png',
  pitch:'Almost all detection: in range, shot reached it, enemy reached the base. The danger is object count.',cfg:tdCfg,
@@ -221,7 +220,7 @@ TEAMS.td={name:'Tower defense',eng:'GDevelop',preset:'td',thumb:'td_tower_g.png'
    engine:'In GDevelop: Projectile is in collision with Enemy, then subtract health from the enemy. No physics behaviour needed.'},
   {title:'Count the cost',term:'The matrix saves frames',story:'Every ticked pair is tested every frame. The counter under the game shows how many tests your matrix makes, and what you would pay if everything were tested against everything.',
    predict:{q:'Send 20 enemies and tick Enemy x Enemy. What happens to the pair tests?',opts:['Barely changes','Jumps by hundreds'],ans:1,why:'20 enemies tested against each other is 190 pairs, every frame.'},
-   task:'Press Send 20 enemies, then tick Enemy x Enemy and watch the number.',wait:'Waiting for the pair tests to climb above 200...',focus:['r:Enemy|Enemy'],done:S=>S.on('Enemy','Enemy')&&S.tests>=200,
+   task:'Press Send 20 enemies, then tick Enemy x Enemy and watch the number.',wait:'Waiting for the pair tests to climb above 200...',focus:['r:Enemy|Enemy'],cost:true,done:S=>S.on('Enemy','Enemy')&&S.tests>=200,
    why:'With 100 enemies that is nearly 5,000 tests every frame for something nobody asked for. A matrix is how you keep the number down: only test pairs that mean something.',
    engine:'In GDevelop every collision condition you write tests all instances of both groups. Fewer events, fewer pairs.'},
   {title:'Build where you should not',term:'Hitbox craft: a separate object',story:'A ghost tower follows your pointer. Three rules decide if the click is allowed: on a pad, not on the path, not on another tower.',

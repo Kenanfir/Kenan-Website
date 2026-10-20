@@ -20,15 +20,15 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.6;overflow-x:hidden}
 a{color:var(--green);text-decoration:none}a:hover{color:var(--cyan)}
 h1,h2,h3,h4{font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-h1{font-size:clamp(1.6rem,6vw,2.8rem);color:var(--green);text-shadow:var(--glow-g);line-height:1.15}
+h1{font-size:clamp(1.3rem,4.5vw,1.9rem);color:var(--green);text-shadow:var(--glow-g);line-height:1.15}
 h2{font-size:1.15rem;color:var(--green);margin-bottom:.9rem}
 h3{font-size:.95rem;color:var(--tx);margin-bottom:.5rem}
 p{color:var(--mut);margin-bottom:.8rem}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
-header{padding:28px 0 8px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header{padding:16px 0 0}
 .kicker{color:var(--cyan);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
 .lede{max-width:70ch;margin-top:12px}
-nav.tabs{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-top:18px}
+nav.tabs{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-top:10px}
 nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
 .tab{font:inherit;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;background:transparent;color:var(--mut);border:1px solid var(--line);padding:8px 14px;cursor:pointer;transition:.2s}
 .tab:hover{color:var(--tx);border-color:var(--purple)}
@@ -129,6 +129,32 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:#666;font-size
 @keyframes pulse{50%{box-shadow:inset 0 0 0 1px var(--green),0 0 18px rgba(163,255,18,.4)}}
 .grid2.tight{gap:12px}.grid2.tight .card{margin-bottom:0;padding:12px}
 .note{font-size:.76rem}
+
+.labgrid{grid-template-columns:minmax(0,1fr) 360px!important}
+@media(max-width:900px){.labgrid{grid-template-columns:1fr!important}}
+.mission{padding:18px!important}
+.mtop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.mission h2{font-size:1.05rem;margin:8px 0 10px}
+.phases{display:flex;gap:6px;margin-bottom:12px}
+.ph{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:#666;border-bottom:2px solid var(--line);padding:2px 0;flex:1}
+.ph.past{color:var(--green);border-color:#2c4a12}.ph.now{color:#fff;border-color:var(--purple)}
+.ask{font-size:.92rem!important;color:#fff!important;line-height:1.55}
+.story{font-size:.82rem!important}
+.try-controls{margin:10px 0;border:1px solid var(--purple);border-radius:6px;padding:4px 8px;background:#0c0714}
+.try-controls .rule{border-bottom:none}
+.status{margin-top:10px}
+.foot{margin-top:16px;gap:12px!important}
+.link{background:none;border:none;color:var(--mut);font:inherit;font-size:.76rem;text-decoration:underline;cursor:pointer;padding:4px 0}.link:hover{color:var(--tx)}
+.stathome .stat{margin:10px 0}
+.caption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--mut);margin:8px 2px 0}
+.caption .legend{color:#666}
+.logline{margin:8px 0 0}.logbox{font-size:.78rem;color:#9fd8ee;min-height:2.6em;border-left:3px solid var(--cyan);background:#07121a;padding:6px 10px}
+.actions{margin:10px 0 0!important}
+.adv{margin-top:14px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:#070707}
+.adv summary{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.adv[open] summary{margin-bottom:12px}
+@media (hover:hover) and (pointer:fine){.pad{display:none}}
+body.inlab header .kicker{display:none}
 </style>
 </head>
 <body>
@@ -214,9 +240,9 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:#666;font-size
   Art: Kenney, Tower Defense (Top-Down) and Tiny Dungeon, CC0. Platformer art from the Week 5 project: pixelgearz (CC0), Pixel Frog "Pixel Adventure 1" (CC BY 4.0), Val_DeMar "Tundra" (CC0). Plinko art drawn for this course.<br>
   GDevelop instruction names were checked against GDevelop 5.6.282. Roblox API names are from memory: check them against create.roblox.com/docs before relying on them.
 </div></footer>
-<script src="core.js"></script>
-<script src="sandboxes-a.js"></script>
-<script src="sandboxes-b.js"></script>
-<script src="reference.js"></script>
+<script src="core.js?v=4"></script>
+<script src="sandboxes-a.js?v=4"></script>
+<script src="sandboxes-b.js?v=4"></script>
+<script src="reference.js?v=4"></script>
 </body>
 </html>
