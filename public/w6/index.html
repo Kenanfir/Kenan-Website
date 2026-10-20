@@ -4,259 +4,267 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Collision Lab | Week 6</title>
-<meta name="description" content="Week 6, 2D Physics and Collision. A guided lab for four game types: platformer, tower defense, plinko and Roblox horror.">
+<title>Collision Machine | Week 6</title>
+<meta name="description" content="Four small toys that show what the computer does every frame when two things might touch.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#000; --card:#0a0a0a; --green:#A3FF12; --purple:#8A2BE2; --cyan:#00E0FF; --red:#ff4d6d;
-  --tx:#fff; --mut:#888; --line:#333;
-  --glow-g:0 0 20px rgba(163,255,18,.5); --glow-p:0 0 24px rgba(138,43,226,.6);
-}
+:root{--bg:#000;--card:#0a0a0a;--g:#A3FF12;--p:#8A2BE2;--c:#00E0FF;--o:#ff8a3d;--r:#ff4d6d;--tx:#fff;--mut:#9a9a9a;--line:#333}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.6;overflow-x:hidden}
-a{color:var(--green);text-decoration:none}a:hover{color:var(--cyan)}
-h1,h2,h3,h4{font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-h1{font-size:clamp(1.3rem,4.5vw,1.9rem);color:var(--green);text-shadow:var(--glow-g);line-height:1.15}
-h2{font-size:1.15rem;color:var(--green);margin-bottom:.9rem}
-h3{font-size:.95rem;color:var(--tx);margin-bottom:.5rem}
-p{color:var(--mut);margin-bottom:.8rem}
-.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
-header{padding:16px 0 0}
-.kicker{color:var(--cyan);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
-.lede{max-width:70ch;margin-top:12px}
-nav.tabs{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-top:10px}
-nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
-.tab{font:inherit;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;background:transparent;color:var(--mut);border:1px solid var(--line);padding:8px 14px;cursor:pointer;transition:.2s}
-.tab:hover{color:var(--tx);border-color:var(--purple)}
-.tab.on{color:#000;background:var(--green);border-color:var(--green);box-shadow:var(--glow-g)}
-.sub{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 18px}
-.sub .tab.on{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:var(--glow-p)}
-section.pane{display:none;padding:26px 0 60px}
-section.pane.on{display:block}
-.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:18px}
-.card:hover{border-color:#4a2a7a}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:820px){.grid2{grid-template-columns:1fr}}
-canvas{display:block;width:100%;background:#050505;border:1px solid var(--line);border-radius:6px;touch-action:none}
-.ctl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:10px;font-size:.8rem;color:var(--mut)}
-.ctl label{display:flex;align-items:center;gap:8px}
-.ctl input[type=range]{accent-color:var(--green);width:130px}
-button.b{font:inherit;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;border:2px solid var(--green);background:transparent;color:var(--green);padding:6px 14px;cursor:pointer;transition:.2s}
-button.b:hover{background:var(--green);color:#000;box-shadow:var(--glow-g)}
-button.b.p{border-color:var(--purple);color:var(--purple)}button.b.p:hover{background:var(--purple);color:#fff;box-shadow:var(--glow-p)}
-.read{margin-top:10px;padding:10px 12px;border-left:3px solid var(--cyan);background:#07121a;color:#cfefff;font-size:.82rem;min-height:2.6em}
-.read.bad{border-color:var(--red);background:#1a0a0e;color:#ffd0d8}
-.read.good{border-color:var(--green);background:#0d1405;color:#e5ffb8}
-pre{background:#050505;border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;font-size:.76rem;line-height:1.5;color:#d6ffa0;margin:8px 0 12px;white-space:pre}
-pre .c{color:#7b7b7b}
-code{color:var(--cyan)}
-ul.tight{margin:0 0 12px 1.1rem;color:var(--mut)}ul.tight li{margin-bottom:6px}ul.tight b{color:var(--tx)}
-.tag{display:inline-block;font-size:.7rem;border:1px solid var(--purple);color:#c9a3ff;padding:1px 8px;border-radius:99px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
-.refs a{display:block;padding:8px 0;border-bottom:1px dashed var(--line)}.refs span{display:block;color:var(--mut);font-size:.8rem}
-.note{font-size:.78rem;color:#9a9a9a;border:1px dashed var(--line);padding:10px 12px;border-radius:6px;margin:10px 0}
-.mx-wrap{overflow-x:auto}
-table.mx{border-collapse:collapse;font-size:.76rem;margin:8px 0}
-table.mx th,table.mx td{border:1px solid var(--line);padding:6px 8px;text-align:center}
-table.mx th{color:var(--green);background:#0c0c0c;font-weight:700}
-table.mx th.rot{writing-mode:vertical-rl;transform:rotate(180deg);height:92px;white-space:nowrap;padding:8px 4px}
-table.mx td.dis{background:#101010}
-table.mx input[type=checkbox]{width:18px;height:18px;accent-color:var(--green);cursor:pointer}
-table.mx td.diag{background:#0e0a14}
-.warn{margin:6px 0;padding:8px 12px;border-left:3px solid var(--red);background:#1a0a0e;color:#ffd0d8;font-size:.8rem}
-.info{margin:6px 0;padding:8px 12px;border-left:3px solid var(--cyan);background:#07121a;color:#cfefff;font-size:.8rem}
-.okk{margin:6px 0;padding:8px 12px;border-left:3px solid var(--green);background:#0d1405;color:#e5ffb8;font-size:.8rem}
-input[type=text]{font:inherit;font-size:.78rem;background:#0c0c0c;color:var(--tx);border:1px solid var(--line);padding:5px 8px;border-radius:4px;width:100%;min-width:130px}
-input[type=text]:focus{outline:none;border-color:var(--green)}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 14px}
-details{border-bottom:1px solid var(--line);padding:10px 0}
-summary{cursor:pointer;font-weight:700;color:var(--tx);list-style:none}
-summary::before{content:"+ ";color:var(--green)}details[open] summary::before{content:"- "}
-details .row{display:grid;grid-template-columns:70px 1fr;gap:4px 12px;margin-top:8px;font-size:.82rem;color:var(--mut)}
-details .row b{color:var(--cyan)}
-footer{border-top:1px solid var(--line);padding:22px 0 40px;color:#666;font-size:.76rem}
-.big{font-size:1.9rem;font-weight:700;color:var(--green);line-height:1}
-.stat{display:flex;gap:26px;flex-wrap:wrap;margin-top:10px}
-.stat div{max-width:210px}
-.stat div span{display:block;color:var(--mut);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.rule{display:grid;grid-template-columns:22px 1fr;gap:2px 8px;padding:8px 0;border-bottom:1px dashed var(--line);cursor:pointer;align-items:start}.rule input{margin-top:4px;accent-color:var(--green);width:16px;height:16px}.rule span{grid-column:2;color:var(--mut);font-size:.78rem}
-
-.view{display:none;padding:26px 0 60px}.view.on{display:block}
-.refpane{display:none}.refpane.on{display:block}
-.cards4{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
-@media(max-width:700px){.cards4{grid-template-columns:1fr}}
-.gamecard{display:grid;grid-template-columns:96px 1fr;gap:16px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;color:var(--tx);font:inherit;cursor:pointer;transition:.25s}
-.gamecard:hover{border-color:var(--purple);box-shadow:var(--glow-p);transform:translateY(-3px)}
-.gamecard .thumb{display:flex;align-items:center;justify-content:center;background:#050505;border:1px solid var(--line);border-radius:6px;height:96px}
-.gamecard .thumb img{max-width:80px;max-height:80px;image-rendering:pixelated}
-.gamecard h3{margin:6px 0 4px;color:var(--green)}.gamecard p{margin-bottom:6px;font-size:.82rem}
-.prog{font-size:.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em}
-.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px}
-@media(max-width:700px){.how{grid-template-columns:1fr}}
-.how div{border-left:3px solid var(--purple);padding:4px 12px;color:var(--mut);font-size:.84rem}.how b{display:block;color:var(--tx);text-transform:uppercase;letter-spacing:.06em;font-size:.78rem}
-.labhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.dots{display:flex;gap:6px;margin-left:auto}
-.dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);background:transparent;color:var(--mut);font:inherit;font-weight:700;font-size:.75rem;cursor:pointer}
-.dot.ok{border-color:var(--green);color:var(--green)}.dot.now{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:var(--glow-p)}
-.labgrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:18px;align-items:start}
-@media(max-width:900px){.labgrid{grid-template-columns:1fr}.mission{order:-1;position:static!important;max-height:none!important}}
-.mission{position:sticky;top:70px;max-height:calc(100vh - 90px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
-.mission h2{margin:2px 0 8px}.story{font-size:.86rem}
-.step{border:1px solid var(--line);border-radius:6px;padding:12px;margin:12px 0;background:#070707}.step.locked{opacity:.45}
-.step.why{border-color:#2c4a12;background:#0a1205}
-.stephead{display:flex;align-items:center;gap:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.76rem;color:var(--tx);margin-bottom:6px}
-.stephead i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--purple);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem}
-.step.why .stephead i{background:var(--green);color:#000}
-.step p{margin-bottom:6px;font-size:.84rem;color:#cfcfcf}.engine{color:var(--cyan)!important;font-size:.78rem!important}
-.opts{display:grid;gap:8px;margin:8px 0}
-.opt{font:inherit;font-size:.82rem;text-align:left;background:#0c0c0c;color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer;transition:.2s}
-.opt:hover{border-color:var(--purple)}.opt.right{border-color:var(--green);background:#0d1405}.opt.wrong{border-color:var(--red);background:#1a0a0e}
-.fb.good{color:#e5ffb8!important}.fb.bad{color:#ffd0d8!important}
-.status{font-size:.78rem;color:var(--cyan);padding:6px 10px;border-left:3px solid var(--cyan);background:#07121a}.status.ok{color:var(--green);border-color:var(--green);background:#0d1405}
-.stage{min-width:0}.stage canvas{border-radius:8px}
-.pad{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}.padbtn{touch-action:none;user-select:none;min-width:58px;padding:12px 14px;font-size:.9rem}
-.strip{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;margin:12px 0;align-items:stretch}
-@media(max-width:700px){.strip{grid-template-columns:1fr}}
-.logwrap{border-left:3px solid var(--cyan);background:#07121a;padding:8px 12px}.logwrap span{display:block;font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
-.logbox{white-space:pre-wrap;font-size:.8rem;color:#cfefff;min-height:3.6em}
-.stat{display:flex;gap:18px;flex-wrap:wrap}.big.red{color:#ff4d6d}
-.rules .rule{display:grid;grid-template-columns:22px 1fr;gap:2px 8px;padding:8px 6px;border-bottom:1px dashed var(--line);cursor:pointer;align-items:start;border-radius:4px}
-.rule input{margin-top:4px;accent-color:var(--green);width:16px;height:16px}.rule b{font-size:.8rem}.rule span{grid-column:2;color:var(--mut);font-size:.76rem}
-.rule.slider{display:block}.rule.hl{background:#10051d;box-shadow:inset 0 0 0 1px var(--purple),var(--glow-p);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{50%{box-shadow:inset 0 0 0 1px var(--green),0 0 18px rgba(163,255,18,.4)}}
-.grid2.tight{gap:12px}.grid2.tight .card{margin-bottom:0;padding:12px}
-.note{font-size:.76rem}
-
-.labgrid{grid-template-columns:minmax(0,1fr) 360px!important}
-@media(max-width:900px){.labgrid{grid-template-columns:1fr!important}}
-.mission{padding:18px!important}
-.mtop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.mission h2{font-size:1.05rem;margin:8px 0 10px}
-.phases{display:flex;gap:6px;margin-bottom:12px}
-.ph{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:#666;border-bottom:2px solid var(--line);padding:2px 0;flex:1}
-.ph.past{color:var(--green);border-color:#2c4a12}.ph.now{color:#fff;border-color:var(--purple)}
-.ask{font-size:.92rem!important;color:#fff!important;line-height:1.55}
-.story{font-size:.82rem!important}
-.try-controls{margin:10px 0;border:1px solid var(--purple);border-radius:6px;padding:4px 8px;background:#0c0714}
-.try-controls .rule{border-bottom:none}
-.status{margin-top:10px}
-.foot{margin-top:16px;gap:12px!important}
-.link{background:none;border:none;color:var(--mut);font:inherit;font-size:.76rem;text-decoration:underline;cursor:pointer;padding:4px 0}.link:hover{color:var(--tx)}
-.stathome .stat{margin:10px 0}
-.caption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--mut);margin:8px 2px 0}
-.caption .legend{color:#666}
-.logline{margin:8px 0 0}.logbox{font-size:.78rem;color:#9fd8ee;min-height:2.6em;border-left:3px solid var(--cyan);background:#07121a;padding:6px 10px}
-.actions{margin:10px 0 0!important}
-.adv{margin-top:14px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:#070707}
-.adv summary{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
-.adv[open] summary{margin-bottom:12px}
-@media (hover:hover) and (pointer:fine){.pad{display:none}}
-body.inlab header .kicker{display:none}
-
-.hunt{display:grid;gap:8px;margin:10px 0}
-.bug{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#070707}
-.bug.found{border-color:#2c4a12;background:#0a1205}
-.bughead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.bughead i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#222;color:#888;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;flex:none}
-.bug.found .bughead i{background:var(--green);color:#000}
-.bughead b{font-size:.84rem;color:#fff}.bug.locked .bughead b{color:#666;letter-spacing:.2em}
-.bughead .hint{font-size:.76rem;color:var(--cyan)}.bughead .link{margin-left:auto}
-.cause{font-size:.78rem!important;color:#cfcfcf!important;margin:6px 0 8px!important}
-.fixed{color:var(--green);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
-.bug .b{padding:4px 12px;font-size:.72rem}
-.loading{display:flex;align-items:center;justify-content:center;height:280px;border:1px solid var(--line);border-radius:8px;color:var(--mut);background:#050505}
+body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 8px}
+.kicker{color:var(--c);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(1.6rem,6vw,2.5rem);color:var(--g);text-transform:uppercase;letter-spacing:.08em;text-shadow:0 0 20px rgba(163,255,18,.45)}
+.lede{color:var(--mut);margin-top:10px;max-width:62ch}
+.toy{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:20px 0}
+.toy h2{font-size:1.1rem;color:var(--tx);margin:4px 0 4px}
+.n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--p);align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+.how{color:var(--mut);margin-bottom:12px}
+.row{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
+@media(max-width:760px){.row{grid-template-columns:1fr}}
+canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);border-radius:8px;touch-action:none}
+.read{font-size:.9rem}
+.lbl{color:var(--mut);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 4px}
+.nums{color:var(--tx);border-left:3px solid var(--c);padding:6px 10px;background:#07121a}
+.q{display:grid;grid-template-columns:1fr auto auto;gap:4px 10px;padding:7px 0;border-bottom:1px dashed var(--line);align-items:center}
+.q .t{color:#ddd}.q .v{color:var(--mut);font-weight:700;white-space:nowrap}
+.yn{font-weight:700;min-width:2.4em;text-align:right}
+.yes{color:var(--g)}.no{color:var(--r)}
+.verdict{margin-top:12px;padding:10px 12px;border-radius:6px;font-weight:700;font-size:1.05rem;text-align:center;border:2px solid var(--line);color:var(--mut)}
+.verdict.on{border-color:var(--g);color:var(--g);background:#0d1405}
+.verdict.bad{border-color:var(--r);color:var(--r);background:#1a0a0e}
+.big{font-size:1.9rem;font-weight:700;color:var(--g);line-height:1.1}
+.big.warn{color:var(--o)}.big.over{color:var(--r)}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:12px 0 0;color:var(--mut);font-size:.85rem}
+.ctl label{display:flex;gap:8px;align-items:center}
+.ctl b{color:var(--tx)}
+input[type=range]{accent-color:var(--g);width:min(260px,70vw)}
+input[type=checkbox],input[type=radio]{accent-color:var(--g);width:16px;height:16px}
+.bar{height:16px;background:#111;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--g);transition:width .15s}
+.foot{color:#666;font-size:.76rem;padding:12px 0 40px}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div class="kicker">Game Development | Week 6 | 2D Physics &amp; Collision</div>
-    <h1>Collision Lab</h1>
-  </div>
-  <nav class="tabs"><div class="wrap" id="mainNav">
-    <button class="tab on" data-v="home">Start</button>
-    <button class="tab" data-v="ref">Reference</button>
-  </div></nav>
-</header>
+<header><div class="wrap">
+  <div class="kicker">Game Development | Week 6 | Optional</div>
+  <h1>Collision Machine</h1>
+  <p class="lede">Four small toys that show what the computer does, every frame, when two things might touch. Same bullet and same slime as the slides. Takes about five minutes.</p>
+</div></header>
 
 <main class="wrap">
-<section class="view on" id="view-home">
-  <h2>Pick your game</h2>
-  <p>Each one is a small playable game like yours, and each one is broken. Play it, find the bugs, then fix them. After that there are five short missions, and at the end you have a collision matrix for your own game.</p>
-  <div class="how">
-    <div><b>1 Find the bugs</b>Play a broken game and see what is wrong.</div>
-    <div><b>2 Fix them</b>Each bug is a collision rule that is missing, off or too loose.</div>
-    <div><b>3 Then your game</b>Hunt the same bugs in your own game and write your matrix.</div>
+
+<section class="toy" id="t1">
+  <span class="n">1</span>
+  <h2>Touching is four yes or no questions</h2>
+  <p class="how">Drag the small orange bullet onto the slime. Watch the four questions change.</p>
+  <div class="row">
+    <canvas id="c1" width="560" height="400"></canvas>
+    <div class="read">
+      <div class="lbl">What the computer knows</div>
+      <div class="nums" id="r1nums"></div>
+      <div class="lbl">The four questions</div>
+      <div id="r1q"></div>
+      <div class="verdict" id="r1v">not touching</div>
+    </div>
   </div>
-  <div class="cards4" id="gameCards"></div>
 </section>
 
-<section class="view" id="view-lab"><div id="labBody"></div></section>
-
-<section class="view" id="view-ref">
-  <h2>Reference</h2>
-  <div class="sub" id="refTabs"><button class="tab on" data-r="matrix">Matrix builder</button><button class="tab" data-r="bugs">Bug clinic</button></div>
-  <div class="refpane on" id="r-matrix">
-    <p>Start from your game type, then tick which groups may touch which. Collision is mutual, so one tick covers both directions. Everything you do not tick is a check your game never runs.</p>
-    <div class="sub" id="presetTabs"></div>
-    <div class="card">
-      <div class="mx-wrap" id="mxTable"></div>
-      <div class="ctl">
-        <label>Add a group <input type="text" id="newGroup" placeholder="e.g. Shield" maxlength="24" style="width:160px"></label>
-        <button class="b p" id="addGroup">Add</button>
-        <button class="b p" id="resetPreset">Reset to preset</button>
-      </div>
-    </div>
-    <div class="card"><h3>Checks</h3><div id="mxWarn"></div></div>
-    <div class="card">
-      <h3>Output</h3>
-      <div class="sub" id="outTabs">
-        <button class="tab on" data-o="md">Markdown file</button>
-        <button class="tab" data-o="gd">GDevelop</button>
-        <button class="tab" data-o="lua">Roblox (Luau)</button>
-      </div>
-      <pre id="outBox"></pre>
-      <div class="ctl">
-        <button class="b" id="copyOut">Copy</button>
-        <button class="b p" id="copyLink">Copy link to this matrix</button>
-        <span id="copyMsg"></span>
-      </div>
-      <p style="margin-top:12px">Save the Markdown as <code>docs/collision-matrix.md</code> in your team repository. To swap with another team, send them the link: it opens this page with your matrix already filled in, ready to break.</p>
-    </div>
-    <div class="card">
-      <h3>Prototype v0.3, due Week 7</h3>
-      <ul class="tight">
-        <li>A written collision matrix in <code>docs/</code>, listing every group and what it may touch.</li>
-        <li>Groups set up in your engine, with collision conditions matching the document.</li>
-        <li>Hurtbox, hitbox and sprite bounds separated on the player and at least one enemy.</li>
-        <li>A dedicated ground or interaction check that is not the whole body.</li>
-        <li>At least one raycast in use: line of sight, ledge detection or interaction range.</li>
-        <li>An invulnerability window after damage, with visible feedback.</li>
-        <li>Every bug in the clinic checked for, and either absent or logged.</li>
-      </ul>
+<section class="toy" id="t2">
+  <span class="n">2</span>
+  <h2>More objects, many more checks</h2>
+  <p class="how">The computer checks every object against every other, every frame. Slide the number up. Then switch the shape and see what each check costs.</p>
+  <div class="row">
+    <canvas id="c2" width="560" height="300"></canvas>
+    <div class="read">
+      <div class="lbl">Objects</div>
+      <div class="big" id="r2n">100</div>
+      <div class="lbl">Checks every frame</div>
+      <div class="big" id="r2c">4,950</div>
+      <div class="lbl">Time for all of them (ballpark)</div>
+      <div class="big" id="r2t">0.02 ms</div>
+      <div class="bar"><i id="r2b"></i></div>
+      <div class="lbl" id="r2p">0.1% of a 16.7 ms frame</div>
     </div>
   </div>
-  <div class="refpane" id="r-bugs">
-    <p>Keep this open while you debug. Filter by your game type, or search a symptom.</p>
-    <div class="chips" id="bugChips"></div>
-    <input type="text" id="bugSearch" placeholder="Search a symptom, e.g. jitter, twice, through" style="margin-bottom:12px">
-    <div id="bugList"></div>
+  <div class="ctl">
+    <label>Objects <input type="range" id="s2" min="2" max="1000" step="1" value="100"> <b id="s2v">100</b></label>
+    <label><input type="radio" name="shape" id="shA" checked> Simple boxes (about 5 ns a check)</label>
+    <label><input type="radio" name="shape" id="shB"> Complicated outlines (about 500 ns)</label>
   </div>
 </section>
+
+<section class="toy" id="t3">
+  <span class="n">3</span>
+  <h2>So it skips everything far away</h2>
+  <p class="how">Move your pointer over the box. The bullet follows. Switch the grid on and off and compare how many objects the bullet is checked against.</p>
+  <div class="row">
+    <canvas id="c3" width="640" height="360"></canvas>
+    <div class="read">
+      <div class="lbl">The bullet is compared with</div>
+      <div class="big" id="r3c">150</div>
+      <div class="lbl">out of</div>
+      <div class="nums" id="r3o">150 objects</div>
+      <div class="ctl"><label><input type="checkbox" id="g3"> Grid on</label></div>
+      <div class="ctl"><label><input type="button" id="n3" value="Scatter again" style="font:inherit;padding:6px 12px;background:transparent;color:var(--g);border:2px solid var(--g);cursor:pointer;text-transform:uppercase"></label></div>
+      <div class="lbl" id="r3t"></div>
+    </div>
+  </div>
+</section>
+
+<section class="toy" id="t4">
+  <span class="n">4</span>
+  <h2>Fast things can be missed</h2>
+  <p class="how">The computer only asks once per frame. Each square is where the bullet is on one frame. Make it faster and watch it skip the thin wall.</p>
+  <canvas id="c4" width="800" height="190"></canvas>
+  <div class="ctl">
+    <label>Speed <input type="range" id="s4" min="5" max="200" step="5" value="10"> <b id="s4v">10</b> px per frame</label>
+    <label><input type="checkbox" id="l4"> Also check a line along the move</label>
+  </div>
+  <div class="verdict" id="r4v" style="margin-top:12px"></div>
+  <div class="lbl" id="r4t"></div>
+</section>
+
+<p class="foot">Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. Times in toy 2 are ballpark figures to show the shape of the idea: your machine and engine will differ.</p>
 </main>
 
-<footer><div class="wrap">
-  Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. The sandboxes are small simulations written for this page, not footage of any game. Real-game links open a YouTube search, so you choose the clip.<br>
-  Art: Kenney, Tower Defense (Top-Down) and Tiny Dungeon, CC0. Platformer art from the Week 5 project: pixelgearz (CC0), Pixel Frog "Pixel Adventure 1" (CC BY 4.0), Val_DeMar "Tundra" (CC0). Plinko art drawn for this course.<br>
-  GDevelop instruction names were checked against GDevelop 5.6.282. Roblox API names are from memory: check them against create.roblox.com/docs before relying on them.
-</div></footer>
-<script src="assets.js?v=9"></script>
-<script src="core.js?v=9"></script>
-<script src="sandboxes-a.js?v=9"></script>
-<script src="sandboxes-b.js?v=9"></script>
-<script src="reference.js?v=9"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const G='#A3FF12',O='#ff8a3d',R='#ff4d6d',C='#00E0FF',DIM='#4a4a4a';
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function pos(c,e){const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}}
+
+/* ---------------------------------------------------------------- 1: four questions */
+(function(){
+  const c=$('c1'),x=c.getContext('2d');
+  const S={x:260,y:310,w:36,h:28};                 // the slime, same numbers as the slides
+  const B={x:236,y:292,w:8,h:8};                   // the bullet
+  const OX=200,OY=270,K=4;                          // world window: x 200..340, y 270..370, drawn 4x bigger
+  const qrows=[];const box=$('r1q');
+  for(let i=0;i<4;i++){const r=el('div','q');const t=el('span','t');const v=el('span','v');const yn=el('span','yn');r.append(t,v,yn);box.append(r);qrows.push({t,v,yn})}
+  function draw(touch){
+    x.clearRect(0,0,c.width,c.height);x.fillStyle='#050505';x.fillRect(0,0,c.width,c.height);
+    x.strokeStyle='#161616';x.lineWidth=1;
+    for(let i=0;i<=c.width;i+=40){x.beginPath();x.moveTo(i,0);x.lineTo(i,c.height);x.stroke()}
+    for(let j=0;j<=c.height;j+=40){x.beginPath();x.moveTo(0,j);x.lineTo(c.width,j);x.stroke()}
+    const sx=(S.x-OX)*K,sy=(S.y-OY)*K;
+    x.fillStyle=touch?'rgba(163,255,18,.22)':'rgba(163,255,18,.08)';x.fillRect(sx,sy,S.w*K,S.h*K);
+    x.strokeStyle=touch?G:'#4d7a10';x.lineWidth=touch?4:2.5;x.strokeRect(sx,sy,S.w*K,S.h*K);
+    x.fillStyle=G;x.font='bold 16px "Space Mono",monospace';x.fillText('slime',sx+8,sy+S.h*K-10);
+    const bx=(B.x-OX)*K,by=(B.y-OY)*K;
+    x.fillStyle=O;x.fillRect(bx,by,B.w*K,B.h*K);
+    x.fillStyle=O;x.fillText('bullet  (drag me)',Math.max(4,bx-10),by-10);
+  }
+  function update(){
+    const sR=S.x+S.w,sB=S.y+S.h,bR=B.x+B.w,bB=B.y+B.h;
+    const q=[
+      ["Bullet starts before the slime ends?",B.x+' < '+sR,B.x<sR],
+      ["Bullet ends after the slime starts?",bR+' > '+S.x,bR>S.x],
+      ["Bullet's top is above the slime's bottom?",B.y+' < '+sB,B.y<sB],
+      ["Bullet's bottom is below the slime's top?",bB+' > '+S.y,bB>S.y]];
+    let all=true;
+    q.forEach(([t,v,ok],i)=>{qrows[i].t.textContent=t;qrows[i].v.textContent=v;qrows[i].yn.textContent=ok?'yes':'no';qrows[i].yn.className='yn '+(ok?'yes':'no');all=all&&ok});
+    $('r1nums').textContent='Slime:  x '+S.x+', y '+S.y+', width '+S.w+', height '+S.h+'\nBullet: x '+B.x+', y '+B.y+', width '+B.w+', height '+B.h;
+    $('r1nums').style.whiteSpace='pre-wrap';
+    const v=$('r1v');v.textContent=all?'4 of 4 yes: TOUCHING':(q.filter(a=>a[2]).length+' of 4 yes: not touching');v.className='verdict '+(all?'on':'');
+    draw(all);
+  }
+  let drag=false;
+  const move=e=>{const p=pos(c,e);B.x=Math.round(clamp(p.x/K+OX-B.w/2,OX,OX+140-B.w));B.y=Math.round(clamp(p.y/K+OY-B.h/2,OY,OY+100-B.h));update()};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  c.addEventListener('pointerdown',e=>{drag=true;c.setPointerCapture(e.pointerId);move(e)});
+  c.addEventListener('pointermove',e=>{if(drag)move(e)});
+  c.addEventListener('pointerup',()=>drag=false);c.addEventListener('pointercancel',()=>drag=false);
+  window.addEventListener('load',update);update();
+  window.__t1={S,B,update};
+})();
+
+/* ---------------------------------------------------------------- 2: how many checks */
+(function(){
+  const c=$('c2'),x=c.getContext('2d');
+  let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+  const dots=[];for(let i=0;i<1000;i++)dots.push([rnd()*c.width,rnd()*c.height]);
+  const BUDGET=16.7;
+  function upd(){
+    const n=+$('s2').value,pairs=n*(n-1)/2,ns=$('shB').checked?500:5,ms=pairs*ns/1e6,pct=ms/BUDGET*100;
+    $('s2v').textContent=n;$('r2n').textContent=fmt(n);$('r2c').textContent=fmt(pairs);
+    const t=$('r2t');t.textContent=(ms<0.001?'under 0.001':ms<0.1?ms.toFixed(3):ms<10?ms.toFixed(2):ms.toFixed(0))+' ms';
+    t.className='big'+(pct>100?' over':pct>40?' warn':'');
+    $('r2b').style.width=Math.min(100,pct)+'%';$('r2b').style.background=pct>100?R:pct>40?O:G;
+    $('r2p').textContent=(pct<10?pct.toFixed(1):fmt(pct))+'% of a 16.7 ms frame'+(pct>100?': over budget':'');
+    x.clearRect(0,0,c.width,c.height);x.fillStyle='#050505';x.fillRect(0,0,c.width,c.height);
+    const shown=Math.min(n,400);x.fillStyle=pct>100?R:O;
+    for(let i=0;i<shown;i++)x.fillRect(dots[i][0],dots[i][1],6,6);
+    x.fillStyle='#777';x.font='13px "Space Mono",monospace';x.fillText(n>400?'drawing 400 of '+fmt(n):fmt(n)+' objects',8,c.height-10);
+  }
+  ['s2','shA','shB'].forEach(id=>$(id).addEventListener('input',upd));$('shA').addEventListener('change',upd);$('shB').addEventListener('change',upd);
+  upd();window.__t2={upd};
+})();
+
+/* ---------------------------------------------------------------- 3: the grid */
+(function(){
+  const c=$('c3'),x=c.getContext('2d');
+  const CW=80,CH=90,COLS=8,ROWS=4,N=150;
+  let dots=[],bx=300,by=170;
+  function scatter(){dots=[];for(let i=0;i<N;i++)dots.push([10+Math.random()*(c.width-20),10+Math.random()*(c.height-20)]);upd()}
+  function upd(){
+    const grid=$('g3').checked,bc=Math.min(COLS-1,Math.floor(bx/CW)),br=Math.min(ROWS-1,Math.floor(by/CH));
+    x.clearRect(0,0,c.width,c.height);x.fillStyle='#050505';x.fillRect(0,0,c.width,c.height);
+    if(grid){
+      x.fillStyle='rgba(163,255,18,.10)';x.fillRect(Math.max(0,bc-1)*CW,Math.max(0,br-1)*CH,(Math.min(COLS-1,bc+1)-Math.max(0,bc-1)+1)*CW,(Math.min(ROWS-1,br+1)-Math.max(0,br-1)+1)*CH);
+      x.strokeStyle='#222';x.lineWidth=1;for(let i=0;i<=COLS;i++){x.beginPath();x.moveTo(i*CW,0);x.lineTo(i*CW,c.height);x.stroke()}for(let j=0;j<=ROWS;j++){x.beginPath();x.moveTo(0,j*CH);x.lineTo(c.width,j*CH);x.stroke()}
+    }
+    let count=0;
+    for(const [dx,dy] of dots){
+      const cc=Math.floor(dx/CW),rr=Math.floor(dy/CH),near=!grid||(Math.abs(cc-bc)<=1&&Math.abs(rr-br)<=1);
+      if(near)count++;
+      x.fillStyle=near?O:DIM;x.fillRect(dx-3,dy-3,6,6);
+    }
+    x.fillStyle=G;x.fillRect(bx-6,by-6,12,12);x.strokeStyle='#fff';x.lineWidth=2;x.strokeRect(bx-6,by-6,12,12);
+    $('r3c').textContent=count;$('r3c').className='big'+(grid?'':' warn');
+    $('r3o').textContent=N+' objects in the level';
+    $('r3t').textContent=grid?'Only objects in the bullet\'s cell and the cells next door. The grey ones are never checked.':'Everything. Even the objects on the far side of the level.';
+  }
+  const mv=e=>{const p=pos(c,e);bx=Math.max(6,Math.min(c.width-6,p.x));by=Math.max(6,Math.min(c.height-6,p.y));upd()};
+  c.addEventListener('pointermove',mv);c.addEventListener('pointerdown',mv);
+  $('g3').addEventListener('change',upd);$('n3').addEventListener('click',scatter);
+  scatter();window.__t3={upd};
+})();
+
+/* ---------------------------------------------------------------- 4: fast things */
+(function(){
+  const c=$('c4'),x=c.getContext('2d');
+  const WALL={x:420,w:10},BW=12,X0=30,Y=86;
+  function upd(){
+    const sp=+$('s4').value,line=$('l4').checked;
+    $('s4v').textContent=sp;
+    x.clearRect(0,0,c.width,c.height);x.fillStyle='#050505';x.fillRect(0,0,c.width,c.height);
+    x.fillStyle='#888';x.fillRect(WALL.x,20,WALL.w,150);x.fillStyle='#9a9a9a';x.font='13px "Space Mono",monospace';x.fillText('thin wall',WALL.x-22,14);
+    const frames=[];for(let k=0;X0+sp*k<c.width;k++)frames.push(X0+sp*k);
+    const touches=frames.map(px=>px+BW>WALL.x&&px<WALL.x+WALL.w);
+    const hitFrame=touches.indexOf(true)+1;
+    let lineFrame=0;
+    frames.forEach((px,k)=>{
+      const touch=touches[k],nx=px+sp;
+      const segHit=!hitFrame&&px<WALL.x+WALL.w&&nx+BW>WALL.x;
+      if(segHit&&!lineFrame)lineFrame=k+1;
+      x.fillStyle=touch?'rgba(163,255,18,.35)':'rgba(255,138,61,.15)';x.strokeStyle=touch?G:O;x.lineWidth=2;
+      x.fillRect(px,Y,BW,BW);x.strokeRect(px,Y,BW,BW);
+      if(frames.length<=14||k<6){x.fillStyle='#8a8a8a';x.font='11px "Space Mono",monospace';x.fillText('f'+(k+1),px-1,Y+30)}
+      if(line&&segHit){x.strokeStyle=C;x.lineWidth=3;x.beginPath();x.moveTo(px+BW/2,Y+BW/2);x.lineTo(nx+BW/2,Y+BW/2);x.stroke()}
+    });
+    const v=$('r4v');
+    if(hitFrame){v.textContent='A frame landed on the wall (frame '+hitFrame+'). It is caught.';v.className='verdict on'}
+    else if(line&&lineFrame){v.textContent='No frame touched the wall, but the line along the move did (frame '+lineFrame+'). Caught.';v.className='verdict on'}
+    else{v.textContent='No frame touched the wall. The bullet is on the other side and nothing noticed.';v.className='verdict bad'}
+    $('r4t').textContent='Step '+sp+' px per frame. Bullet '+BW+' px wide plus wall '+WALL.w+' px = '+(BW+WALL.w)+' px. A step bigger than that can jump over the wall.';
+  }
+  $('s4').addEventListener('input',upd);$('l4').addEventListener('change',upd);upd();window.__t4={upd};
+})();
+</script>
 </body>
 </html>
