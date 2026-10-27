@@ -80,10 +80,11 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
 
 <section class="card">
   <h2><span class="n">3</span>Hitstop: freeze on impact</h2>
-  <p class="how">Choose how many frames the game freezes when the hit lands, then press Swing. Try 0, then 4, then 20.</p>
+  <p class="how">Choose how many frames the game freezes when the hit lands, then press Swing. Try 0, then 4, then 20. Then switch the hit sound off and swing again: the freeze and the sound work together.</p>
   <canvas id="c" width="800" height="200"></canvas>
   <div class="ctl" id="opts"></div>
-  <div class="ctl"><button id="swing">Swing</button></div>
+  <div class="ctl"><button id="swing">Swing</button>
+    <label style="color:var(--mut);display:flex;gap:8px;align-items:center"><input type="checkbox" id="hitsnd" checked style="accent-color:var(--g);width:16px;height:16px"> Hit sound</label></div>
   <div class="read" id="hsread"></div>
 </section>
 
@@ -111,6 +112,16 @@ function five(random){
 }
 $('same').addEventListener('click',()=>five(false));
 $('rand').addEventListener('click',()=>five(true));
+
+function thud(){
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  if(AC.state==='suspended')AC.resume();
+  const len=Math.floor(AC.sampleRate*0.22),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<len;i++){const t=i/AC.sampleRate;
+    d[i]=(Math.random()*2-1)*Math.exp(-t*60)*0.6+Math.sin(2*Math.PI*(150-t*300)*t)*Math.exp(-t*18)}
+  const src=AC.createBufferSource();src.buffer=buf;
+  const g=AC.createGain();g.gain.value=0.5;src.connect(g).connect(AC.destination);src.start();
+}
 
 /* toy 3: hitstop */
 const cv=$('c'),x=cv.getContext('2d');
@@ -145,6 +156,7 @@ function swing(){
   if(playing)return;playing=true;clearInterval(timer);
   let f=0,held=0;
   timer=setInterval(()=>{
+    if(f===IMPACT&&held===0&&$('hitsnd').checked)thud();
     if(f===IMPACT&&held<freeze){held++;scene(f,true);return}
     scene(f,false);f++;
     if(f>60){clearInterval(timer);playing=false;setTimeout(idle,400)}
