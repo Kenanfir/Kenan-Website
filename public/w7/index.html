@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Sound Sources | Week 7</title>
-<meta name="description" content="Where to get game sounds and the licence rule for each, plus two small toys for random pitch and hitstop.">
+<title>Audio and Juice | Week 7</title>
+<meta name="description" content="Week 7 companion: where to get game sounds and the licence rule for each, two toys for random pitch and hitstop, a copy-ready audio log, and a reading and watching list on sound, juice and VFX.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--card:#0a0a0a;--g:#A3FF12;--p:#8A2BE2;--c:#00E0FF;--o:#ff8a3d;--r:#ff4d6d;--tx:#fff;--mut:#9a9a9a;--line:#333}
+:root{--bg:#000;--card:#0a0a0a;--g:#A3FF12;--p:#8A2BE2;--c:#00E0FF;--o:#ff8a3d;--r:#ff4d6d;--tx:#fff;--mut:#a8a8a8;--line:#3a3a3a}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.55}
 .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
@@ -34,21 +34,48 @@ pre{background:#050505;border:1px solid var(--line);border-radius:8px;padding:12
 canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);border-radius:8px}
 .ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 0}
 .read{margin-top:10px;color:var(--mut);font-size:.9rem}
-.foot{color:#8a8a8a;font-size:.76rem;padding:12px 0 40px}
+.foot{color:#a0a0a0;font-size:.76rem;padding:12px 0 40px}
+
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+nav.top{position:sticky;top:0;z-index:5;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+nav.top a{flex:none;color:var(--tx);text-decoration:none;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+nav.top a:hover,nav.top a:focus-visible{border-color:var(--g);color:var(--g);outline:none}
+.sec{margin:42px 0 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sec h2{font-size:1.25rem;color:var(--g);text-transform:uppercase;letter-spacing:.08em}
+.sec span{color:var(--mut);font-size:.85rem}
+.grp{margin:26px 0 10px;color:var(--c);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.res{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--tx);transition:border-color .15s,transform .15s}
+.res:hover,.res:focus-visible{border-color:var(--g);transform:translateY(-2px);outline:none}
+.res b{font-size:.95rem;line-height:1.35}
+.res .by{color:var(--mut);font-size:.8rem}
+.res .why{font-size:.85rem;color:#cfcfcf}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.chip{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px solid var(--line);color:var(--mut)}
+.chip.t{color:var(--c);border-color:#08434d}.chip.go{color:var(--g);border-color:#2f4d09}.chip.team{color:var(--o);border-color:#5a3515}
+.logbox{position:relative}
+.logbox button{position:absolute;top:8px;right:8px;padding:4px 10px;font-size:.75rem;background:#000}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.res{transition:none}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <div class="kicker">Game Development | Week 7 | Audio and juice</div>
-  <h1>Sound Sources</h1>
-  <p class="lede">Where to get sounds, the rule for each, and two small toys. Log every source you use in docs/audio-log.md.</p>
+  <div class="kicker">Game Development | Week 7 | IMT01306618</div>
+  <h1>Audio &amp; Juice</h1>
+  <p class="lede">Everything from today in one place: where to get sounds, two toys to hear the ideas, an audio log to copy, and what to watch next. Keep it open during the exercise and the studio.</p>
 </div></header>
+<nav class="top" aria-label="Sections"><div class="wrap">
+  <a href="#sounds">Sounds</a><a href="#toys">Toys</a><a href="#log">Audio log</a><a href="#learn">Go deeper</a>
+</div></nav>
 
 <main class="wrap">
 
+<div class="sec" id="sounds"><h2>Sounds</h2><span>Make or get them, and know the rule for each.</span></div>
+
 <section class="card">
   <h2><span class="n">1</span>Make or get sounds</h2>
-  <p class="how">Start with the first one. Twelve sounds in fifteen minutes.</p>
+  <p class="how">Start with the first one. Make your top five sounds before you go looking for more.</p>
   <div>
     <div class="s"><a class="btn" href="https://sfxr.me" target="_blank" rel="noopener">sfxr.me</a>
       <div class="for">Make sound effects in your browser. Press a preset (pickup, jump, hit, explosion), then export to download a WAV.</div>
@@ -68,6 +95,7 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
   </div>
 </section>
 
+<div class="sec" id="toys"><h2>Toys</h2><span>Hear the idea before you build it.</span></div>
 <section class="card">
   <h2><span class="n">2</span>Same sound, random pitch</h2>
   <p class="how">The first button plays the exact same beep five times. The second changes the pitch a little each time, between 0.9 and 1.1.</p>
@@ -88,7 +116,27 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
   <div class="read" id="hsread"></div>
 </section>
 
-<p class="foot">Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. Hit sounds are layers from Kenney's Impact Sounds pack (CC0), plus a synthesised low boom. Licence notes were checked against each site in October 2026 and can change.</p>
+<div class="sec" id="log"><h2>Audio log</h2><span>An AFL-2 deliverable. Copy this into docs/audio-log.md and fill a row for every sound or track.</span></div>
+<section class="card logbox">
+<button id="copylog" type="button">Copy</button>
+<pre id="logtxt"># Audio log
+
+| File | What it is | Source (site and link) | Licence | Credit needed? | Prompt (AI music only) |
+|---|---|---|---|---|---|
+| coin.wav | Pickup sound | sfxr.me | Made by me | No | |
+| hit_01.wav | Enemy hit | kenney.nl Impact Sounds | CC0 | No | |
+| loop_menu.mp3 | Menu music | suno.com | Plan: free or paid | Check terms | Instrumental, calm, 8-bit, 90 bpm, loops |
+</pre>
+</section>
+<div class="sec" id="learn"><h2>Go deeper</h2><span>Optional. Pick the one for your game. Links open YouTube; the chip shows where to start.</span></div>
+<div class="grp">Sound design</div><div class="grid"><a class="res" href="https://youtu.be/MYi72cCOR8k" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>I recreated 30 sounds from Roblox Doors</b><span class="by">Davidlap, 8 min</span><span class="why">See how a monster, a door and a scream are built from ordinary sounds.</span><span class="chips"><span class="chip team">Roblox horror</span><span class="chip ">Sound effects</span></span></a><a class="res" href="https://youtu.be/TDLn_HVhz7I" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Making the sounds of Roblox Doors: The Archives</b><span class="by">Davidlap, 1 min</span><span class="why">A one-minute version. Good to show a teammate.</span><span class="chips"><span class="chip team">Roblox horror</span><span class="chip ">Sound effects</span></span></a><a class="res" href="https://wiki.gdevelop.io/gdevelop5/all-features/audio/" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Docs</span></span><b>GDevelop: audio</b><span class="by">GDevelop wiki</span><span class="why">Sound vs Music, channels, preloading and which file types work on which device.</span><span class="chips"><span class="chip team">All teams</span><span class="chip ">Setup</span></span></a></div>
+<div class="grp">Psychology of sound and reward</div><div class="grid"><a class="res" href="https://youtu.be/hbzGO_Qonu0" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>How to Keep Players Engaged (Without Being Evil)</b><span class="by">Game Maker's Toolkit, 11 min</span><span class="why">Anticipation, goals and feedback loops, and where the line is.</span><span class="chips"><span class="chip team">All teams</span><span class="chip go">Start 3:44</span></span></a><a class="res" href="https://youtu.be/wqUPJE-qXwk" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Why Is Peggle (Still) So Good?</b><span class="by">SatanHerself, 14 min</span><span class="why">How sound, light and timing build a reward that keeps climbing.</span><span class="chips"><span class="chip team">Dropper</span><span class="chip go">Start 4:16</span></span></a></div>
+<div class="grp">Music</div><div class="grid"><a class="res" href="https://youtu.be/yLd5wmBNCBM" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Adaptive Music (In Gaming) Is Amazing</b><span class="by">Noodle, 16 min</span><span class="why">How music reads the game: horizontal and vertical mixing, with examples.</span><span class="chips"><span class="chip team">All teams</span><span class="chip go">Start 8:55</span></span></a></div>
+<div class="grp">Juice and game feel</div><div class="grid"><a class="res" href="https://youtu.be/216_5nu4aVQ" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Secrets of Game Feel and Juice</b><span class="by">Game Maker's Toolkit, 5 min</span><span class="why">Short and practical: the cheap tricks, added one at a time.</span><span class="chips"><span class="chip team">All teams</span></span></a><a class="res" href="https://youtu.be/Fy0aCDmgnxg" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Talk</span></span><b>Juice it or lose it</b><span class="by">Martin Jonasson and Petri Purho</span><span class="why">The talk that named juice. A simple game gets better with each added effect.</span><span class="chips"><span class="chip team">All teams</span></span></a><a class="res" href="https://youtu.be/AJdEqssNZ-U" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Talk</span></span><b>The art of screenshake</b><span class="by">Jan Willem Nijman, Vlambeer</span><span class="why">Screenshake, hitstop, muzzle flash and more, added live to one small game.</span><span class="chips"><span class="chip team">Platformer</span><span class="chip team">Tower defense</span></span></a><a class="res" href="https://youtu.be/yorTG9at90g" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Why Does Celeste Feel So Good to Play?</b><span class="by">Game Maker's Toolkit</span><span class="why">Small forgiveness and feedback details that make a platformer feel fair.</span><span class="chips"><span class="chip team">Platformer</span></span></a><a class="res" href="https://youtu.be/JyVP577gIoY" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>How Hollow Knight NAILED the Combat</b><span class="by">Lychee Game Labs, 8 min</span><span class="why">Hit feedback, recoil and the feel of every swing.</span><span class="chips"><span class="chip team">Platformer</span><span class="chip go">Start 0:21</span></span></a></div>
+<div class="grp">VFX and technical art</div><div class="grid"><a class="res" href="https://youtu.be/SIJtfr-PO4Y" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>The Effects Animation of Hollow Knight</b><span class="by">New Frame Plus, 7 min</span><span class="why">How short, high-contrast effects carry a whole game.</span><span class="chips"><span class="chip team">Platformer</span><span class="chip team">All teams</span></span></a><a class="res" href="https://youtu.be/IE0E5NWHaSw" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Valorant VFX Breakdown #1</b><span class="by">Fluffy, under 1 min</span><span class="why">What a single ability effect is made of, layer by layer.</span><span class="chips"><span class="chip team">Tower defense</span><span class="chip team">All teams</span></span></a></div>
+<div class="grp">Teaching without text</div><div class="grid"><a class="res" href="https://youtu.be/Tp0-AYpWcXw" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>Tutorial with no Text: Hollow Knight</b><span class="by">Game Design Library, 3 min</span><span class="why">The first minutes taught by the level alone.</span><span class="chips"><span class="chip team">Platformer</span><span class="chip team">All teams</span></span></a><a class="res" href="https://youtu.be/7ITtPPE-pXE" target="_blank" rel="noopener"><span class="chips" style="margin:0;padding:0"><span class="chip t">Video</span></span><b>The World Design of Hollow Knight</b><span class="by">Game Maker's Toolkit, 40 min</span><span class="why">Long, but worth it if level design is your role.</span><span class="chips"><span class="chip team">Platformer</span><span class="chip ">Optional</span></span></a></div>
+
+<p class="foot">Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. Videos and talks belong to their authors and are linked, not copied. Hit sounds are layers from Kenney's Impact Sounds pack (CC0), plus a synthesised low boom. Licence notes were checked against each site in October 2026 and can change.</p>
 </main>
 
 <script>
@@ -224,6 +272,13 @@ $('swing').addEventListener('click',swing);
 $('swing').addEventListener('pointerdown',loadHits);[...$('opts').children].forEach(b=>b.addEventListener('pointerdown',loadHits));
 mark();idle();
 window.__ws={swing,idle};
+
+$('copylog').addEventListener('click',()=>{
+  const t=$('logtxt').textContent;
+  const done=()=>{$('copylog').textContent='Copied';setTimeout(()=>{$('copylog').textContent='Copy'},1500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>{})}
+  else{const r=document.createRange();r.selectNodeContents($('logtxt'));const s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');done()}catch(e){}}
+});
 </script>
 </body>
 </html>
