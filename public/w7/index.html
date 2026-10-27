@@ -80,7 +80,7 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
 
 <section class="card">
   <h2><span class="n">3</span>Hitstop: freeze on impact</h2>
-  <p class="how">Pick a hit weight, then press Swing. A light hit freezes about 2 frames, a heavy one about 8. The sound is a sequence: the hit lands on the first frozen frame, then the pause (the freeze), then the blow when the game resumes, then a whoosh as the enemy flies away. Heavier hits get bigger layers. Try Too long (20 frames) to see why games cap the freeze, and switch the sound off to hear what it adds.</p>
+  <p class="how">Pick a hit weight, then press Swing. A light hit freezes about 2 frames, a heavy one about 8. The sound is a sequence: the hit lands on the first frozen frame, then the pause (the freeze), then the blow when the game resumes. Heavier hits get bigger layers. Try Too long (20 frames) to see why games cap the freeze, and switch the sound off to hear what it adds.</p>
   <canvas id="c" width="800" height="200"></canvas>
   <div class="ctl" id="opts"></div>
   <div class="ctl"><button id="swing">Swing</button>
@@ -177,7 +177,6 @@ function thud(frames){
     sg.gain.setValueAtTime(lv===3?0.9:0.55,tb);sg.gain.exponentialRampToValueAtTime(0.001,tb+dur);
     o.connect(sg).connect(master);o.start(tb);o.stop(tb+dur+0.05);
   }
-  whoosh(tb+0.03,lv,master);                /* 4. the whoosh: the enemy flies away */
 }
 
 /* toy 3: hitstop */
