@@ -149,7 +149,7 @@ function whoosh(t,lv,out){
   /* brown noise (soft, no hiss) through a sweeping filter, panned across, with a quieter airy layer on top */
   const dur=[0,0.35,0.5,0.7][lv],n=Math.floor(AC.sampleRate*dur),b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<n;i++){last=(last+0.02*(Math.random()*2-1))/1.02;d[i]=last*3.5}
-  const peak=[0,1.1,1.5,1.9][lv],pan=AC.createStereoPanner?AC.createStereoPanner():null;
+  const peak=[0,0.35,0.5,0.65][lv],pan=AC.createStereoPanner?AC.createStereoPanner():null;
   function band(freqs,q,gain,type){
     const src=AC.createBufferSource();src.buffer=b;
     const f=AC.createBiquadFilter();f.type=type;f.Q.value=q;
