@@ -80,7 +80,7 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
 
 <section class="card">
   <h2><span class="n">3</span>Hitstop: freeze on impact</h2>
-  <p class="how">Choose how many frames the game freezes when the hit lands, then press Swing. Try 0, then 4, then 20. Then switch the hit sound off and swing again: the freeze and the sound work together.</p>
+  <p class="how">Choose how many frames the game freezes when the hit lands, then press Swing. Try 0, then 4, then 20. The sound grows with the freeze: a tick, a punch, a heavy hit, a huge impact. Switch it off to hear how much the sound adds.</p>
   <canvas id="c" width="800" height="200"></canvas>
   <div class="ctl" id="opts"></div>
   <div class="ctl"><button id="swing">Swing</button>
@@ -113,14 +113,46 @@ function five(random){
 $('same').addEventListener('click',()=>five(false));
 $('rand').addEventListener('click',()=>five(true));
 
-function thud(){
+/* Hit sound that grows with the freeze: 0 = a tick, 4 = a punch, 8 = a heavy hit, 20 = a huge impact. */
+function noiseBuf(ctx,sec,decay){
+  const n=Math.floor(ctx.sampleRate*sec),b=ctx.createBuffer(1,n,ctx.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.exp(-(i/ctx.sampleRate)*decay);
+  return b;
+}
+function curve(k){const n=2048,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=Math.tanh(x*k)}return c}
+function buildHit(ctx,out,frames){
+  const lv=frames===0?0:frames<=4?1:frames<=8?2:3, t0=ctx.currentTime;
+  const master=ctx.createGain();master.gain.value=[0.7,1.2,1.3,1.5][lv];
+  const comp=ctx.createDynamicsCompressor();const soft=ctx.createWaveShaper();soft.curve=curve(1);master.connect(comp);comp.connect(soft);soft.connect(out);
+  // 1. crack: a bright noise burst
+  const crack=ctx.createBufferSource();crack.buffer=noiseBuf(ctx,0.25,[90,60,45,30][lv]);
+  const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=[3000,1800,1200,800][lv];
+  const cg=ctx.createGain();cg.gain.value=[0.5,0.8,1,1][lv];
+  crack.connect(hp).connect(cg).connect(master);crack.start(t0);
+  if(lv===0)return;
+  // 2. body: a low note that drops in pitch, driven hard for the bigger hits
+  const dur=[0,0.28,0.45,0.9][lv],osc=ctx.createOscillator();osc.type=lv>=2?'sawtooth':'sine';
+  osc.frequency.setValueAtTime([0,170,140,110][lv],t0);osc.frequency.exponentialRampToValueAtTime(38,t0+dur);
+  const sh=ctx.createWaveShaper();sh.curve=curve([0,1,3,6][lv]);
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=[0,900,700,500][lv];
+  const og=ctx.createGain();og.gain.setValueAtTime(0.9,t0);og.gain.exponentialRampToValueAtTime(0.001,t0+dur);
+  osc.connect(sh).connect(lp).connect(og).connect(master);osc.start(t0);osc.stop(t0+dur+0.05);
+  // 3. sub boom: only the big ones
+  if(lv>=2){
+    const sub=ctx.createOscillator();sub.type='sine';
+    sub.frequency.setValueAtTime(70,t0);sub.frequency.exponentialRampToValueAtTime(28,t0+dur);
+    const sg=ctx.createGain();sg.gain.setValueAtTime(lv===3?1:0.7,t0);sg.gain.exponentialRampToValueAtTime(0.001,t0+dur+0.1);
+    sub.connect(sg).connect(master);sub.start(t0);sub.stop(t0+dur+0.15);
+  }
+  // 4. tail: a room that rings through the freeze
+  const conv=ctx.createConvolver();conv.buffer=noiseBuf(ctx,[0,0.5,0.9,1.6][lv],[0,9,5,3][lv]);
+  const wet=ctx.createGain();wet.gain.value=[0,0.25,0.4,0.55][lv];
+  crack.connect(conv);osc.connect(conv);conv.connect(wet).connect(master);
+}
+function thud(frames){
   AC=AC||new (window.AudioContext||window.webkitAudioContext)();
   if(AC.state==='suspended')AC.resume();
-  const len=Math.floor(AC.sampleRate*0.22),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
-  for(let i=0;i<len;i++){const t=i/AC.sampleRate;
-    d[i]=(Math.random()*2-1)*Math.exp(-t*60)*0.6+Math.sin(2*Math.PI*(150-t*300)*t)*Math.exp(-t*18)}
-  const src=AC.createBufferSource();src.buffer=buf;
-  const g=AC.createGain();g.gain.value=0.5;src.connect(g).connect(AC.destination);src.start();
+  buildHit(AC,AC.destination,frames);
 }
 
 /* toy 3: hitstop */
@@ -156,7 +188,7 @@ function swing(){
   if(playing)return;playing=true;clearInterval(timer);
   let f=0,held=0;
   timer=setInterval(()=>{
-    if(f===IMPACT&&held===0&&$('hitsnd').checked)thud();
+    if(f===IMPACT&&held===0&&$('hitsnd').checked)thud(freeze);
     if(f===IMPACT&&held<freeze){held++;scene(f,true);return}
     scene(f,false);f++;
     if(f>60){clearInterval(timer);playing=false;setTimeout(idle,400)}
