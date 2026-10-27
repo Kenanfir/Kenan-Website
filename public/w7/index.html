@@ -136,7 +136,7 @@ function thud(frames){
   AC=AC||new (window.AudioContext||window.webkitAudioContext)();
   if(AC.state==='suspended')AC.resume();
   const lv=weight(frames);if(!lv||!HB)return;
-  const t0=AC.currentTime,master=AC.createGain();master.gain.value=[0,0.8,0.9,1.0][lv];
+  const t0=AC.currentTime,master=AC.createGain();master.gain.value=[0,1.8,1.5,1.6][lv];
   const comp=AC.createDynamicsCompressor(),soft=AC.createWaveShaper();soft.curve=curve(1);
   master.connect(comp);comp.connect(soft);soft.connect(AC.destination);
   LAYERS[lv].forEach(([name,gain,rate])=>{
