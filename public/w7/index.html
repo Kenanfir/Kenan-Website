@@ -87,32 +87,6 @@ canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);
   <div class="read" id="hsread"></div>
 </section>
 
-<section class="card">
-  <h2><span class="n">4</span>Roblox: one scare, four effects</h2>
-  <p class="how">Horror team. Silence, sound, shake, flash. Copy it into a LocalScript in StarterPlayerScripts and change the names to your own objects. Not tested in Studio, so read the Output window if it errors.</p>
-<pre>local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
-local Lighting = game:GetService("Lighting")
-
-local flash = Instance.new("ColorCorrectionEffect", Lighting)
-
-local function scare(ambience, sting)
-    ambience.Volume = 0                -- 1. silence
-    task.wait(0.3)
-    sting:Play()                       -- 2. the sound
-    local hum = Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    local power, conn = 0.4, nil       -- 3. shake, fading out
-    conn = RunService.RenderStepped:Connect(function()
-        hum.CameraOffset = Vector3.new((math.random() - 0.5) * power, (math.random() - 0.5) * power, 0)
-        power *= 0.9
-        if power < 0.01 then hum.CameraOffset = Vector3.zero conn:Disconnect() end
-    end)
-    flash.Brightness = 0.6             -- 4. white flash
-    TweenService:Create(flash, TweenInfo.new(0.25), { Brightness = 0 }):Play()
-end</pre>
-</section>
-
 <p class="foot">Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. Licence notes were checked against each site in October 2026 and can change.</p>
 </main>
 
