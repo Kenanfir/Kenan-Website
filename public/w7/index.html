@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Sound Sources | Week 7</title>
+<meta name="description" content="Where to get game sounds and the licence rule for each, plus two small toys for random pitch and hitstop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--card:#0a0a0a;--g:#A3FF12;--p:#8A2BE2;--c:#00E0FF;--o:#ff8a3d;--r:#ff4d6d;--tx:#fff;--mut:#9a9a9a;--line:#333}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 8px}
+.kicker{color:var(--c);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(1.6rem,6vw,2.5rem);color:var(--g);text-transform:uppercase;letter-spacing:.08em;text-shadow:0 0 20px rgba(163,255,18,.45)}
+.lede{color:var(--mut);margin-top:10px;max-width:62ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:20px 0}
+.card h2{font-size:1.1rem;margin:0 0 6px;display:flex;gap:10px;align-items:center}
+.n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--p);align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex:none}
+.how{color:var(--mut);margin-bottom:12px}
+a{color:var(--c)}
+a.btn,button{font:inherit;padding:8px 14px;background:transparent;color:var(--g);border:2px solid var(--g);cursor:pointer;text-transform:uppercase;text-decoration:none;display:inline-block}
+button:hover,a.btn:hover{background:var(--g);color:#000}
+button.on{background:var(--g);color:#000}
+.s{padding:12px 0;border-bottom:1px dashed var(--line)}
+.s .for{color:var(--mut);font-size:.85rem;margin-top:6px}
+.rule{display:inline-block;margin-top:6px;padding:2px 8px;border:1px solid var(--line);border-radius:4px;font-size:.82rem}
+.ok{color:var(--g);border-color:#2f4d09}.warn{color:var(--o);border-color:#5a3515}
+canvas{width:100%;display:block;background:#050505;border:1px solid var(--line);border-radius:8px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 0}
+.read{margin-top:10px;color:var(--mut);font-size:.9rem}
+.foot{color:#8a8a8a;font-size:.76rem;padding:12px 0 40px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Game Development | Week 7 | Audio and juice</div>
+  <h1>Sound Sources</h1>
+  <p class="lede">Where to get sounds, the rule for each, and two small toys. Log every source you use in docs/audio-log.md.</p>
+</div></header>
+
+<main class="wrap">
+
+<section class="card">
+  <h2><span class="n">1</span>Make or get sounds</h2>
+  <p class="how">Start with the first one. Twelve sounds in fifteen minutes.</p>
+  <div>
+    <div class="s"><a class="btn" href="https://sfxr.me" target="_blank" rel="noopener">sfxr.me</a>
+      <div class="for">Make sound effects in your browser. Press a preset (pickup, jump, hit, explosion), then export to download a WAV.</div>
+      <span class="rule ok">Free. You made it, so you can use it.</span></div>
+    <div class="s"><a class="btn" href="https://kenney.nl/assets/category:Audio" target="_blank" rel="noopener">Kenney</a>
+      <div class="for">Ready-made packs of interface sounds, impacts and more.</div>
+      <span class="rule ok">CC0: free to use, no credit needed.</span></div>
+    <div class="s"><a class="btn" href="https://freesound.org" target="_blank" rel="noopener">Freesound</a>
+      <div class="for">Real recordings: footsteps, doors, rain. You need a free account to download.</div>
+      <span class="rule warn">Read the licence on every sound. CC0 is free. CC-BY means you must credit the author. CC-BY-NC means no commercial use.</span></div>
+    <div class="s"><a class="btn" href="https://suno.com" target="_blank" rel="noopener">Suno</a>
+      <div class="for">AI music. Ask for instrumental. Save every prompt.</div>
+      <span class="rule warn">Free plan: personal, non-commercial use. Paid plan: commercial use for songs made while subscribed. Terms change, so read the current ones before you publish.</span></div>
+    <div class="s"><a class="btn" href="https://create.roblox.com/docs/building-and-visuals/audio/audio-assets" target="_blank" rel="noopener">Roblox audio</a>
+      <div class="for">Roblox team: free sounds are in Studio's Toolbox, Creator Store tab, Audio. Uploading your own needs the rights to it.</div>
+      <span class="rule warn">Upload limits change. Check the upload window.</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="n">2</span>Same sound, random pitch</h2>
+  <p class="how">The first button plays the exact same beep five times. The second changes the pitch a little each time, between 0.9 and 1.1.</p>
+  <div class="ctl">
+    <button id="same">Five the same</button>
+    <button id="rand">Five with random pitch</button>
+  </div>
+  <div class="read" id="pitchread">Your browser plays a short beep. Turn your volume up a little.</div>
+</section>
+
+<section class="card">
+  <h2><span class="n">3</span>Hitstop: freeze on impact</h2>
+  <p class="how">Choose how many frames the game freezes when the hit lands, then press Swing. Try 0, then 4, then 20.</p>
+  <canvas id="c" width="800" height="200"></canvas>
+  <div class="ctl" id="opts"></div>
+  <div class="ctl"><button id="swing">Swing</button></div>
+  <div class="read" id="hsread"></div>
+</section>
+
+<p class="foot">Built for IMT01306618 Games Development, Universitas Ciputra, by Kenan Firmansyah. Licence notes were checked against each site in October 2026 and can change.</p>
+</main>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+
+/* toy 2: pitch */
+let AC=null;
+function beep(rate){
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  if(AC.state==='suspended')AC.resume();
+  const len=Math.floor(AC.sampleRate*0.12),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<len;i++){const t=i/AC.sampleRate;d[i]=Math.sin(2*Math.PI*440*t)*Math.exp(-t*28)}
+  const src=AC.createBufferSource();src.buffer=buf;src.playbackRate.value=rate;
+  const g=AC.createGain();g.gain.value=0.35;src.connect(g).connect(AC.destination);src.start();
+}
+function five(random){
+  const rates=[];
+  for(let i=0;i<5;i++){const r=random?0.9+Math.random()*0.2:1;rates.push(r);setTimeout(()=>beep(r),i*320)}
+  $('pitchread').textContent='Pitch of each play: '+rates.map(r=>r.toFixed(2)).join(', ');
+}
+$('same').addEventListener('click',()=>five(false));
+$('rand').addEventListener('click',()=>five(true));
+
+/* toy 3: hitstop */
+const cv=$('c'),x=cv.getContext('2d');
+let freeze=4,playing=false,timer=null;
+[0,4,8,20].forEach(n=>{
+  const b=document.createElement('button');b.textContent=n+' frames';b.dataset.n=n;
+  b.addEventListener('click',()=>{freeze=n;mark();idle()});$('opts').appendChild(b);
+});
+function mark(){[...$('opts').children].forEach(b=>b.classList.toggle('on',+b.dataset.n===freeze))}
+const IMPACT=24;
+function scene(f,frozen){
+  x.clearRect(0,0,cv.width,cv.height);x.fillStyle='#050505';x.fillRect(0,0,cv.width,cv.height);
+  x.fillStyle='#222';x.fillRect(0,170,cv.width,4);
+  const px=60+Math.min(f,IMPACT)*14,hit=f>=IMPACT,after=Math.max(0,f-IMPACT);
+  const ex=480+after*22,ey=110-after*3;
+  const shake=(hit&&after<8&&!frozen)?(8-after)*0.8:0;
+  x.save();x.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
+  x.fillStyle='#A3FF12';x.fillRect(px,110,40,60);
+  x.fillStyle='#fff';x.fillRect(px+26,126,8,8);
+  if(f>=IMPACT-6){x.strokeStyle='#00E0FF';x.lineWidth=5;x.beginPath();x.arc(px+40,140,52,-1.1,0.9);x.stroke()}
+  x.fillStyle=(hit&&after<4)?'#ffffff':'#ff8a3d';x.fillRect(ex,ey,44,60);
+  x.restore();
+  if(frozen){x.fillStyle='#ff4d6d';x.font='bold 16px "Space Mono",monospace';x.fillText('FROZEN',px-6,96)}
+}
+function idle(){
+  clearInterval(timer);playing=false;scene(0,false);
+  $('hsread').textContent=freeze
+    ?'Freeze: '+freeze+' frames, about '+Math.round(freeze/60*1000)+' ms at 60 frames a second.'
+    :'Freeze: 0 frames. Nothing stops, so the hit has no weight.';
+}
+function swing(){
+  if(playing)return;playing=true;clearInterval(timer);
+  let f=0,held=0;
+  timer=setInterval(()=>{
+    if(f===IMPACT&&held<freeze){held++;scene(f,true);return}
+    scene(f,false);f++;
+    if(f>60){clearInterval(timer);playing=false;setTimeout(idle,400)}
+  },1000/60);
+}
+$('swing').addEventListener('click',swing);
+mark();idle();
+window.__ws={swing,idle};
+</script>
+</body>
+</html>
