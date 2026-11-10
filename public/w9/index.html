@@ -41,22 +41,23 @@ h3{font-size:.95rem;color:var(--c);margin:16px 0 6px}
 pre{padding-right:70px;font-size:.78rem}
 </style></head><body>
 <header class="wrap"><div class="kicker">IMT01306618 | Week 9</div><h1>Code, AI and Your Game</h1>
-<p class="lede">The JavaScript cheat sheet, prompts you can copy, five checks for code your AI writes, and ideas for maps, UI and bots that test your game. Nothing here is marked. Keep it open on your phone.</p></header>
-<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#studio">Studio</a></div></nav>
+<p class="lede">The JavaScript cheat sheet, prompts you can copy, five checks for code your AI writes, and ideas for maps, UI and bots that test your game. Nothing here is marked today. Open it on your laptop, next to your AI.</p></header>
+<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#roblox">Roblox</a><a href="#studio">Studio</a></div></nav>
 <main class="wrap">
 
 <section class="card" id="today"><h2><span class="n">1</span>Today in one minute</h2>
-<ul><li>Short theory on JavaScript in GDevelop: what it is for, and how to read what your AI writes.</li><li>Try 1: ask your AI to explain a JavaScript block from your game.</li><li>Ideas for letting AI draft a map or a UI layout.</li><li>Try 2: ask your AI for a map or a UI layout for your game.</li><li>Ideas for tester bots, small programs that play your game and report what breaks.</li><li>Studio: pick one idea and try it in your own game.</li></ul></section>
+<ul><li>Short theory on JavaScript in GDevelop: what it is for, and how to read what your AI writes.</li><li>How to ask your AI well.</li><li>Try 1: ask your AI to explain a block of code (yours, or the sample block on this page).</li><li>Ideas for letting AI draft a map or a UI layout.</li><li>Try 2: ask your AI for a map or a UI layout for your game.</li><li>A 5-minute break.</li><li>Ideas for tester bots, small programs that play your game and report what breaks, then the five checks.</li><li>Studio: pick one idea and try it in your own game.</li></ul></section>
 
 <section class="card" id="cheat"><h2><span class="n">2</span>JavaScript cheat sheet for GDevelop</h2>
-<p class="how">These calls were checked against GDevelop's own code. If your AI uses a function that is not in this list, check it before you trust it.</p>
+<p class="how">These calls were checked against GDevelop's own runtime code. If your AI uses a function that is not in this list, check it before you trust it.</p>
 <div class="pw"><button class="cp" data-t="cheat" type="button">Copy</button><pre id="cheat">// runtimeScene : the scene the event is in
-// objects      : the instances your conditions picked (add objects as parameters)
+// objects      : the instances your conditions picked (the event takes ONE object parameter)
 
 runtimeScene.getObjects(&quot;Enemy&quot;)                    // EVERY Enemy in the scene
 obj.getX()  obj.getY()  obj.setX(n)  obj.setY(n)    // position
 obj.deleteFromScene()                               // remove it (no argument)
 runtimeScene.createObject(&quot;Enemy&quot;)                  // make a new one, returns it
+// getObjects(&quot;Player&quot;)[0] is undefined when there is no Player, so check it first: if (player) { ... }
 
 runtimeScene.getVariables().get(&quot;Score&quot;).add(1)     // scene variable
 obj.getVariables().get(&quot;hp&quot;).sub(10)                // object variable
@@ -65,10 +66,16 @@ variable.setNumber(n)   variable.getAsNumber()   variable.getAsString()
 runtimeScene.getTimeManager().getElapsedTime()      // time since last frame, in MILLISECONDS
 console.log(&quot;hello&quot;)                                // prints to the browser console</pre></div>
 <h3>Three rules that catch most bugs</h3>
-<ol><li><b>Milliseconds.</b> getElapsedTime() returns milliseconds. Divide by 1000 to get seconds.</li><li><b>objects or getObjects().</b> objects holds only the instances your conditions picked. getObjects() returns every instance in the scene. Using getObjects() where you meant objects damages every enemy at once.</li><li><b>deleteFromScene() takes no argument.</b> Older examples online write deleteFromScene(runtimeScene). It still works, but you do not need the argument.</li></ol></section>
+<ol><li><b>Milliseconds.</b> getElapsedTime() returns milliseconds. Divide by 1000 to get seconds.</li><li><b>objects or getObjects().</b> objects holds only the instances your conditions picked. getObjects() returns every instance in the scene. Using getObjects() where you meant objects damages every enemy at once.</li><li><b>One object parameter.</b> A JavaScript event takes a single object. Put the condition that picks it (for example Player collides with Coin) above the code event.</li><li><b>deleteFromScene() takes no argument.</b> Older examples online write deleteFromScene(runtimeScene). It still works, but you do not need the argument.</li></ol>
+<h3>Sample block for Try 1</h3><p class="how">No project open, or no code yet? Paste this into your AI. Object parameter: Coin. A condition above it, Player collides with Coin, picks the coins.</p><div class="pw"><button class="cp" data-t="coin" type="button">Copy</button><pre id="coin">for (const coin of objects) {
+  runtimeScene.getVariables().get(&quot;Score&quot;).add(
+    coin.getVariables().get(&quot;value&quot;).getAsNumber()
+  );
+  coin.deleteFromScene();
+}</pre></div></section>
 
 <section class="card" id="prompts"><h2><span class="n">3</span>Prompts you can copy</h2>
-<p class="how">Replace the parts in square brackets. Ask for a plan first, then the code, then how to test it.</p>
+<p class="how">Replace the parts in square brackets. Ask for a plan first, then the code, then how to test it. Building in Roblox? Replace GDevelop 5 with Roblox Studio, Luau, and see section 7.</p>
 <h3>Ask for code</h3><div class="pw"><button class="cp" data-t="p1" type="button">Copy</button><pre id="p1">I&#x27;m making a [genre] game in GDevelop 5. I need a JavaScript code event that [goal in game terms, for example: spawns an enemy every 3 seconds, picked from a weighted list].
 
 My objects are named: [Enemy, Player].
@@ -77,6 +84,8 @@ My scene variables are: [Score, Wave].
 Rules:
 - Use only GDevelop&#x27;s JavaScript API: runtimeScene, objects, getVariables, and the calls in the list below. No DOM, no libraries, no async.
 - Time from getElapsedTime() is in milliseconds.
+- The event has one object parameter: [Enemy].
+- If you are not sure a call exists, say so instead of guessing.
 
 Calls you may use:
 [paste the cheat sheet]
@@ -91,7 +100,8 @@ Give me a level layout as a text grid, [30] wide and [12] tall.
 Legend: # wall, . floor, S start, X exit, E enemy, C coin.
 Rule: the exit must be reachable from the start.
 First tell me your plan in two sentences, then the grid, then the legend.
-Do not write any code yet.</pre></div>
+Then write a short function that checks the exit is reachable from the start, because you may miscount the grid.
+Do not write the code that builds the level yet.</pre></div>
 <h3>Draft a UI (Try 2)</h3><div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">I&#x27;m making a [genre] game in GDevelop 5.
 1. List the screens it needs (for example title, pause, game over, settings) and what goes on each one.
 2. For the HUD, give positions relative to the screen size with a safe margin, so it works on a laptop and a phone.
@@ -109,49 +119,63 @@ Here are the calls I know are real:
 1. List every call that is NOT in my list, and say whether you are sure it exists.
 2. Check object picking: is objects used where getObjects() is wrong, or the other way round?
 3. Check time units (milliseconds or seconds).
-4. Point out anything that runs every frame and could be slow.
+4. Point out anything that runs every frame and could be slow, and any value that resets every frame (for example a let inside the event).
 5. Write 3 tests I can do in a preview.</pre></div>
 <h3>Ask for a tester bot</h3><div class="pw"><button class="cp" data-t="p6" type="button">Copy</button><pre id="p6">I&#x27;m making a [genre] game in GDevelop 5. Controls: [arrow keys to move, space to jump].
-I want a small tester bot as a JavaScript code event, in a separate test scene, that:
-- presses keys at random for a few minutes, like a monkey
+I want a small tester bot as a JavaScript code event, in an event group I can switch off, that:
+- presses a random key, holds it for a random 100 to 500 ms, then releases it, like a monkey. The event runs every frame, so keep the timer and the held key in scene variables, not in let variables
+- sets the time scale once at the start of the scene, not every frame
 - writes to the console when the player is stuck for 20 seconds, falls out of the level, or dies, with the position
 - can be switched off with one variable
 
 Calls you may use for input and time:
 runtimeScene.getGame().getInputManager().onKeyPressed(keyCode, 0) and onKeyReleased(keyCode, 0)
 runtimeScene.getTimeManager().setTimeScale(n)
+runtimeScene.getTimeManager().getElapsedTime()
 
 First give me a plan and your assumptions. Then the code. Then tell me what I should read in the console.</pre></div></section>
 
 <section class="card" id="checks"><h2><span class="n">4</span>Five checks before you keep code</h2>
-<ol><li><b>Does it run?</b> Open the browser console in a preview. No red errors.</li><li><b>Does it do what you asked?</b> Watch it in the game, not just in the code.</li><li><b>Do the calls exist?</b> Compare against the cheat sheet.</li><li><b>Does it hold up?</b> Try zero enemies, a hundred enemies, pause and restart.</li><li><b>Can you explain it?</b> Ask your AI to explain it line by line, then keep it in a named, commented group in your event sheet.</li></ol></section>
+<ol><li><b>Does it run?</b> Open the browser console in a preview. No red errors.</li><li><b>Does it do what you asked?</b> Watch it in the game, not just in the code.</li><li><b>Do the calls exist?</b> Compare against the cheat sheet.</li><li><b>Does it hold up?</b> Try zero enemies, a hundred enemies, pause and restart. Watch for values that reset every frame.</li><li><b>Can you explain it?</b> Ask your AI to explain it line by line, then keep it in a named, commented group in your event sheet.</li></ol></section>
 
 <section class="card" id="ideas"><h2><span class="n">5</span>Maps and UI: ideas to try</h2>
 <h3>Maps</h3>
-<ul><li>Ask the AI for a grid of text, for example 30 wide and 12 tall, with a letter for each tile.</li><li>Your code reads each letter and creates the matching object at the right position. That is a good use of JavaScript.</li><li>Check it in the game: can you get from start to exit, is it too empty or too crowded, does it feel fair.</li></ul>
+<ul><li>Ask the AI for a grid of text, for example 30 wide and 12 tall, with a letter for each tile. Pegs and slots for a Plinko board work the same way.</li><li>AIs miscount grids. Ask it for a short function that checks the exit is reachable.</li><li>Your code reads each letter and creates the matching object at the right position. That is a good use of JavaScript.</li><li>Check it in the game: can you get from start to exit, is it too empty or too crowded, does it feel fair.</li></ul>
 <h3>UI</h3>
 <ul><li>Ask for the screens first: title, pause, game over, settings, and what goes on each.</li><li>Then ask for positions relative to the screen size, with a safe margin.</li><li>Then text size, contrast, and a short message when something changes.</li><li>Check it on a small screen, and hand it to someone and watch their first 30 seconds.</li></ul></section>
 
 <section class="card" id="bots"><h2><span class="n">6</span>Tester bots: ideas to try</h2>
-<p class="how">A tester bot is a small program whose only job is to play your game and report what breaks. It runs in a separate test scene, and you remove it before you ship.</p>
-<div class='tw'><table><tr><th>Bot</th><th>What it does</th><th>What it finds</th></tr><tr><td>Monkey</td><td>Presses random keys at random times</td><td>Crashes, falling out of the world, getting stuck</td></tr><tr><td>Human-like</td><td>Reacts slowly, makes mistakes, holds keys for different lengths</td><td>Whether the difficulty feels fair for a person</td></tr><tr><td>Goal-seeker</td><td>Follows simple rules: head for the exit, jump at gaps</td><td>Whether a level can be finished at all</td></tr><tr><td>Monte Carlo</td><td>Plays hundreds of runs with random choices and counts the results</td><td>Win rate, run length, which upgrade is always picked</td></tr></table></div>
+<p class="how">A tester bot is a small program whose only job is to play your game and report what breaks. Keep it in an event group you can switch off, and remove it before you ship.</p>
+<div class='tw'><table><tr><th>Bot</th><th>What it does</th><th>What it finds</th></tr><tr><td>Monkey</td><td>Presses random keys at random times</td><td>Crashes, falling out of the world, getting stuck</td></tr><tr><td>Human-like</td><td>Reacts slowly, makes mistakes, holds keys for different lengths</td><td>Whether the difficulty feels fair for a person</td></tr><tr><td>Goal-seeker</td><td>Follows simple rules: head for the exit, jump at gaps</td><td>Whether a level can be finished at all</td></tr><tr><td>Monte Carlo</td><td>Runs the numbers (waves, upgrades, odds) many times with random choices and counts the results</td><td>Win rate, run length, which upgrade is always picked</td></tr></table></div>
 <h3>What a bot can do in GDevelop</h3>
-<ul><li>Press and release keys, and use the mouse, from a JavaScript code event.</li><li>Speed up time with the time scale, so many runs fit in a few minutes. Very high speed can break physics, so start low.</li><li>Write what happened to the console: where the player got stuck, fell out, or died.</li><li>Not tell you the game is fun. A person has to play it for that.</li></ul>
-<h3>Which bot fits which game</h3><div class='tw'><table><tr><th>Game</th><th>Good bot</th><th>Look for</th></tr><tr><td>Platformer</td><td>Monkey, then goal-seeker</td><td>Falling out of the world, a gap that cannot be jumped, getting stuck</td></tr><tr><td>Co-op horror</td><td>Monkey</td><td>Doors or puzzles that can be skipped, getting stuck in a room</td></tr><tr><td>Tower defense</td><td>Monte Carlo on waves</td><td>A tower or wave that is far too strong or too weak</td></tr><tr><td>Plinko Dungeon</td><td>Monte Carlo</td><td>How often the boss dies, which upgrade is chosen every time</td></tr></table></div>
-<h3>A tiny monkey bot, as an idea</h3><div class="pw"><button class="cp" data-t="sk" type="button">Copy</button><pre id="sk">// Idea sketch, test it in a preview before relying on it.
+<ul><li>Press and release keys, and use the mouse, from a JavaScript code event.</li><li>Speed up time a little with the time scale, 2x or 3x. Very high speed can break physics, which matters for a Plinko ball, so start low.</li><li>A sped-up game still runs in real time, so hundreds of runs of a whole game take hours. For Monte Carlo, simulate just the numbers in plain JavaScript.</li><li>Write what happened to the console: where the player got stuck, fell out, or died.</li><li>Not tell you the game is fun. A person has to play it for that.</li></ul>
+<h3>Which bot fits which game</h3><div class='tw'><table><tr><th>Game</th><th>Good bot</th><th>Look for</th></tr><tr><td>Platformer</td><td>Monkey, then goal-seeker</td><td>Falling out of the world, a gap that cannot be jumped, getting stuck</td></tr><tr><td>Co-op horror</td><td>Monkey. In Roblox, a test script that moves a character</td><td>Doors or puzzles that can be skipped, getting stuck in a room</td></tr><tr><td>Tower defense</td><td>Monte Carlo on the wave numbers</td><td>A tower or wave that is far too strong or too weak</td></tr><tr><td>Plinko Dungeon</td><td>Monte Carlo on the numbers</td><td>How often the boss dies, which upgrade is chosen every time</td></tr></table></div>
+<h3>A tiny monkey bot, as an idea</h3><p class="how">An idea sketch. It checks out against GDevelop's runtime code, but it has not been tried in a full game yet, so test it in a preview before relying on it.</p><div class="pw"><button class="cp" data-t="sk" type="button">Copy</button><pre id="sk">// Runs every frame, so the bot's state lives in scene variables.
+const v = runtimeScene.getVariables();
 const input = runtimeScene.getGame().getInputManager();
-const keys = [37, 38, 39, 40, 32];            // arrows and space
+const keys = [37, 38, 39, 40, 32];      // arrows and space
 
-const k = keys[Math.floor(Math.random() * keys.length)];
-input.onKeyPressed(k, 0);                     // press it
-// ...a short random time later:
-input.onKeyReleased(k, 0);                    // let go
+if (v.get(&quot;BotT&quot;).getAsNumber() &lt;= 0) {
+  const k = keys[Math.floor(Math.random() * keys.length)];
+  input.onKeyPressed(k, 0);               // press a random key
+  v.get(&quot;BotKey&quot;).setNumber(k);
+  v.get(&quot;BotT&quot;).setNumber(100 + Math.random() * 400);   // hold for ms
+} else {
+  v.get(&quot;BotT&quot;).sub(runtimeScene.getTimeManager().getElapsedTime());
+  if (v.get(&quot;BotT&quot;).getAsNumber() &lt;= 0)
+    input.onKeyReleased(v.get(&quot;BotKey&quot;).getAsNumber(), 0);
+}
+// Speed-up: setTimeScale(2) ONCE at the start of the scene.</pre></div></section>
 
-runtimeScene.getTimeManager().setTimeScale(3);   // run faster</pre></div></section>
+<section class="card" id="roblox"><h2><span class="n">7</span>Building in Roblox?</h2>
+<p class="how">The ideas on this page carry over: reading code, the five checks, maps and UI, tester bots. The calls do not, because Roblox uses Luau, not JavaScript. Put <b>Roblox Studio, Luau</b> in every prompt and drop the GDevelop calls list. These are the nearest equivalents. They have not been tried in Studio for this class, so if your AI disagrees, ask it which API the call belongs to.</p>
+<div class='tw'><table><tr><th>GDevelop JavaScript</th><th>Roblox Luau</th><th>Note</th></tr><tr><td>const, let, !=, &amp;&amp;, ||</td><td>local, ~=, and, or</td><td>Luau also has += for adding</td></tr><tr><td>getObjects("Enemy")</td><td>CollectionService:GetTagged("Enemy")</td><td>Tag the parts you want to find</td></tr><tr><td>deleteFromScene()</td><td>part:Destroy()</td><td></td></tr><tr><td>Scene variable</td><td>SetAttribute / GetAttribute</td><td>On any part, or on a folder</td></tr><tr><td>Milliseconds per frame</td><td>dt in seconds</td><td>From RunService.Heartbeat</td></tr><tr><td>console.log(x)</td><td>print(x)</td><td>Shows in the Output window</td></tr></table></div>
+<p class="how">Tester bot idea for Roblox: ask your AI for a test script that moves a test character at random and prints to the Output window when it gets stuck. Ask it which Roblox calls it relies on, and check them.</p>
+<p class="how">Stuck in the studio block? Copy the Output message and the list of calls into your AI first. Kenan cannot debug Luau.</p></section>
 
-<section class="card" id="studio"><h2><span class="n">7</span>Studio: pick one</h2>
-<ul><li>Clean up and understand one JavaScript block, with the five checks.</li><li>Add a map or a UI that your AI drafted.</li><li>Ask your AI for a tester bot for your game.</li><li>Show Kenan the console message if something breaks.</li><li>If you try something and drop it, delete the old events and leftovers.</li></ul>
-<p class="how">After class, optional: keep any JavaScript block in a named, commented group, remove test bots, and note which blocks your AI wrote so you can declare them.</p></section>
+<section class="card" id="studio"><h2><span class="n">8</span>Studio: pick one</h2>
+<ul><li>Explain and clean up one code block, with the five checks. Not sure? Start with this one.</li><li>Add a map or a UI that your AI drafted.</li><li>Ask your AI for a tester bot for your game.</li><li>If something breaks, copy the console message into your AI first. If it is still stuck, show Kenan.</li><li>If you try something and drop it, delete the old events and leftovers.</li></ul>
+<p class="how">After class, optional: keep any JavaScript block in a named, commented group, remove test bots, and write down which blocks your AI wrote. AI-written code goes in CREDITS.md, and you need to be able to explain it. AFL-3 needs at least 3 JavaScript code events doing real work, each in its own named group.</p></section>
 
 <p class="foot">Games Development, Odd Semester 2026/2027</p>
 </main>
