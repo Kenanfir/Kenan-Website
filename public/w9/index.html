@@ -42,13 +42,17 @@ pre{padding-right:70px;font-size:.78rem}
 </style></head><body>
 <header class="wrap"><div class="kicker">IMT01306618 | Week 9</div><h1>Code, AI and Your Game</h1>
 <p class="lede">The JavaScript cheat sheet, prompts you can copy, five checks for code your AI writes, and ideas for maps, UI and bots that test your game. Nothing here is marked today. Open it on your laptop, next to your AI.</p></header>
-<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#roblox">Roblox</a><a href="#studio">Studio</a></div></nav>
+<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#first">First event</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#roblox">Roblox</a><a href="#studio">Studio</a></div></nav>
 <main class="wrap">
 
 <section class="card" id="today"><h2><span class="n">1</span>Today in one minute</h2>
 <ul><li>Short theory on JavaScript in GDevelop: what it is for, and how to read what your AI writes.</li><li>How to ask your AI well.</li><li>Try 1: ask your AI to explain a block of code (yours, or the sample block on this page).</li><li>Ideas for letting AI draft a map or a UI layout.</li><li>Try 2: ask your AI for a map or a UI layout for your game.</li><li>A 5-minute break.</li><li>Ideas for tester bots, small programs that play your game and report what breaks, then the five checks.</li><li>Studio: pick one idea and try it in your own game.</li></ul></section>
 
-<section class="card" id="cheat"><h2><span class="n">2</span>JavaScript cheat sheet for GDevelop</h2>
+<section class="card" id="first"><h2><span class="n">2</span>Add your first JavaScript event</h2>
+<ol><li>In the event sheet press <b>Shift + W</b>, or the circled plus button at the top right, and choose <b>Javascript code</b>.</li><li>Pick the one object the event works on.</li><li>Write or paste the code.</li><li>Preview with the debugger: use the arrow next to Preview and choose <b>Launch preview with debugger and profiler</b>. Errors and console.log show in its console.</li></ol>
+<img src="/w9/js-event-menu.png" alt="The GDevelop event sheet with the Choose and add an event list open, showing Javascript code" style="max-width:100%;border:1px solid var(--g);margin-top:8px"></section>
+
+<section class="card" id="cheat"><h2><span class="n">3</span>JavaScript cheat sheet for GDevelop</h2>
 <p class="how">These calls were checked against GDevelop's own runtime code. If your AI uses a function that is not in this list, check it before you trust it.</p>
 <div class="pw"><button class="cp" data-t="cheat" type="button">Copy</button><pre id="cheat">// runtimeScene : the scene the event is in
 // objects      : the instances your conditions picked (the event takes ONE object parameter)
@@ -74,8 +78,8 @@ console.log(&quot;hello&quot;)                                // prints to the b
   coin.deleteFromScene();
 }</pre></div></section>
 
-<section class="card" id="prompts"><h2><span class="n">3</span>Prompts you can copy</h2>
-<p class="how">Replace the parts in square brackets. Ask for a plan first, then the code, then how to test it. Building in Roblox? Replace GDevelop 5 with Roblox Studio, Luau, and see section 7.</p>
+<section class="card" id="prompts"><h2><span class="n">4</span>Prompts you can copy</h2>
+<p class="how">Replace the parts in square brackets. Ask for a plan first, then the code, then how to test it. Building in Roblox? Replace GDevelop 5 with Roblox Studio, Luau, and see section 8.</p>
 <h3>Ask for code</h3><div class="pw"><button class="cp" data-t="p1" type="button">Copy</button><pre id="p1">I&#x27;m making a [genre] game in GDevelop 5. I need a JavaScript code event that [goal in game terms, for example: spawns an enemy every 3 seconds, picked from a weighted list].
 
 My objects are named: [Enemy, Player].
@@ -135,16 +139,16 @@ runtimeScene.getTimeManager().getElapsedTime()
 
 First give me a plan and your assumptions. Then the code. Then tell me what I should read in the console.</pre></div></section>
 
-<section class="card" id="checks"><h2><span class="n">4</span>Five checks before you keep code</h2>
-<ol><li><b>Does it run?</b> Open the browser console in a preview. No red errors.</li><li><b>Does it do what you asked?</b> Watch it in the game, not just in the code.</li><li><b>Do the calls exist?</b> Compare against the cheat sheet.</li><li><b>Does it hold up?</b> Try zero enemies, a hundred enemies, pause and restart. Watch for values that reset every frame.</li><li><b>Can you explain it?</b> Ask your AI to explain it line by line, then keep it in a named, commented group in your event sheet.</li></ol></section>
+<section class="card" id="checks"><h2><span class="n">5</span>Five checks before you keep code</h2>
+<ol><li><b>Does it run?</b> Preview with the debugger and open its console. No red errors.</li><li><b>Does it do what you asked?</b> Watch it in the game, not just in the code.</li><li><b>Do the calls exist?</b> Compare against the cheat sheet.</li><li><b>Does it hold up?</b> Try zero enemies, a hundred enemies, pause and restart. Watch for values that reset every frame.</li><li><b>Can you explain it?</b> Ask your AI to explain it line by line, then keep it in a named, commented group in your event sheet.</li></ol></section>
 
-<section class="card" id="ideas"><h2><span class="n">5</span>Maps and UI: ideas to try</h2>
+<section class="card" id="ideas"><h2><span class="n">6</span>Maps and UI: ideas to try</h2>
 <h3>Maps</h3>
 <ul><li>Ask the AI for a grid of text, for example 30 wide and 12 tall, with a letter for each tile. Pegs and slots for a Plinko board work the same way.</li><li>AIs miscount grids. Ask it for a short function that checks the exit is reachable.</li><li>Your code reads each letter and creates the matching object at the right position. That is a good use of JavaScript.</li><li>Check it in the game: can you get from start to exit, is it too empty or too crowded, does it feel fair.</li></ul>
 <h3>UI</h3>
 <ul><li>Ask for the screens first: title, pause, game over, settings, and what goes on each.</li><li>Then ask for positions relative to the screen size, with a safe margin.</li><li>Then text size, contrast, and a short message when something changes.</li><li>Check it on a small screen, and hand it to someone and watch their first 30 seconds.</li></ul></section>
 
-<section class="card" id="bots"><h2><span class="n">6</span>Tester bots: ideas to try</h2>
+<section class="card" id="bots"><h2><span class="n">7</span>Tester bots: ideas to try</h2>
 <p class="how">A tester bot is a small program whose only job is to play your game and report what breaks. Keep it in an event group you can switch off, and remove it before you ship.</p>
 <div class='tw'><table><tr><th>Bot</th><th>What it does</th><th>What it finds</th></tr><tr><td>Monkey</td><td>Presses random keys at random times</td><td>Crashes, falling out of the world, getting stuck</td></tr><tr><td>Human-like</td><td>Reacts slowly, makes mistakes, holds keys for different lengths</td><td>Whether the difficulty feels fair for a person</td></tr><tr><td>Goal-seeker</td><td>Follows simple rules: head for the exit, jump at gaps</td><td>Whether a level can be finished at all</td></tr><tr><td>Monte Carlo</td><td>Runs the numbers (waves, upgrades, odds) many times with random choices and counts the results</td><td>Win rate, run length, which upgrade is always picked</td></tr></table></div>
 <h3>What a bot can do in GDevelop</h3>
@@ -167,13 +171,13 @@ if (v.get(&quot;BotT&quot;).getAsNumber() &lt;= 0) {
 }
 // Speed-up: setTimeScale(2) ONCE at the start of the scene.</pre></div></section>
 
-<section class="card" id="roblox"><h2><span class="n">7</span>Building in Roblox?</h2>
+<section class="card" id="roblox"><h2><span class="n">8</span>Building in Roblox?</h2>
 <p class="how">The ideas on this page carry over: reading code, the five checks, maps and UI, tester bots. The calls do not, because Roblox uses Luau, not JavaScript. Put <b>Roblox Studio, Luau</b> in every prompt and drop the GDevelop calls list. These are the nearest equivalents. They have not been tried in Studio for this class, so if your AI disagrees, ask it which API the call belongs to.</p>
 <div class='tw'><table><tr><th>GDevelop JavaScript</th><th>Roblox Luau</th><th>Note</th></tr><tr><td>const, let, !=, &amp;&amp;, ||</td><td>local, ~=, and, or</td><td>Luau also has += for adding</td></tr><tr><td>getObjects("Enemy")</td><td>CollectionService:GetTagged("Enemy")</td><td>Tag the parts you want to find</td></tr><tr><td>deleteFromScene()</td><td>part:Destroy()</td><td></td></tr><tr><td>Scene variable</td><td>SetAttribute / GetAttribute</td><td>On any part, or on a folder</td></tr><tr><td>Milliseconds per frame</td><td>dt in seconds</td><td>From RunService.Heartbeat</td></tr><tr><td>console.log(x)</td><td>print(x)</td><td>Shows in the Output window</td></tr></table></div>
 <p class="how">Tester bot idea for Roblox: ask your AI for a test script that moves a test character at random and prints to the Output window when it gets stuck. Ask it which Roblox calls it relies on, and check them.</p>
 <p class="how">Stuck in the studio block? Copy the Output message and the list of calls into your AI first. Kenan cannot debug Luau.</p></section>
 
-<section class="card" id="studio"><h2><span class="n">8</span>Studio: pick one</h2>
+<section class="card" id="studio"><h2><span class="n">9</span>Studio: pick one</h2>
 <ul><li>Explain and clean up one code block, with the five checks. Not sure? Start with this one.</li><li>Add a map or a UI that your AI drafted.</li><li>Ask your AI for a tester bot for your game.</li><li>If something breaks, copy the console message into your AI first. If it is still stuck, show Kenan.</li><li>If you try something and drop it, delete the old events and leftovers.</li></ul>
 <p class="how">After class, optional: keep any JavaScript block in a named, commented group, remove test bots, and write down which blocks your AI wrote. AI-written code goes in CREDITS.md, and you need to be able to explain it. AFL-3 needs at least 3 JavaScript code events doing real work, each in its own named group.</p></section>
 
