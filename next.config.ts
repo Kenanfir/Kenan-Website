@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     return [
       { source: '/w6', destination: '/w6/index.html' },
       { source: '/w7', destination: '/w7/index.html' },
+      { source: '/w9', destination: '/w9/index.html' },
+      { source: '/w9/', destination: '/w9/index.html' },
       { source: '/w8', destination: '/w8/index.html' },
       { source: '/w8/', destination: '/w8/index.html' },
     ];
