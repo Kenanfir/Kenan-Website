@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Code, AI and Your Game | Week 9</title>
-<meta name="description" content="Week 9 companion: the JavaScript cheat sheet, prompts you can copy, checks for AI code, and ideas for maps, UI and tester bots.">
+<meta name="description" content="Week 9 companion: the JavaScript cheat sheet, prompts you can copy, checks for AI code, AI skills, and ideas for maps, UI and tester bots.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -42,11 +42,11 @@ pre{padding-right:70px;font-size:.78rem}
 </style></head><body>
 <header class="wrap"><div class="kicker">IMT01306618 | Week 9</div><h1>Code, AI and Your Game</h1>
 <p class="lede">The JavaScript cheat sheet, prompts you can copy, five checks for code your AI writes, and ideas for maps, UI and bots that test your game. Nothing here is marked today. Open it on your laptop, next to your AI.</p></header>
-<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#first">First event</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#roblox">Roblox</a><a href="#studio">Studio</a></div></nav>
+<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#first">First event</a><a href="#cheat">Cheat sheet</a><a href="#prompts">Prompts</a><a href="#checks">Five checks</a><a href="#ideas">Maps and UI</a><a href="#bots">Tester bots</a><a href="#skills">AI skills</a><a href="#watch">Watch out</a><a href="#roblox">Roblox</a><a href="#studio">Clinic</a></div></nav>
 <main class="wrap">
 
 <section class="card" id="today"><h2><span class="n">1</span>Today in one minute</h2>
-<ul><li>Short theory on JavaScript in GDevelop: what it is for, and how to read what your AI writes.</li><li>How to ask your AI well.</li><li>Try 1: ask your AI to explain a block of code (yours, or the sample block on this page).</li><li>Ideas for letting AI draft a map or a UI layout.</li><li>Try 2: ask your AI for a map or a UI layout for your game.</li><li>A 5-minute break.</li><li>Ideas for tester bots, small programs that play your game and report what breaks, then the five checks.</li><li>Studio: pick one idea and try it in your own game.</li></ul></section>
+<ul><li>Short theory on JavaScript in GDevelop: what it is for, and how to read what your AI writes.</li><li>How to ask your AI well, and what to watch out for.</li><li>Ideas for letting AI draft a map or a UI layout.</li><li>Ideas for tester bots, small programs that play your game and report what breaks, then the five checks.</li><li>AI skills: rules your AI loads every time, including a JavaScript and game check made for this class.</li><li>Clinic: bring anything that is stuck, for any team or any student.</li></ul></section>
 
 <section class="card" id="first"><h2><span class="n">2</span>Add your first JavaScript event</h2>
 <ol><li>In the event sheet press <b>Shift + W</b>, or the circled plus button at the top right, and choose <b>Javascript code</b>.</li><li>Pick the one object the event works on.</li><li>Write or paste the code.</li><li>Preview with the debugger: use the arrow next to Preview and choose <b>Launch preview with debugger and profiler</b>. Errors and console.log show in its console.</li></ol>
@@ -71,7 +71,7 @@ runtimeScene.getTimeManager().getElapsedTime()      // time since last frame, in
 console.log(&quot;hello&quot;)                                // prints to the browser console</pre></div>
 <h3>Three rules that catch most bugs</h3>
 <ol><li><b>Milliseconds.</b> getElapsedTime() returns milliseconds. Divide by 1000 to get seconds.</li><li><b>objects or getObjects().</b> objects holds only the instances your conditions picked. getObjects() returns every instance in the scene. Using getObjects() where you meant objects damages every enemy at once.</li><li><b>One object parameter.</b> A JavaScript event takes a single object. Put the condition that picks it (for example Player collides with Coin) above the code event.</li><li><b>deleteFromScene() takes no argument.</b> Older examples online write deleteFromScene(runtimeScene). It still works, but you do not need the argument.</li></ol>
-<h3>Sample block for Try 1</h3><p class="how">No project open, or no code yet? Paste this into your AI. Object parameter: Coin. A condition above it, Player collides with Coin, picks the coins.</p><div class="pw"><button class="cp" data-t="coin" type="button">Copy</button><pre id="coin">for (const coin of objects) {
+<h3>Sample block to practise on</h3><p class="how">No project open, or no code yet? Paste this into your AI. Object parameter: Coin. A condition above it, Player collides with Coin, picks the coins.</p><div class="pw"><button class="cp" data-t="coin" type="button">Copy</button><pre id="coin">for (const coin of objects) {
   runtimeScene.getVariables().get(&quot;Score&quot;).add(
     coin.getVariables().get(&quot;value&quot;).getAsNumber()
   );
@@ -95,18 +95,18 @@ Calls you may use:
 [paste the cheat sheet]
 
 First give me a short plan and list any assumptions you made. Then the code, with a comment above each part. Then tell me how to test it in a preview and what could go wrong.</pre></div>
-<h3>Explain my code (Try 1)</h3><div class="pw"><button class="cp" data-t="p2" type="button">Copy</button><pre id="p2">Explain this GDevelop JavaScript code event line by line, in simple words.
+<h3>Explain my code</h3><div class="pw"><button class="cp" data-t="p2" type="button">Copy</button><pre id="p2">Explain this GDevelop JavaScript code event line by line, in simple words.
 Then tell me what could go wrong, and how to test it in a preview.
 
 [paste your code]</pre></div>
-<h3>Draft a map (Try 2)</h3><div class="pw"><button class="cp" data-t="p3" type="button">Copy</button><pre id="p3">I&#x27;m making a [platformer / tower defense / dungeon] game in GDevelop 5.
+<h3>Draft a map</h3><div class="pw"><button class="cp" data-t="p3" type="button">Copy</button><pre id="p3">I&#x27;m making a [platformer / tower defense / dungeon] game in GDevelop 5.
 Give me a level layout as a text grid, [30] wide and [12] tall.
 Legend: # wall, . floor, S start, X exit, E enemy, C coin.
 Rule: the exit must be reachable from the start.
 First tell me your plan in two sentences, then the grid, then the legend.
 Then write a short function that checks the exit is reachable from the start, because you may miscount the grid.
 Do not write the code that builds the level yet.</pre></div>
-<h3>Draft a UI (Try 2)</h3><div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">I&#x27;m making a [genre] game in GDevelop 5.
+<h3>Draft a UI</h3><div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">I&#x27;m making a [genre] game in GDevelop 5.
 1. List the screens it needs (for example title, pause, game over, settings) and what goes on each one.
 2. For the HUD, give positions relative to the screen size with a safe margin, so it works on a laptop and a phone.
 3. Suggest text sizes and a message for when something changes, such as &quot;Saved&quot; or &quot;Wave 3&quot;.
@@ -171,14 +171,69 @@ if (v.get(&quot;BotT&quot;).getAsNumber() &lt;= 0) {
 }
 // Speed-up: setTimeScale(2) ONCE at the start of the scene.</pre></div></section>
 
-<section class="card" id="roblox"><h2><span class="n">8</span>Building in Roblox?</h2>
+<section class="card" id="skills"><h2><span class="n">8</span>AI skills: rules your AI loads every time</h2>
+<p class="how">A skill is a short text file of rules, called SKILL.md, that your coding AI loads for you, so you do not retype the same rules in every prompt. In a chat AI with no skills, paste the same text at the start of the chat. A good one removes a habit you keep correcting. A bad one adds noise, so read it before you install it.</p>
+<h3>Two worth knowing</h3>
+<div class="tw"><table><tr><th>Skill</th><th>What it does</th><th>For this class</th></tr>
+<tr><td><a href="https://github.com/DietrichGebert/ponytail">ponytail</a></td><td>Makes the AI write only what the task needs. It checks, in order: does this need to exist, is it already in the project, does a built-in feature cover it. It never cuts validation or error handling. <code>/ponytail-review</code> reviews a diff.</td><td>Matches our rule: use a built-in event or action before you write JavaScript. The author's benchmark claims about half the code. <a href="https://blog.jetbrains.com/ai/2026/07/ponytail-skill-claude-tested/">An independent test</a> found a smaller gain, so treat the number as a claim.</td></tr>
+<tr><td><a href="https://github.com/Exaphis/baby-copilot/blob/main/.codex/skills/unslop/SKILL.md">unslop</a></td><td>Fifteen lines. It checks your git diff and removes what a human would not have written: comments that repeat the code, extra defensive checks, casts to get around type errors, tests that test nothing, style that does not match the file.</td><td>Made for code files in git. A GDevelop event sheet is saved inside the project file, so the diff is hard to read. Paste one block into your AI with the same list instead. Several skills share the name, so check the author.</td></tr></table></div>
+<p class="how">Before you install any skill: read its SKILL.md, install it only from the author's own repository, and remember it runs with your AI's permissions. Some also install hooks that run on your computer. Neither of these two knows anything about GDevelop or games, which is why the next one exists.</p>
+<h3>A JavaScript and game check made for this class</h3>
+<p class="how">Written for GDevelop 5 JavaScript events. It has not been tested across AIs, so if it helps or fails, tell Kenan. In Claude Code, save it as <b>.claude/skills/gdevelop-js-check/SKILL.md</b> in your project folder. Anywhere else, paste it at the start of the chat. Roblox team: swap the GDevelop rules for the Luau ones in section 10.</p>
+<div class="pw"><button class="cp" data-t="skill" type="button">Copy</button><pre id="skill">---
+name: gdevelop-js-check
+description: Write or review JavaScript code events for a GDevelop 5 game. Use when asked to write, fix or review GDevelop JavaScript.
+---
+You are helping with a GDevelop 5 game. Be short and plain.
+
+Before writing code
+1. If a normal event or a built-in action does it, say so and stop. Events are for wiring. JavaScript is for loops, maths and rules reused with different numbers.
+2. List your assumptions: object names, variable names, and what the conditions above the event pick.
+
+Rules for the code
+- The event takes ONE object parameter. objects holds only the instances the conditions picked. getObjects("Name") returns every instance in the scene. Do not use getObjects where a condition should pick.
+- getObjects("Name")[0] can be undefined. Check it before you use it.
+- The event runs every frame, so a let or const starts fresh every frame. Keep state in scene or object variables.
+- getElapsedTime() is in milliseconds. Do not use setTimeout or setInterval: they ignore pause and the time scale. Use a timer variable.
+- Do not create objects, build arrays or call console.log every frame unless that is the point.
+- Use only the calls I list. If you are not sure a call exists, say so.
+- Names are case sensitive and must match my objects and variables.
+- Change the GDevelop object, not its renderer (Pixi) object. The engine overwrites the renderer object every frame.
+
+Remove slop
+- Comments that repeat the code.
+- try/catch or null checks around things that cannot fail.
+- A helper used once, unused variables, options nobody asked for.
+- Logging or tests that check nothing.
+
+After the code
+- Say what to test in a preview: zero objects, many objects, pause, restart.
+- Say what you did not check.</pre></div>
+<p class="how">Two of these rules, objects against getObjects and the renderer object, come from <a href="https://wiki.gdevelop.io/gdevelop5/events/js-code/">GDevelop's own page on JavaScript events</a>, which is worth reading once.</p></section>
+
+<section class="card" id="watch"><h2><span class="n">9</span>Watch out for these in your prompts</h2>
+<div class="tw"><table><tr><th>Watch out</th><th>What goes wrong</th><th>Do this</th></tr>
+<tr><td>No engine named</td><td>You get Unity, Phaser or plain browser code.</td><td>Say GDevelop 5, a JavaScript code event. Roblox teams say Roblox Studio and Luau.</td></tr>
+<tr><td>A vague goal</td><td>The AI invents the design: "make enemy AI".</td><td>Say it in game terms with numbers: spawn one enemy every 3 seconds, at most 10 at once.</td></tr>
+<tr><td>Pasting the whole project</td><td>The AI loses the point and changes things you did not ask about.</td><td>Paste one block, its object parameter, and the names it uses.</td></tr>
+<tr><td>"It doesn't work" with no error</td><td>The AI guesses.</td><td>Paste the console message, the code, and what you expected to happen.</td></tr>
+<tr><td>Invented calls</td><td>The code looks right and does nothing, or errors.</td><td>Give it the list of calls and ask it to flag any it is unsure of.</td></tr>
+<tr><td>Asking for everything at once</td><td>A 200-line block nobody can read or fix.</td><td>One job per block. Plan first, then code.</td></tr>
+<tr><td>"Be careful" and "be robust"</td><td>You get try/catch and checks everywhere, which hide real errors.</td><td>Say what can really fail, and guard only that.</td></tr>
+<tr><td>Believing "this should work"</td><td>An AI sounds as sure when it is wrong.</td><td>Run the five checks. Running it is the proof.</td></tr>
+<tr><td>Pasting private things</td><td>Keys, passwords and other people's details end up in a prompt.</td><td>Leave them out. Use a made-up value.</td></tr>
+<tr><td>Text from a web page or forum</td><td>Pasted text can carry instructions, and a coding AI may follow them.</td><td>Paste only what you read and trust. Read what the AI did before you accept it.</td></tr>
+<tr><td>Losing the prompt</td><td>You cannot explain the code, or show where it came from.</td><td>Keep the prompts that worked. AI-written code goes in CREDITS.md, and you must be able to explain it.</td></tr></table></div></section>
+
+<section class="card" id="roblox"><h2><span class="n">10</span>Building in Roblox?</h2>
 <p class="how">The ideas on this page carry over: reading code, the five checks, maps and UI, tester bots. The calls do not, because Roblox uses Luau, not JavaScript. Put <b>Roblox Studio, Luau</b> in every prompt and drop the GDevelop calls list. These are the nearest equivalents. They have not been tried in Studio for this class, so if your AI disagrees, ask it which API the call belongs to.</p>
 <div class='tw'><table><tr><th>GDevelop JavaScript</th><th>Roblox Luau</th><th>Note</th></tr><tr><td>const, let, !=, &amp;&amp;, ||</td><td>local, ~=, and, or</td><td>Luau also has += for adding</td></tr><tr><td>getObjects("Enemy")</td><td>CollectionService:GetTagged("Enemy")</td><td>Tag the parts you want to find</td></tr><tr><td>deleteFromScene()</td><td>part:Destroy()</td><td></td></tr><tr><td>Scene variable</td><td>SetAttribute / GetAttribute</td><td>On any part, or on a folder</td></tr><tr><td>Milliseconds per frame</td><td>dt in seconds</td><td>From RunService.Heartbeat</td></tr><tr><td>console.log(x)</td><td>print(x)</td><td>Shows in the Output window</td></tr></table></div>
 <p class="how">Tester bot idea for Roblox: ask your AI for a test script that moves a test character at random and prints to the Output window when it gets stuck. Ask it which Roblox calls it relies on, and check them.</p>
-<p class="how">Stuck in the studio block? Copy the Output message and the list of calls into your AI first. Kenan cannot debug Luau.</p></section>
+<p class="how">Stuck in the clinic? Copy the Output message and the list of calls into your AI first. Kenan cannot debug Luau.</p></section>
 
-<section class="card" id="studio"><h2><span class="n">9</span>Studio: pick one</h2>
-<ul><li>Explain and clean up one code block, with the five checks. Not sure? Start with this one.</li><li>Add a map or a UI that your AI drafted.</li><li>Ask your AI for a tester bot for your game.</li><li>If something breaks, copy the console message into your AI first. If it is still stuck, show Kenan.</li><li>If you try something and drop it, delete the old events and leftovers.</li></ul>
+<section class="card" id="studio"><h2><span class="n">11</span>Clinic: bring whatever is stuck</h2>
+<p class="how">For any team or any student, about anything. Put your name or team on the board. Kenan comes to you in order, and you can help a neighbour while you wait.</p>
+<ul><li><b>Code that will not run.</b> A JavaScript event with a red error, or AI code that does nothing. Copy the console message into your AI first, then bring it with your prompt.</li><li><b>Your team or your game.</b> A bug, a scope problem, a build or export that fails, or what to cut before AFL-3.</li><li><b>Anything else.</b> Assets, a teammate who has gone quiet, a deadline, a question about the course.</li></ul>
 <p class="how">After class, optional: keep any JavaScript block in a named, commented group, remove test bots, and write down which blocks your AI wrote. AI-written code goes in CREDITS.md, and you need to be able to explain it. AFL-3 needs at least 3 JavaScript code events doing real work, each in its own named group.</p></section>
 
 <p class="foot">Games Development, Odd Semester 2026/2027</p>
