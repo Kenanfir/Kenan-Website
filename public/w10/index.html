@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Architecture | Week 10</title>
-<meta name="description" content="Week 10 companion: build a Health behaviour with the exact button names, the Health extension file, structure variables, saving, state machines and prompts you can copy.">
+<meta name="description" content="Week 10 companion: a state machine behaviour you can import, structure variables, saving, and prompts that use AI to break your rules.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -41,66 +41,108 @@ h3{font-size:.95rem;color:var(--c);margin:16px 0 6px}
 pre{padding-right:70px;font-size:.78rem}
 </style></head><body>
 <header class="wrap"><div class="kicker">IMT01306618 | Week 10</div><h1>Architecture</h1>
-<p class="lede">Build a Health behaviour with the exact button names, keep your numbers as data, and turn a pile of booleans into a state machine. Nothing here is marked today. Open it on your laptop, next to GDevelop.</p></header>
-<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#afl">AFL-3</a><a href="#health">Health</a><a href="#js">JavaScript</a><a href="#data">Data</a><a href="#save">Saving</a><a href="#fsm">State machine</a><a href="#prompts">Prompts</a><a href="#watch">Watch out</a><a href="#roblox">Roblox</a><a href="#studio">Clinic</a></div></nav>
+<p class="lede">A state machine you build once and import, numbers kept as data, and prompts that use your AI to break your own game's rules. Nothing here is marked today. Open it on your laptop, next to GDevelop.</p></header>
+<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#afl">AFL-3</a><a href="#rules">Rules</a><a href="#build">Build it</a><a href="#js">JavaScript</a><a href="#ai">AI</a><a href="#data">Data</a><a href="#save">Saving</a><a href="#watch">Watch out</a><a href="#roblox">Roblox</a><a href="#studio">Clinic</a></div></nav>
 <main class="wrap">
 
 <section class="card" id="today"><h2><span class="n">1</span>Today in one minute</h2>
-<ul><li>Three ideas to try in your own game: a behaviour you author once, stats kept as data, and a state machine.</li><li>The steps for each one are on this page with the exact button names, so you do not need to follow along on a screen.</li><li>Health is a file you can import and attach, or build yourself from the steps.</li><li>Clinic: bring anything that is stuck, for any team or any student.</li></ul></section>
+<ul><li>Name something a game did that should have been impossible. Why it happens, and a fix you build once.</li><li>A state machine as a behaviour: one state, one table of allowed moves, one counter of refused moves.</li><li>Prompts that ask your AI to draft the table, then attack it.</li><li>Numbers as data in a structure variable, and saving.</li><li>Clinic: bring anything that is stuck, for any team or any student.</li></ul></section>
 
 <section class="card" id="afl"><h2><span class="n">2</span>What AFL-3 asks for from this week</h2>
-<ul><li>One <b>authored behaviour</b> attached to two or more different object types, with its properties set differently on each.</li><li>One authored extension or behaviour containing a <b>JavaScript function</b>.</li><li>Enemy or item stats in a <b>structure variable</b>, not typed into events.</li><li>A <b>state machine</b> with four states or more: one state variable, one named group per state. No player in your game? Bring it to the clinic.</li></ul>
+<ul><li>One <b>authored behaviour</b> attached to two or more different object types, with its properties set differently on each.</li><li>One authored extension or behaviour containing a <b>JavaScript function</b>.</li><li>Enemy or item stats in a <b>structure variable</b>, not typed into events.</li><li>A <b>state machine</b> with four states or more. No player in your game? Bring it to the clinic.</li></ul>
 <p class="how">Repository on eLearn by the start of the Week 13 session. Nothing is marked today. AI-written code goes in CREDITS.md, and you must be able to explain it. Put your extensions, your data layout and your state diagram in docs/TECHNICAL.md.</p></section>
 
-<section class="card" id="health"><h2><span class="n">3</span>Make a Health behaviour</h2>
-<p class="how">Design first: write the properties and the function names before any logic. What does it know, what can it be asked, what can it be told to do.</p>
-<div class="tw"><table><tr><th>Part</th><th>Names</th></tr><tr><td>Properties</td><td>MaxHealth (Number, 100), Health (Number, 100), InvulnSeconds (Number, 0.5), InvulnLeft (Number, 0, hidden)</td></tr><tr><td>Actions</td><td>Damage(amount), Heal(amount)</td></tr><tr><td>Conditions</td><td>IsDead, IsInvulnerable</td></tr><tr><td>Expression</td><td>CurrentHealth</td></tr><tr><td>Lifecycle</td><td>onCreated (start at MaxHealth), doStepPreEvents (count the timer down, every frame)</td></tr></table></div>
+<section class="card" id="rules"><h2><span class="n">3</span>The rules, as a table</h2>
+<p class="how">Five booleans is 2 to the power 5, which is 32 combinations. Your game defines maybe six. One variable holding one word makes the impossible states impossible. Celeste's player is one state machine with 23 states, in a 5,471-line public Player.cs. Movement that feels that good is a list of states and the rules between them.</p>
+<div class="tw"><table><tr><th>From</th><th>May go to</th></tr><tr><td>idle</td><td>run, jump, hurt</td></tr><tr><td>run</td><td>idle, jump, hurt</td></tr><tr><td>jump</td><td>fall, hurt</td></tr><tr><td>fall</td><td>idle, hurt</td></tr><tr><td>hurt</td><td>idle, dead</td></tr><tr><td>dead</td><td>nothing</td></tr></table></div>
+<p class="how">dead has no way out. That one line is the attack-while-dead bug, fixed for good. Draw yours on paper first. If an arrow you need is missing, that transition does not exist in the game either.</p>
+<img src="/w10/state-machine.png" alt="A state diagram with four states: idle, run, jump and fall, and arrows between them" style="max-width:100%;border:1px solid var(--g);margin:8px 0;background:#fff">
+<p class="how">As one line of text, this is the Rules property:</p>
+<div class="pw"><button class="cp" data-t="rules" type="button">Copy</button><pre id="rules">idle&gt;run,jump,hurt;run&gt;idle,jump,hurt;jump&gt;fall,hurt;fall&gt;idle,hurt;hurt&gt;idle,dead;dead&gt;</pre></div></section>
+
+<section class="card" id="build"><h2><span class="n">4</span>Build the StateMachine behaviour</h2>
+<table><tr><th>Part</th><th>Names</th></tr><tr><td>Properties</td><td>State (String, idle), Previous (String), Rules (String, the line above), Blocked (Number, 0)</td></tr><tr><td>Action</td><td>ChangeState(next)</td></tr><tr><td>Conditions</td><td>InState(name), CameFrom(name)</td></tr><tr><td>Expressions</td><td>CurrentState, BlockedCount</td></tr></table>
 <h3>Fast route: import the file</h3>
-<p class="how"><a class="btn" href="/w10/Health.json" download>Download Health.json</a></p>
-<ol><li>Project Manager, Extensions, the plus button (<b>Create or search for new extensions</b>).</li><li>Choose <b>Import extension</b> and pick Health.json.</li><li>Go to step 7 below.</li></ol>
+<p class="how"><a class="btn" href="/w10/StateMachine.json" download>Download StateMachine.json</a></p>
+<ol><li>Project Manager, Extensions, the plus button (<b>Create or search for new extensions</b>).</li><li>Choose <b>Import extension</b> and pick StateMachine.json.</li><li>Attach it to an object (step 6 below).</li></ol>
 <p class="how">This file was built with GDevelop's own library and its code was tested against a test runtime. Importing it in the editor has not been tried in class, so if it will not import, use the steps below or ask in the clinic.</p>
 <h3>The steps</h3>
-<ol><li><b>Add an extension.</b> Project Manager, Extensions, the plus button, then <b>Create a new extension</b>. Rename it Health straight away (right-click, Rename).</li><li><b>Add a behavior.</b> Open the extension. In the left panel, Behaviors, <b>Add a behavior</b>. Name it Health.</li><li><b>Add properties.</b> The four in the table above. Choose the type for each, and set InvulnLeft to hidden.</li><li><b>Add functions.</b> Add a function and choose Action, Condition or Expression. Parameters 1 and 2 are always Object and Behavior. Add the lifecycle functions onCreated and doStepPreEvents too. If you cannot find them in the menu, import the file and open them there.</li><li><b>Write the logic.</b> In events, or in a JavaScript event as on the next section. A condition must run the action <b>Set condition return value</b>. Forget it and the condition is always false, with no error.</li><li><b>Use a property in scene events.</b> Right-click it and choose <b>Generate expression and action</b>. Properties are private until you do.</li><li><b>Attach it.</b> Open an object, Behaviors tab, <b>Add a behavior</b>, pick Health. Set MaxHealth on each object: 30 on a slime, 400 on a boss. Do it on a second object type.</li><li><b>Use it.</b> In an event, pick the action Damage from the object's Health actions. Then delete the old health events from your scene. If you leave them, the logic runs twice.</li></ol>
+<ol><li><b>Add an extension.</b> Project Manager, Extensions, the plus button, then <b>Create a new extension</b>. Rename it StateMachine straight away (right-click, Rename).</li><li><b>Add a behavior.</b> Open the extension. In the left panel, Behaviors, <b>Add a behavior</b>. Name it StateMachine.</li><li><b>Add properties.</b> The four in the table. Choose the type for each. Right-click a property and choose <b>Generate expression and action</b> if scene events need it. Properties are private until you do.</li><li><b>Add functions.</b> Add a function and choose Action, Condition or Expression. Parameters 1 and 2 are always Object and Behavior. Add your own parameter after them, a text for next and name.</li><li><b>Write the logic.</b> In a JavaScript event, as in the next section. A condition must run the action <b>Set condition return value</b> if you use events. Forget it and the condition is always false, with no error.</li><li><b>Attach it.</b> Open an object, Behaviors tab, <b>Add a behavior</b>, pick StateMachine, and set its Rules. Do it on a second object type with different rules.</li><li><b>Use it in events.</b> Pick the action Change state of your object, and the condition is in state. Then delete the old boolean events from your scene. If you leave them, the logic runs twice.</li></ol>
+<div class="pw"><button class="cp" data-t="ev" type="button">Copy</button><pre id="ev">// In your event sheet, using the behaviour on the Player:
+Cond: Key "Space" was just pressed
+      Player is in state run          &lt;- the InState condition
+Act:  Change state of Player to jump  &lt;- the ChangeState action
+
+Cond: Player collides with Enemy
+Act:  Change state of Player to hurt
+
+// If the player is dead, ChangeState to anything is refused and counted.
+// No extra event is needed to stop a corpse from jumping.</pre></div>
 <p class="how">Share it: open the extension, the gear icon (<b>Open extension settings</b>), <b>Export extension</b>, <b>Export to a file</b>. You get a plain .json file you can import into your next project.</p></section>
 
-<section class="card" id="js"><h2><span class="n">4</span>The JavaScript inside a behaviour</h2>
-<p class="how">This is Week 9's JavaScript inside a part you built, and it covers the AFL-3 floor. In the JavaScript event, type <b>Object</b> in the box that picks the objects, or use the getObjects line below. There is no <b>behavior</b> or <b>this</b> variable, so you get the behaviour yourself. A property named Health has _getHealth() and _setHealth(value), spelled exactly like the property. Time is in seconds here: getElapsedTime() is milliseconds, so divide by 1000.</p>
-<div class="pw"><button class="cp" data-t="fns" type="button">Copy</button><pre id="fns">// Every function below starts with this line (it gets the Health behaviour):
+<section class="card" id="js"><h2><span class="n">5</span>The JavaScript inside the behaviour</h2>
+<p class="how">This is Week 9's JavaScript inside a part you built, and it covers the AFL-3 floor. There is no <b>behavior</b> or <b>this</b> variable inside the function, so you get the behaviour yourself with the first line. A property named State has _getState() and _setState(value), spelled exactly like the property.</p>
+<div class="pw"><button class="cp" data-t="fns" type="button">Copy</button><pre id="fns">// Every function starts with this line. It gets the StateMachine behaviour:
 const b = eventsFunctionContext.getObjects("Object")[0]
   .getBehavior(eventsFunctionContext.getBehaviorName("Behavior"));
 
-// onCreated  (lifecycle, runs when the object is created)
-b._setHealth(b._getMaxHealth());
+// ChangeState(next)  (action, parameter next is a text)
+const next = eventsFunctionContext.getArgument("next");
+const now = b._getState();
+if (next === now) return;
 
-// doStepPreEvents  (lifecycle, every frame, before your scene events)
-const left = b._getInvulnLeft();
-if (left &gt; 0) {
-  const seconds = runtimeScene.getTimeManager().getElapsedTime() / 1000;
-  b._setInvulnLeft(Math.max(0, left - seconds));
+// Rules look like "idle&gt;run,jump;run&gt;idle". Read them into a table.
+const rules = {};
+for (const part of b._getRules().split(";")) {
+  const [from, to] = part.split("&gt;");
+  if (from) rules[from.trim()] = (to || "").split(",").map(s =&gt; s.trim()).filter(Boolean);
 }
 
-// Damage(amount)  (action)
-if (b._getInvulnLeft() &gt; 0) return;        // still protected
-const amount = eventsFunctionContext.getArgument("amount");
-b._setHealth(Math.max(0, b._getHealth() - amount));
-b._setInvulnLeft(b._getInvulnSeconds());
+if ((rules[now] || []).includes(next)) {
+  b._setPrevious(now);
+  b._setState(next);
+} else {
+  b._setBlocked(b._getBlocked() + 1);          // a move the rules refuse
+  console.warn("Blocked: " + now + " -&gt; " + next);
+}
 
-// Heal(amount)  (action)
-const amount = eventsFunctionContext.getArgument("amount");
-b._setHealth(Math.min(b._getMaxHealth(), b._getHealth() + amount));
+// InState(name)  (condition, parameter name is a text)
+eventsFunctionContext.returnValue = b._getState() === eventsFunctionContext.getArgument("name");
 
-// IsDead  (condition)
-eventsFunctionContext.returnValue = b._getHealth() &lt;= 0;
+// CameFrom(name)  (condition)
+eventsFunctionContext.returnValue = b._getPrevious() === eventsFunctionContext.getArgument("name");
 
-// IsInvulnerable  (condition)
-eventsFunctionContext.returnValue = b._getInvulnLeft() &gt; 0;
+// CurrentState  (expression that returns text)
+eventsFunctionContext.returnValue = b._getState();
 
-// CurrentHealth  (expression)
-eventsFunctionContext.returnValue = b._getHealth();</pre></div>
-<p class="how">These were run against a test runtime, not in a full game. If one fails in your project, read the console message and check the property spelling first.</p></section>
+// BlockedCount  (expression that returns a number)
+eventsFunctionContext.returnValue = b._getBlocked();</pre></div>
+<p class="how">These were run against a test runtime, not in a full game. For example, from idle the moves run, jump, fall, idle, hurt, dead are all allowed, and then jump, run and idle are each refused and counted. If one fails in your project, read the console message and check the property spelling first.</p></section>
 
-<section class="card" id="data"><h2><span class="n">5</span>Stats as a structure variable</h2>
-<p class="how">The test: to make every slime 20% tougher, how many places do you edit? If it is more than one, the number lives in the wrong place.</p>
+<section class="card" id="ai"><h2><span class="n">6</span>AI that tries to break your rules</h2>
+<p class="how">Ask your AI for the table, then ask it to attack the table. You still test everything in the game. Also use the rules and the five checks from <a href="/w9">Week 9</a>, including the gdevelop-js-check skill.</p>
+<h3>Draft the table</h3><div class="pw"><button class="cp" data-t="p1" type="button">Copy</button><pre id="p1">I'm making a [platformer] game in GDevelop 5. My [player] has these states: [idle, run, jump, fall, hurt, dead].
+Give me a table of allowed moves: for each state, which states it may go to, and one line on why.
+Then write it as one line of text in this format, with no spaces: idle&gt;run,jump,hurt;run&gt;idle,jump,hurt;...;dead&gt;
+Point out any move that looks wrong, for example a state that can never be left, or one that can never be reached.</pre></div>
+<h3>Attack the table</h3><div class="pw"><button class="cp" data-t="p2" type="button">Copy</button><pre id="p2">Here are the allowed moves for my GDevelop 5 game, one state per entry:
+[paste your Rules text]
+Give me 10 sequences of moves that should be blocked, for example jump while dead, and say why each one matters in the game.
+Then give me 5 sequences that should work but might be blocked by mistake.
+I will try each in a preview, so keep every sequence short.</pre></div>
+<h3>The bug finder: the monkey bot plus BlockedCount (an idea, not run in a full game)</h3><div class="pw"><button class="cp" data-t="p3" type="button">Copy</button><pre id="p3">I have a GDevelop 5 StateMachine behaviour on my Player with an action ChangeState(next) and an expression BlockedCount.
+Using the Week 9 tester bot idea (a random key pressed at random times, in an event group I can switch off, with its timer in scene variables), tell me:
+- the events I need to show BlockedCount on screen in a text object
+- what a rising BlockedCount means, and what I should read in the console
+- how to tell whether a blocked move is a bug in my events or a missing rule
+Plan first, then the events, then how to test it in a preview.</pre></div>
+<p class="how">Show BlockedCount in a text object. Each refused move prints in the console like <b>Blocked: dead -&gt; jump</b>. A rising count means your events tried a move the rules forbid. Either an event is wrong or a rule is missing. A bot cannot tell you the game is fun. Remove the bot and the counter before you ship.</p>
+<h3>Find the copy-paste</h3><div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">This is a screenshot of one scene's event sheet from my GDevelop 5 game.
+List the events that look copied with one value changed. For each, tell me whether it should become (a) a function in an extension, (b) a behaviour, or (c) a row in a structure variable.
+Do not rewrite anything. Only list and explain.</pre></div></section>
+
+<section class="card" id="data"><h2><span class="n">7</span>Numbers as data: a structure variable</h2>
+<p class="how">The test: to make every slime 20% tougher, how many places do you edit? If it is more than one, the number lives in the wrong place. Stardew Valley keeps its items and crops in data files, so mods change them without touching the code.</p>
 <ol><li>Scene variables, <b>Add a variable</b>, type <b>Structure</b>, <b>Add child</b>. A child for each type, with health and speed inside.</li><li>In events: EnemyStats.slime.health.</li><li>Or read it in a JavaScript event. Adding a tenth enemy is then a data edit.</li></ol>
 <div class="pw"><button class="cp" data-t="stats" type="button">Copy</button><pre id="stats">// Scene variable EnemyStats (Structure):
 //   slime.health = 30   slime.speed = 80
@@ -116,84 +158,36 @@ for (const enemy of objects) {            // every enemy the conditions picked
   enemy.getVariables().get("health").setNumber(s.getChild("health").getAsNumber());
   enemy.getVariables().get("speed").setNumber(s.getChild("speed").getAsNumber());
 }</pre></div>
-<p class="how">Run it in a sub-event of the event that creates the enemy, so <b>objects</b> holds the new enemy. <b>getChild</b> creates a child that is missing, so a typo makes an empty child instead of an error. <b>hasChild</b> checks without creating one. Scene variables reset when the scene starts.</p></section>
+<p class="how">Run it in a sub-event of the event that creates the enemy, so <b>objects</b> holds the new enemy. <b>getChild</b> creates a child that is missing, so a typo makes an empty child instead of an error. <b>hasChild</b> checks without creating one. Scene variables reset when the scene starts.</p>
+<h3>Ask your AI to draft and test the table</h3><div class="pw"><button class="cp" data-t="p5" type="button">Copy</button><pre id="p5">I'm making a [tower defense] game in GDevelop 5. Draft a table of [10 enemy types] that get harder, with health, speed and reward.
+Then write a short JavaScript script I can run on my laptop, outside the game, that simulates 1000 fights between a [tower] and each enemy and prints which rows are far too strong or too weak.
+Finally give me the structure for a GDevelop scene variable with the same rows. A JavaScript event has ONE object parameter, and getChild creates a child that does not exist, so check with hasChild first.</pre></div></section>
 
-<section class="card" id="save"><h2><span class="n">6</span>Saving, as an idea</h2>
+<section class="card" id="save"><h2><span class="n">8</span>Saving, as an idea</h2>
 <ul><li><b>Save little.</b> Level reached, unlocks, high score, settings. Three numbers and a key is enough for most games here.</li><li><b>The actions:</b> Save a value, Save a text, Load a value, Load a text, and the condition Existence of a group. Load puts the answer into a variable you name.</li><li><b>First launch has no save.</b> A Load of a missing key leaves your variable as it was, so give it a default first.</li><li><b>A whole structure as text:</b> the expression ToJSON(variable) to save it, and the action Convert JSON to a variable to load it.</li><li><b>Keep a version number</b> so old saves can upgrade when the shape changes.</li><li><b>On the web</b> the browser stores it, per browser. A private window or cleared site data looks like a lost save.</li></ul></section>
-
-<section class="card" id="fsm"><h2><span class="n">7</span>A state machine for your player</h2>
-<p class="how">Five booleans is 2 to the power 5, which is 32 combinations. Your game defines maybe six. One variable holding one word makes the impossible states impossible.</p>
-<ol><li>One object variable, for example Player.State, holding one word: idle, run, jump, fall.</li><li>One named event group per state. Each group starts with its own state check.</li><li>Only a state's own group changes away from that state.</li><li>Draw it on paper first. If an arrow you need is missing, that transition does not exist in the game either.</li></ol>
-<img src="/w10/state-machine.png" alt="A state diagram with four states: idle, run, jump and fall, and arrows between them" style="max-width:100%;border:1px solid var(--g);margin:8px 0;background:#fff">
-<div class="pw"><button class="cp" data-t="sm" type="button">Copy</button><pre id="sm">GROUP "STATE: run"
-  EVENT  Cond: Player.State = "run"
-               Key "Space" was just pressed
-         Act:  Player.State = "jump"
-               Simulate jump key press
-  EVENT  Cond: Player.State = "run"
-               Player is not moving
-         Act:  Player.State = "idle"
-  EVENT  Cond: Player.State = "run"
-               Player.HurtRequested = 1
-         Act:  Player.State = "hurt"
-
-// Hurt comes from a collision, which sits outside every group.
-// So the collision only sets Player.HurtRequested = 1 and each group reads it.
-// An event group cannot be switched on or off while the game runs.
-// Every group starts with its own state check instead.</pre></div>
-<p class="how">These are pseudo-events. The real ones are conditions and actions picked from the lists. The Platformer character conditions are <b>Is moving</b>, <b>Is jumping</b>, <b>Is falling</b> and <b>Is on floor</b>, and the action is <b>Simulate jump key press</b>.</p></section>
-
-<section class="card" id="prompts"><h2><span class="n">8</span>Prompts you can copy</h2>
-<p class="how">Also use the rules and the five checks from <a href="/w9">Week 9</a>, including the gdevelop-js-check skill.</p>
-<h3>Design a behaviour first</h3><div class="pw"><button class="cp" data-t="p1" type="button">Copy</button><pre id="p1">I'm making a [genre] game in GDevelop 5. I want a custom behaviour called [Health] that I can put on [the player and each enemy].
-First give me the design only, no code:
-- the properties (name, type, default), and which should be hidden
-- the actions, conditions and expressions, with their parameters
-- the lifecycle functions I need (onCreated, doStepPreEvents ...)
-Use seconds for time. Tell me which objects it could go on, and one thing that could go wrong.
-Do not write the code yet.</pre></div>
-<h3>Write a behaviour function</h3><div class="pw"><button class="cp" data-t="p2" type="button">Copy</button><pre id="p2">Write the JavaScript for the GDevelop 5 behaviour function [Damage(amount)].
-Facts you must follow:
-- It runs in a JavaScript code event inside an events-based behaviour. There is no "behavior" or "this" variable.
-- Get the behaviour with: eventsFunctionContext.getObjects("Object")[0].getBehavior(eventsFunctionContext.getBehaviorName("Behavior"))
-- Read an argument with eventsFunctionContext.getArgument("amount")
-- A property named Health has _getHealth() and _setHealth(value). Spell it exactly like the property.
-- A condition returns with: eventsFunctionContext.returnValue = true or false
-- getElapsedTime() is milliseconds. Divide by 1000 for seconds.
-- Use only these calls. If you are not sure a call exists, say so.
-My properties: [MaxHealth, Health, InvulnSeconds, InvulnLeft].
-Give me a plan and your assumptions first, then the code, then how to test it in a preview.</pre></div>
-<h3>Move stats into a structure variable</h3><div class="pw"><button class="cp" data-t="p3" type="button">Copy</button><pre id="p3">I'm making a [tower defense] game in GDevelop 5. Move my numbers out of events into a structure variable.
-My numbers now: [list each enemy or tower and its numbers].
-Give me: (1) the structure for a scene variable, with the names of the children, (2) the events or a JavaScript event that reads it. The JavaScript event has ONE object parameter, and getChild creates a child that does not exist, so check with hasChild first.
-Then tell me how to add one more type later.</pre></div>
-<h3>Turn booleans into a state machine</h3><div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">My player in GDevelop 5 has these booleans: [isJumping, isDashing, isAttacking, isHurt, isDead].
-Turn them into a state machine: one variable called State holding one word, and one event group per state.
-Give me: the list of states, a table of which state can go to which and why, and what happens when hurt comes from a collision (use a request variable, because an event group cannot be switched off while the game runs).
-Draw the states as a simple text diagram. List any transition that should be impossible.</pre></div></section>
 
 <section class="card" id="watch"><h2><span class="n">9</span>Watch out for these</h2>
 <div class="tw"><table><tr><th>Watch out</th><th>What goes wrong</th><th>Do this</th></tr>
 <tr><td>Behaviour not attached</td><td>Its actions are missing for that object, and getBehavior returns undefined.</td><td>Object, Behaviors tab, Add a behavior. Check the name.</td></tr>
-<tr><td>Forgot Set condition return value</td><td>The condition is always false, or an expression returns 0.</td><td>Set it in every condition and expression.</td></tr>
+<tr><td>Forgot Set condition return value</td><td>The condition is always false, or an expression returns 0.</td><td>Set it in every condition and expression made with events.</td></tr>
 <tr><td>Property seems missing in scene events</td><td>Properties are private to the behaviour.</td><td>Right-click it, Generate expression and action.</td></tr>
-<tr><td>No <b>objects</b> in your JavaScript</td><td>A ReferenceError.</td><td>Type Object in the box that picks objects, or use getObjects.</td></tr>
-<tr><td>Default value against per-object value</td><td>You change the default and old objects keep what they had.</td><td>Set the value on each object. Check it once on a placed instance.</td></tr>
+<tr><td>Rules text with a space or a typo</td><td>Moves are refused that you meant to allow.</td><td>No spaces around the &gt; and commas. Names are case sensitive.</td></tr>
+<tr><td>Default value against per-object value</td><td>You change the default and old objects keep what they had.</td><td>Set the Rules on each object. Check it once on a placed instance.</td></tr>
 <tr><td>Cannot see your scene variables inside a function</td><td>Extension events only see the extension's own variables.</td><td>Pass values as parameters, or read them in JavaScript.</td></tr>
-<tr><td>Old health events left in the scene</td><td>The logic runs twice.</td><td>Delete them once the behaviour works.</td></tr>
+<tr><td>Old boolean events left in the scene</td><td>The logic runs twice and fights the rules.</td><td>Delete them once the behaviour works.</td></tr>
 <tr><td>getChild on a typo</td><td>It creates an empty child, so you get 0 and no error.</td><td>Check with hasChild first.</td></tr>
 <tr><td>Load of a missing key</td><td>Your variable keeps its old value.</td><td>Give it a default, and test with Existence of a group.</td></tr>
-<tr><td>State changed from two places</td><td>One frame cascades idle, run, jump, because events run top to bottom.</td><td>Only a state's own group changes it. Use a request variable for hurt.</td></tr></table></div></section>
+<tr><td>State set from two places</td><td>One frame cascades idle, run, jump, because events run top to bottom.</td><td>Always go through ChangeState, so the table decides.</td></tr></table></div></section>
 
 <section class="card" id="roblox"><h2><span class="n">10</span>Building in Roblox?</h2>
 <p class="how">The ideas carry over. The tools do not, because Roblox uses Luau. Put <b>Roblox Studio, Luau</b> in every prompt. These are the nearest equivalents. They have not been tried in Studio for this class, so if your AI disagrees, ask it which API the call belongs to. How Luau work counts toward the AFL-3 floor is being checked with Pak Andreas this week.</p>
-<div class='tw'><table><tr><th>GDevelop</th><th>Roblox</th><th>Note</th></tr><tr><td>Behaviour with properties</td><td>ModuleScript, a tag, and Attributes</td><td>CollectionService tags mark the parts. Attributes hold the numbers</td></tr><tr><td>Structure variable</td><td>A table in a ModuleScript</td><td>Stats.slime.health, or Attributes on a Folder</td></tr><tr><td>Save and load</td><td>DataStoreService</td><td>Server only. Wrap calls in pcall. Studio needs API access switched on to test</td></tr><tr><td>State machine</td><td>A state string and a table of functions</td><td>Humanoid has built-in states for characters. A custom monster needs its own</td></tr></table></div>
+<div class='tw'><table><tr><th>GDevelop</th><th>Roblox</th><th>Note</th></tr><tr><td>Behaviour with properties</td><td>ModuleScript, a tag, and Attributes</td><td>CollectionService tags mark the parts. Attributes hold the numbers</td></tr><tr><td>Structure variable</td><td>A table in a ModuleScript</td><td>Stats.slime.health, or Attributes on a Folder</td></tr><tr><td>Save and load</td><td>DataStoreService</td><td>Server only. Wrap calls in pcall. Studio needs API access switched on to test</td></tr><tr><td>State machine</td><td>A state string and a table of allowed moves</td><td>Humanoid has built-in states for characters. A custom monster needs its own</td></tr></table></div>
 <p class="how">Stuck in the clinic? Copy the Output message into your AI first. Kenan cannot debug Luau.</p></section>
 
 <section class="card" id="studio"><h2><span class="n">11</span>Clinic: bring whatever is stuck</h2>
 <p class="how">For any team or any student, about anything. Put your name or team on the board. Kenan comes to you in order, and you can help a neighbour while you wait.</p>
-<ul><li><b>Make Health.</b> Follow the steps, or import Health.json and attach it to two objects. Then read the JavaScript in Damage.</li><li><b>Your own game.</b> Move stats into a structure variable, convert the player to a state machine, or turn your most copy-pasted event into a function.</li><li><b>Anything else.</b> A bug, a teammate, a build that fails, a question about AFL-3.</li></ul>
-<p class="how">After class, optional: one behaviour on two object types, one JavaScript function in it, stats as data, a player state machine, and your notes in docs/TECHNICAL.md.</p></section>
+<ul><li><b>Attach the state machine.</b> Import StateMachine.json, attach it to two objects, and change the Rules text for each.</li><li><b>Your own game.</b> Move stats into a structure variable, replace booleans with states, or turn your most copy-pasted event into a function.</li><li><b>Anything else.</b> A bug, a teammate, a build that fails, a question about AFL-3.</li></ul>
+<p class="how">After class, optional: one behaviour on two object types, one JavaScript function in it, stats as data, a state machine with four states or more, and your notes in docs/TECHNICAL.md.</p></section>
 
 <p class="foot">Games Development, Odd Semester 2026/2027</p>
 </main>
