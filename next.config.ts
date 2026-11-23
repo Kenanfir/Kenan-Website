@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       { source: '/w9/', destination: '/w9/index.html' },
       { source: '/w10', destination: '/w10/index.html' },
       { source: '/w10/', destination: '/w10/index.html' },
+      { source: '/w11', destination: '/w11/index.html' },
+      { source: '/w11/', destination: '/w11/index.html' },
       { source: '/w8', destination: '/w8/index.html' },
       { source: '/w8/', destination: '/w8/index.html' },
     ];

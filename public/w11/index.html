@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Game AI I | Week 11</title>
+<meta name="description" content="Week 11 companion: a Vision behaviour you can import, an enemy state machine, exact button names, and prompts that ask your AI to beat your guard.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--card:#0a0a0a;--g:#A3FF12;--p:#8A2BE2;--c:#00E0FF;--tx:#fff;--mut:#a8a8a8;--line:#3a3a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Space Mono',ui-monospace,Menlo,monospace;font-size:15px;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 8px}
+.kicker{color:var(--c);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+h3{font-size:.95rem;color:var(--c);margin:16px 0 6px}
+h1{font-size:clamp(1.6rem,6vw,2.5rem);color:var(--g);text-transform:uppercase;letter-spacing:.08em;text-shadow:0 0 20px rgba(163,255,18,.45)}
+.lede{color:var(--mut);margin-top:10px;max-width:62ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:20px 0}
+.card h2{font-size:1.1rem;margin:0 0 6px;display:flex;gap:10px;align-items:center}
+.n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--p);align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex:none}
+.how{color:var(--mut);margin-bottom:12px}
+a{color:var(--c)}
+a.btn{font:inherit;padding:10px 16px;color:var(--g);border:2px solid var(--g);text-transform:uppercase;text-decoration:none;display:inline-block}
+a.btn:hover{background:var(--g);color:#000}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.88rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{color:var(--c);font-weight:700}
+.tw{overflow-x:auto}
+.row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.qrbox{background:#fff;padding:6px;border-radius:6px;width:176px;flex:none}
+.qr{width:100%;height:auto;display:block}
+.dl{display:block;margin-top:8px;font-size:.78rem}
+ol{padding-left:22px} li{margin:4px 0}
+pre{background:#050505;border:1px solid var(--line);border-radius:8px;padding:12px;white-space:pre-wrap;font:inherit;font-size:.8rem;color:#ddd}
+nav.top{position:sticky;top:0;z-index:5;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:16px;padding:10px 16px;overflow-x:auto;white-space:nowrap;font-size:.85rem}
+html{scroll-behavior:smooth;scroll-padding-top:56px}
+.foot{color:#a0a0a0;font-size:.76rem;padding:12px 0 40px}
+
+h3{font-size:.95rem;color:var(--c);margin:16px 0 6px}
+.pw{position:relative;margin:8px 0}.cp{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;color:var(--g);background:#000;border:1px solid var(--g);padding:3px 9px;cursor:pointer}.cp:hover{background:var(--g);color:#000}
+pre{padding-right:70px;font-size:.78rem}
+details{margin:10px 0}summary{cursor:pointer;color:var(--c)}
+</style></head><body>
+<header class="wrap"><div class="kicker">IMT01306618 | Week 11</div><h1>Game AI I</h1>
+<p class="lede">An enemy that seems smart: it sees you, remembers where you were, and shows you what it is doing. A Vision behaviour you can import, an enemy state machine, and prompts that ask your AI to beat your own guard. Nothing here is marked today. Open it on your laptop, next to GDevelop.</p></header>
+<nav class="top" aria-label="Sections"><div class="wrap"><a href="#today">Today</a><a href="#afl">AFL-3</a><a href="#checks">Three checks</a><a href="#build">Build it</a><a href="#memory">Memory</a><a href="#rules">Enemy rules</a><a href="#ai">AI thief</a><a href="#watch">Watch out</a><a href="#games">Your game</a><a href="#roblox">Roblox</a><a href="#studio">Clinic</a></div></nav>
+<main class="wrap">
+
+<section class="card" id="today"><h2><span class="n">1</span>Today in one minute</h2>
+<ul><li>Think of an enemy that felt smart. Almost every answer is one of three things: it saw you, it remembered you, or it showed you what it was about to do.</li><li>Three checks in order, cheapest first: range, angle, ray.</li><li>A memory that fades and a short reaction delay.</li><li>Last week's state machine on an enemy.</li><li>A prompt that asks your AI to play the thief.</li><li>Clinic: bring anything that is stuck, for any team or any student.</li></ul>
+<img src="/w11/fig-omniscient_vs_fair.png" alt="Two guards. Left: knows everything and walks through the wall to you. Right: knows only what it saw and goes to the last place it saw you" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block"></section>
+
+<section class="card" id="afl"><h2><span class="n">2</span>What AFL-3 asks for from this week</h2>
+<ul><li>An enemy or agent with <b>perception</b>: something it senses, not just a timer.</li><li>A <b>state machine</b> or behaviour tree with at least four states, and a diagram that shows what each move needs.</li><li>An <b>optimization</b> you can name, for example cheapest check first.</li></ul>
+<p class="how">Repository on eLearn by the start of the Week 13 session. Nothing is marked today. AI-written code goes in CREDITS.md, and you must be able to explain it. Put your state diagram in docs/TECHNICAL.md.</p></section>
+
+<section class="card" id="checks"><h2><span class="n">3</span>The three checks, cheapest first</h2>
+<p class="how">Run range, then angle, then the ray, and stop at the first one that fails. Forty guards, nine in range, three in the cone: three raycasts instead of forty. The numbers in the picture are an example, not a measurement.</p>
+<img src="/w11/fig-cone_checks.png" alt="A guard with a cone and four players: player 1 is too far, player 2 is outside the cone, player 3 is behind a wall, player 4 is seen" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<img src="/w11/fig-funnel.png" alt="Forty guards: 9 pass the range check, 3 pass the angle check, so 3 raycasts instead of 40" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<h3>The names, as GDevelop 5.6 shows them</h3>
+<div class="tw"><table><tr><th>What</th><th>Where</th></tr><tr><td>Distance, objects</td><td>Expression <b>Enemy.Distance(Player)</b>, or the condition <b>Distance between two objects</b></td></tr><tr><td>Angle to the target</td><td>Expression <b>Enemy.AngleToObject(Player)</b>, or <b>AngleBetweenPositions(x1, y1, x2, y2)</b></td></tr><tr><td>Difference between angles</td><td>Expression <b>AngleDifference(a, b)</b>. It returns -180 to 180</td></tr><tr><td>Inside the cone</td><td>Condition <b>Compare two numbers</b>: abs(AngleDifference(Enemy.Angle(), Enemy.AngleToObject(Player))) &lt;= 40</td></tr><tr><td>Line of sight</td><td>Condition <b>Raycast to position</b>, in the Objects category. It tests objects or an object group, not a layer, and needs no Physics behaviour</td></tr><tr><td>Centre of an object</td><td><b>Enemy.CenterX()</b> and <b>Enemy.CenterY()</b>. X() and Y() are the top-left corner by default</td></tr></table></div>
+<p class="how"><b>Three traps.</b> Angles wrap: 350 and 10 are 20 apart, not 340, so always use AngleDifference. Y points down, so angle 90 looks down the screen. A sprite that flips never changes Angle(), so a platformer guard looks right forever. Set its Angle to 0 for facing right and 180 for facing left.</p></section>
+
+<section class="card" id="build"><h2><span class="n">4</span>Build it: the Vision behaviour</h2>
+<p class="how">Two files, built with GDevelop's own library and tested against a test runtime. Importing them in the editor has not been tried, so if one will not import, tell Kenan in the clinic.</p>
+<p><a class="btn" href="/w11/Vision.json" download>Vision.json</a> &nbsp; <a class="btn" href="/w11/StateMachine.json" download>StateMachine.json</a></p>
+<img src="/w11/fig-where_to_click.png" alt="Three steps: import the two extensions, attach both behaviours to the enemy, then write the events" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<h3>1. Import</h3>
+<ol><li>Open the <b>Project Manager</b>, then <b>Extensions</b>.</li><li>Click <b>Create or search for new extensions</b>, then <b>Import extension</b>.</li><li>Choose Vision.json, then StateMachine.json.</li></ol>
+<h3>2. Attach</h3>
+<ol><li>Open your enemy object, then the <b>Behaviors</b> tab.</li><li><b>Add a behavior</b>: Vision. Then <b>Add a behavior</b>: StateMachine.</li><li>On StateMachine, set <b>State</b> to <b>patrol</b>. The default is idle, and the Rules below have no idle row, so every move would be refused.</li><li>Set Range 300, HalfAngle 40, Memory 3 on Vision. Different enemies can have different numbers.</li></ol>
+<h3>3. Events</h3>
+<img src="/w11/fig-two_parts.png" alt="The guard holds two behaviours, Vision and StateMachine, and the frame runs Tick, Can see, Ray, Saw target and ChangeState, then Forgot target" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<ol><li>Create two <b>scene variables</b>, <b>HitX</b> and <b>HitY</b>. The raycast writes the hit position into them, and only when it hits.</li><li>Make an object group <b>Obstacles</b> with your walls. The guard and the player must not be in it.</li><li>Event <b>For each Enemy</b>, action <b>Enemy.Vision: Tick</b> with TimeDelta(). Do this first every frame.</li><li>Event <b>For each Enemy</b>, condition <b>Enemy can see Player (range and angle only)</b>.</li><li>Sub-event, condition <b>Raycast to position</b>: from Enemy.CenterX();Enemy.CenterY() to Player.CenterX();Player.CenterY(), against Obstacles, saved in HitX, HitY. A hit means blocked.</li><li>Add an <b>Else</b> to that sub-event with the actions <b>Saw target</b> (Player) and <b>Change state of Enemy to chase</b>.</li><li>Event <b>For each Enemy</b>, conditions <b>has forgotten its target</b> and <b>is in state chase</b>, action change state to <b>search</b>.</li></ol>
+<p class="how"><b>Do not tick Invert on the raycast.</b> In 5.6 it means "return the farthest hit", not "nothing in the way". Why For each Enemy: in a plain event, Enemy.CenterX() in a condition reads only the first enemy. The Else item is in the add-event menu, and its exact position there has not been checked in the editor.</p>
+<details><summary>What the Can see condition does (JavaScript, optional)</summary>
+<div class="pw"><button class="cp" data-t="vision-js" type="button">Copy</button><pre id="vision-js">const b = eventsFunctionContext.getObjects(&quot;Object&quot;)[0]
+  .getBehavior(eventsFunctionContext.getBehaviorName(&quot;Behavior&quot;));
+const me = eventsFunctionContext.getObjects(&quot;Object&quot;)[0];
+const target = eventsFunctionContext.getObjects(&quot;target&quot;)[0];
+if (!target) { eventsFunctionContext.returnValue = false; return; }
+
+const dx = target.getCenterXInScene() - me.getCenterXInScene();
+const dy = target.getCenterYInScene() - me.getCenterYInScene();
+
+// 1. Range: the cheapest test. Most targets stop here.
+if (Math.hypot(dx, dy) &gt; b._getRange()) { eventsFunctionContext.returnValue = false; return; }
+
+// 2. Angle: how far is the target from where I am facing? Wrap into -180..180.
+const toTarget = Math.atan2(dy, dx) * 180 / Math.PI;
+const off = ((toTarget - me.getAngle()) % 360 + 540) % 360 - 180;
+eventsFunctionContext.returnValue = Math.abs(off) &lt;= b._getHalfAngle();
+
+// 3. Line of sight is NOT here. It is a raycast event in the scene.</pre></div>
+<p class="how">Line of sight is deliberately not here. It is the raycast event in the scene.</p></details>
+<h3>Draw the cone while you build</h3>
+<p class="how">You cannot debug perception you cannot see. Add a <b>Shape painter</b> object, tick <b>Clear between frames</b> or the cone smears, and use the <b>Line</b> action from the enemy's centre to Enemy.CenterX() + XFromAngleAndDistance(Enemy.Angle() - Enemy.Vision::PropertyHalfAngle(), Enemy.Vision::PropertyRange()), and the same with Y and +HalfAngle for the other edge.</p></section>
+
+<section class="card" id="memory"><h2><span class="n">5</span>Memory, reaction and cues</h2>
+<img src="/w11/fig-chase_timeline.png" alt="A timeline: the guard sees you, a cue plays, a short reaction delay, chase, sight lost and last position saved, search for about 3 seconds, back to patrol" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<ul><li><b>Last known position.</b> Saw target stores LastX and LastY. When it loses you, move to those numbers, not to the live player. Chasing the live position tracks you through walls.</li><li><b>Memory.</b> Tick counts seconds since the last sighting. Forgot target is true after Memory seconds.</li><li><b>Reaction delay.</b> Use an <b>object timer</b>: action <b>Start (or reset) an object timer</b>, condition <b>Value of an object timer</b>. A scene timer is shared by every enemy. A timer that was never started compares false.</li><li><b>Cue.</b> A sound, an icon or a colour change the moment it changes state. If the player cannot tell they were spotted, the AI exists but the design does not.</li></ul></section>
+
+<section class="card" id="rules"><h2><span class="n">6</span>The enemy's rules</h2>
+<img src="/w11/fig-enemy_rules.png" alt="A state diagram: patrol, suspicious, chase, attack, search and dead. A move from patrol to attack is refused, and nothing leaves dead" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<p class="how">Paste this into the Rules property of StateMachine. It lets every state reach dead, so a guard that is shot while patrolling can still die.</p>
+<div class="pw"><button class="cp" data-t="rules" type="button">Copy</button><pre id="rules">patrol&gt;suspicious,chase,dead;suspicious&gt;chase,patrol,dead;chase&gt;attack,search,dead;attack&gt;chase,dead;search&gt;chase,patrol,dead;dead&gt;</pre></div>
+<p class="how">Same idea as last week. Suspicious and search are the two states students skip, and without them an enemy is blind or all-knowing. Call ChangeState only when something changed: a refused move called every frame fills the console with warnings.</p>
+<img src="/w11/fig-fsm_vs_tree.png" alt="Left: a state machine, where adding a state rewires a web of arrows. Right: a behaviour tree as a priority list, where adding a priority inserts one row" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<p class="how">A clean four-state machine scores better in AFL-3 than a half-built behaviour tree. Use a tree when you need priority, for example flee if badly hurt, whatever else it was doing.</p></section>
+
+<section class="card" id="ai"><h2><span class="n">7</span>AI that tries to beat your guard</h2>
+<p class="how">Ask your AI to play the thief. It finds cases you would not think of. Then you test each one in the game, not in the chat.</p>
+<h3>Ten ways to beat it</h3>
+<div class="pw"><button class="cp" data-t="p1" type="button">Copy</button><pre id="p1">I am making [describe your game] in GDevelop 5. My enemy&#x27;s state table is:
+[paste your Rules text]
+Act as a player trying to beat this enemy. List ten ways to get past it or break it, such as standing at the edge of its range, hiding next to it, peeking for one frame, approaching from behind, or getting it stuck on a wall. For each, say which state the enemy ends in and what the player sees. Do not write code.</pre></div>
+<h3>Numbers, not code</h3>
+<div class="pw"><button class="cp" data-t="p2" type="button">Copy</button><pre id="p2">My guard has Range 300, HalfAngle 40, Memory 3 seconds and a reaction delay of 0.3 seconds. Suggest three variants: a sniper, a patroller, and a dog that hears more than it sees. Give a table of the numbers only, and one sentence on what each is like to play against. Do not write code.</pre></div>
+<h3>Check the cost</h3>
+<div class="pw"><button class="cp" data-t="p3" type="button">Copy</button><pre id="p3">Here is my enemy logic in words, in the order the events run each frame:
+[paste your list]
+Is the cheapest check run first? Which events run every frame that could run less often? Which check could cause the enemy to flicker between two states? Answer as a short list. Do not write code.</pre></div>
+<h3>Roblox</h3>
+<div class="pw"><button class="cp" data-t="p4" type="button">Copy</button><pre id="p4">I am making a Roblox game in Roblox Studio, Luau. I want a monster that notices the player by sight and by sound, remembers where it last saw them for 3 seconds, then gives up. Explain the approach using workspace:Raycast with RaycastParams and a Magnitude check for hearing. Name the API for every function you use, and list what could go wrong. Do not write code yet.</pre></div>
+<h3>The bug it will find first: the flicker</h3>
+<img src="/w11/fig-flicker.png" alt="Two graphs of distance to the player. With one threshold the guard changes state 16 times. With enter at 300 and leave at 340 it changes once" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<p class="how">Standing at the edge of the range makes one threshold flip every frame. Use two: enter chase at 300, leave at 340. Vision has one Range, so use its <b>Set Range</b> action: 340 when the guard starts chasing, 300 when it stops. The numbers in the picture come from a made-up wobble, not a measurement.</p>
+<div class="tw"><table><tr><th>The trick</th><th>What goes wrong</th><th>The fix</th></tr><tr><td>Stand at the edge of the range</td><td>The guard flips between chase and patrol</td><td>Enter at 300, leave at 340</td></tr><tr><td>Wait out the memory timer</td><td>The guard gives up while you hide next to it</td><td>Search the last known spot before giving up</td></tr><tr><td>Peek round a corner for one frame</td><td>The guard fires the moment it sees you</td><td>A short reaction delay before it commits</td></tr><tr><td>Approach from behind</td><td>A cone in front only means it never notices</td><td>A hearing radius with no line of sight</td></tr><tr><td>Break line of sight and stay close</td><td>The guard chases your live position through walls</td><td>Chase the last known position</td></tr></table></div>
+<h3>Optional: difficulty that adapts</h3>
+<img src="/w11/fig-dda.png" alt="A loop of measure, adjust slowly and stay quiet, next to four dials: reaction delay, attack cooldown, aim error and spawn rate. Never turn the player's own damage" style="max-width:100%;background:#fff;padding:8px;border-radius:8px;margin:10px 0;display:block">
+<p class="how">Measure deaths, time to clear and hit rate. Adjust slowly, never announce it, and never touch the player's own damage, because that reads as the game cheating.</p></section>
+
+<section class="card" id="watch"><h2><span class="n">8</span>Watch out for these</h2>
+<div class="tw"><table><tr><th>Watch out</th><th>What goes wrong</th><th>Do this</th></tr><tr><td>Raycast with Invert ticked</td><td>It returns the farthest hit, not clear, so the guard sees through walls or never sees</td><td>Leave Invert off. A hit means blocked. Use an Else sub-event</td></tr><tr><td>Guard or player inside Obstacles</td><td>A ray starting inside a mask hits that mask's own edge</td><td>Keep both out of the Obstacles group</td></tr><tr><td>Stale HitX and HitY</td><td>They are written only on a hit, so an old value looks like a hit that is not there</td><td>Read them only after a hit</td></tr><tr><td>Subtracting raw angles</td><td>350 minus 10 is 340, so the cone breaks at the wrap</td><td>Always AngleDifference</td></tr><tr><td>Using X() and Y()</td><td>They are the top-left corner, so the cone is off-centre</td><td>Use CenterX() and CenterY()</td></tr><tr><td>Plain event with several enemies</td><td>Enemy.CenterX() in a condition reads the first enemy only</td><td>Use For each Enemy</td></tr><tr><td>One scene timer for every guard</td><td>All guards share it, and a timer never started compares false</td><td>Use object timers, and start them first</td></tr><tr><td>State left at idle</td><td>The Rules have no idle row, so every move is refused</td><td>Set State to patrol on the object</td></tr><tr><td>ChangeState every frame</td><td>Each refused move writes a console warning</td><td>Call it only when something changed</td></tr><tr><td>Debug cone smears</td><td>Shape painter keeps the old frames</td><td>Tick Clear between frames</td></tr><tr><td>Flipped sprite</td><td>Flipping never changes Angle(), so the cone faces right forever</td><td>Set Angle to 0 or 180 yourself</td></tr></table></div></section>
+
+<section class="card" id="games"><h2><span class="n">9</span>Which one first, for your game</h2>
+<div class="tw"><table><tr><th>Game</th><th>What perceives</th><th>Start here</th></tr><tr><td>Platformer</td><td>Patrol enemies</td><td>Range, angle and the Vision behaviour on one enemy</td></tr><tr><td>Tower defense</td><td>Towers choosing a target</td><td>A range check, then pick first, closest or strongest</td></tr><tr><td>Plinko Dungeon</td><td>The boss</td><td>A state machine of three phases, one rules table</td></tr><tr><td>Co-op horror (Roblox)</td><td>The monster</td><td>Hearing and a last known position, no cone needed</td></tr></table></div>
+<p class="how">Tower defense and Plinko have no player to chase. The thing that perceives is the tower or the boss, and the state machine goes on it.</p></section>
+
+<section class="card" id="roblox"><h2><span class="n">10</span>Building in Roblox?</h2>
+<p class="how">The ideas carry over. The tools do not, because Roblox uses Luau. Put <b>Roblox Studio, Luau</b> in every prompt. These are the nearest equivalents. They have not been tried in Studio for this class, so if your AI disagrees, ask it which API the call belongs to. How Luau work counts toward the AFL-3 floor is being checked with Pak Andreas this week.</p>
+<div class="tw"><table><tr><th>GDevelop</th><th>Roblox</th><th>Note</th></tr><tr><td>Range check</td><td>(target.Position - guard.Position).Magnitude</td><td>Compare it with the range number</td></tr><tr><td>Angle check</td><td>Dot product of the guard's LookVector and the direction to the target</td><td>Compare with the cosine of half the angle</td></tr><tr><td>Line of sight</td><td>workspace:Raycast with RaycastParams</td><td>Exclude the guard's own parts in the params</td></tr><tr><td>Hearing</td><td>(a.Position - b.Position).Magnitude, no raycast</td><td>The same range check, with no line of sight</td></tr><tr><td>State machine</td><td>A state string and a table of allowed moves</td><td>Same as last week</td></tr></table></div>
+<p class="how">Stuck in the clinic? Copy the Output message into your AI first. Kenan cannot debug Luau.</p></section>
+
+<section class="card" id="studio"><h2><span class="n">11</span>Clinic: bring whatever is stuck</h2>
+<p class="how">For any team or any student, about anything. Put your name or team on the board. Kenan comes to you in order, and you can help a neighbour while you wait.</p>
+<ul><li><b>Vision on one enemy.</b> Import Vision.json, attach it with StateMachine, and set Range, HalfAngle and Memory.</li><li><b>Your own game.</b> Give one enemy a reaction delay, a last known position, or two thresholds so it stops flickering.</li><li><b>Anything else.</b> A bug, a teammate, a build that fails, a question about AFL-3.</li></ul>
+<p class="how">After class, optional: one enemy with range, angle and a ray in that order, a last known position with a memory timer, a visible cue on every state change, and your state diagram in docs/TECHNICAL.md. Week 12 is pathfinding and keeping the frame rate with many enemies.</p></section>
+
+<p class="foot">Games Development, Odd Semester 2026/2027</p>
+</main>
+<script>
+document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+ var t=document.getElementById(b.dataset.t).textContent;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)}).catch(function(){b.textContent='Select and copy'});
+})});
+</script>
+</body></html>
